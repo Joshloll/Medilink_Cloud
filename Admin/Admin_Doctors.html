@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Doctor Management - MediLink Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-slate-50 dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Clinic Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Appointments.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Patients.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined font-variation-fill">stethoscope</span>
+<span class="text-sm font-medium">Doctors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Billing.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Documents.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Settings.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Portrait of logged in admin" id="adminProfileImage"></div>
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-slate-900 dark:text-white" id="adminName">[Admin Name]</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-6 py-4 shrink-0">
+<div class="flex justify-between items-center">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Doctor Management</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage clinic doctors, schedules, and credentials</p>
+</div>
+<div class="flex gap-3">
+<button onclick="openAddDoctorModal()" class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span>Accept Doctor</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Export</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Stats Cards -->
+<div class="p-6 pb-0">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Total Doctors</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="totalDoctors">0</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+2 this month</p>
+</div>
+<div class="size-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">medical_services</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Available Now</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="availableDoctors">0</p>
+<p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Ready for appointments</p>
+</div>
+<div class="size-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">check_circle</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">In Consultation</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="inConsultation">0</p>
+<p class="text-xs text-amber-600 dark:text-amber-400 mt-1">Currently busy</p>
+</div>
+<div class="size-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">schedule</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">On Leave</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="onLeave">0</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Not available</p>
+</div>
+<div class="size-12 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400 text-2xl">event_busy</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Filters and Search -->
+<div class="p-6 pt-4">
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+<div class="flex flex-col lg:flex-row gap-4">
+<div class="flex-1">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input type="text" placeholder="Search doctors..." class="w-full pl-10 pr-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+</div>
+<div class="flex gap-3">
+<select class="px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">All Departments</option>
+<option value="general">General Practice</option>
+<option value="cardiology">Cardiology</option>
+<option value="pediatrics">Pediatrics</option>
+<option value="radiology">Radiology</option>
+</select>
+<select class="px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">All Status</option>
+<option value="available">Available</option>
+<option value="in-consultation">In Consultation</option>
+<option value="on-break">On Break</option>
+<option value="on-leave">On Leave</option>
+</select>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Master-Detail Layout -->
+<div class="flex-1 overflow-hidden relative">
+<!-- List Panel (Master) -->
+<div class="w-96 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632] h-full shrink-0">
+<!-- Header & Search -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Doctors</h2>
+<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold px-2 py-1 rounded-full" id="totalDoctorsCount">Total: 0</span>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input type="text" placeholder="Search doctors..." class="block w-full pl-10 pr-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" id="doctorSearchInput">
+</div>
+<button class="flex w-full items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20" onclick="openAddDoctorModal()">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span>Accept New Doctor</span>
+</button>
+</div>
+<!-- Scrollable List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar" id="doctorsList">
+<!-- Doctor items will be populated here -->
+</div>
+</div>
+
+<!-- Detail View (Detail) -->
+<div class="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Sticky Detail Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-8 py-6 shrink-0 z-10 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="flex items-start gap-6">
+<div class="relative">
+<div class="size-24 rounded-xl shadow-lg bg-slate-200 flex items-center justify-center" id="doctorDetailAvatar">
+<span class="material-symbols-outlined text-slate-500 text-4xl">person</span>
+</div>
+<button class="absolute -bottom-2 -right-2 bg-white dark:bg-slate-700 p-1.5 rounded-full shadow-md border border-slate-100 dark:border-slate-600 hover:text-primary text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white" id="doctorDetailName">[Doctor Name]</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800">Active</span>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-100 dark:border-blue-800">Available</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400 mt-2">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">badge</span>
+ID: #[Doctor ID]
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-slate-500 text-[18px]">medical_services</span>
+<span id="doctorDetailSpecialty">[Specialty]</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">school</span>
+<span id="doctorDetailDepartment">[Department]</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">phone</span>
+<span id="doctorDetailPhone">[Phone]</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">email</span>
+<span id="detailEmail">[Email]</span>
+</span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-red-200 dark:border-red-900 bg-white dark:bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 py-2 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+<span class="hidden xl:inline">Delete Record</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 py-2 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span class="hidden xl:inline">Print Record</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2 px-6 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 mt-8 border-b border-slate-200 dark:border-slate-800 -mb-[25px]">
+<button class="pb-4 px-1 border-b-2 border-primary text-primary font-semibold text-sm">Basic Info</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Schedule</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Patients</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Performance</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Settings</button>
+</div>
+</header>
+
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Basic Information Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person</span>
+Personal Information
+</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">First Name</label>
+<input type="text" value="[First Name]" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorFirstName">
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Last Name</label>
+<input type="text" value="[Last Name]" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorLastName">
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Date of Birth</label>
+<input type="date" value="1980-01-01" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorDOB">
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Phone Number</label>
+<input type="tel" value="[Phone Number]" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorPhone">
+</div>
+<div class="space-y-1.5 md:col-span-2">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Email Address</label>
+<input type="email" value="[Email Address]" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorEmail">
+</div>
+<div class="space-y-1.5 md:col-span-3">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Address</label>
+<input type="text" value="[Address]" class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" id="doctorAddress">
+</div>
+</div>
+</section>
+
+<!-- Professional Information Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">medical_services</span>
+Professional Information
+</h3>
+<button class="text-primary text-sm font-medium hover:underline">Edit Details</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700">
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">License Number</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">[License Number]</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Specializations</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">[Specializations]</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Department</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">[Department]</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Years of Experience</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">[Years]</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Education</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">[Education]</p>
+</div>
+</div>
+</section>
+
+<!-- Schedule Information Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+Schedule Information
+</h3>
+<button class="text-primary text-sm font-medium hover:underline">Edit Schedule</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Working Days</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">Monday - Friday</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Working Hours</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">8:00 AM - 6:00 PM</p>
+</div>
+<div>
+<p class="text-text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Consultation Duration</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">30 minutes</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Break Time</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">1:00 PM - 2:00 PM</p>
+</div>
+</div>
+<div class="mt-4">
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-2">Available Services</p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">General Consultation</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Annual Checkup</span>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">Specialist Consultation</span>
+</div>
+</div>
+</section>
+
+<!-- Recent Performance Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">trending_up</span>
+Performance Metrics
+</h3>
+<button class="text-primary text-sm font-medium hover:underline">View Full Report</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Total Patients</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="totalPatientsCount">0</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+12 this month</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">This Month</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="thisMonthPatients">0</p>
+<p class="text-xs text-blue-600 dark:text-blue-400 mt-1">On track</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Avg. Rating</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="avgRating">4.8</p>
+<p class="text-xs text-amber-600 dark:text-amber-400 mt-1">Excellent</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Revenue</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="monthlyRevenue">$0</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+15% increase</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Footer Space -->
+<div class="h-20"></div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Add Doctor Modal -->
+<div id="addDoctorModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Accept New Doctor</h2>
+<button onclick="closeAddDoctorModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">First Name *</label>
+<input type="text" id="doctorFirstName" placeholder="Enter first name" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Last Name *</label>
+<input type="text" id="doctorLastName" placeholder="Enter last name" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address *</label>
+<input type="email" id="doctorEmail" placeholder="Enter email address" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone Number *</label>
+<input type="tel" id="doctorPhone" placeholder="Enter phone number" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Department *</label>
+<select id="doctorDepartment" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">Select Department</option>
+<option value="general">General Practice</option>
+<option value="cardiology">Cardiology</option>
+<option value="pediatrics">Pediatrics</option>
+<option value="radiology">Radiology</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">License Number *</label>
+<input type="text" id="doctorLicense" placeholder="Enter license number" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Specializations</label>
+<input type="text" id="doctorSpecializations" placeholder="Enter specializations (comma separated)" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Working Hours</label>
+<div class="grid grid-cols-2 gap-2">
+<input type="time" id="doctorStartTime" class="px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-sm">
+<input type="time" id="doctorEndTime" class="px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+<button onclick="closeAddDoctorModal()" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+<button onclick="addDoctor()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Accept Doctor</button>
+</div>
+</div>
+</div>
+
+<script>
+// Admin Doctors State Management
+const doctorsState = {
+    user: {
+        name: '[Admin Name]',
+        email: 'admin@medilinkcloud.com',
+        role: 'System Administrator'
+    },
+    stats: {
+        totalDoctors: 0,
+        availableDoctors: 0,
+        inConsultation: 0,
+        onLeave: 0
+    },
+    doctors: [],
+    filters: {
+        department: '',
+        status: '',
+        search: ''
+    }
+};
+
+// Initialize Doctors Page
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDoctors();
+    setupEventListeners();
+    loadDoctorsData();
+});
+
+function initializeDoctors() {
+    // Set user information
+    const userName = localStorage.getItem('adminName') || '[Admin Name]';
+    doctorsState.user.name = userName;
+    
+    // Update UI with user info
+    document.getElementById('adminName').textContent = userName;
+    
+    // Set profile image placeholder
+    const profileImage = document.getElementById('adminProfileImage');
+    profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+}
+
+function setupEventListeners() {
+    // Add Doctor Button
+    document.querySelector('button[onclick="openAddDoctorModal()"]').addEventListener('click', function() {
+        openAddDoctorModal();
+    });
+    
+    // Export Button
+    document.querySelector('button:has(.material-symbols-outlined.download)').addEventListener('click', function() {
+        exportDoctors();
+    });
+    
+    // Search Input
+    document.querySelector('input[placeholder="Search doctors..."]').addEventListener('input', function(e) {
+        doctorsState.filters.search = e.target.value;
+        filterDoctors();
+    });
+    
+    // Department Filter
+    document.querySelectorAll('select')[0].addEventListener('change', function(e) {
+        doctorsState.filters.department = e.target.value;
+        filterDoctors();
+    });
+    
+    // Status Filter
+    document.querySelectorAll('select')[1].addEventListener('change', function(e) {
+        doctorsState.filters.status = e.target.value;
+        filterDoctors();
+    });
+}
+
+function loadDoctorsData() {
+    // Simulate loading data from API
+    setTimeout(() => {
+        updateStatistics();
+        loadDoctors();
+    }, 1000);
+}
+
+function updateStatistics() {
+    // Simulate real-time statistics
+    doctorsState.stats = {
+        totalDoctors: Math.floor(Math.random() * 10) + 15,
+        availableDoctors: Math.floor(Math.random() * 5) + 3,
+        inConsultation: Math.floor(Math.random() * 4) + 2,
+        onLeave: Math.floor(Math.random() * 3) + 1
+    };
+    
+    // Update UI
+    document.getElementById('totalDoctors').textContent = doctorsState.stats.totalDoctors;
+    document.getElementById('availableDoctors').textContent = doctorsState.stats.availableDoctors;
+    document.getElementById('inConsultation').textContent = doctorsState.stats.inConsultation;
+    document.getElementById('onLeave').textContent = doctorsState.stats.onLeave;
+}
+
+function loadDoctors() {
+    // Generate placeholder doctors
+    const doctors = [
+        {
+            id: 1,
+            firstName: '[First Name]',
+            lastName: '[Last Name]',
+            email: '[Email]',
+            phone: '[Phone]',
+            department: '[Department]',
+            license: '[License Number]',
+            specializations: '[Specializations]',
+            status: 'available',
+            patientsToday: Math.floor(Math.random() * 10) + 5,
+            schedule: '8:00 AM - 5:00 PM',
+            avatar: null
+        },
+        {
+            id: 2,
+            firstName: '[First Name]',
+            lastName: '[Last Name]',
+            email: '[Email]',
+            phone: '[Phone]',
+            department: '[Department]',
+            license: '[License Number]',
+            specializations: '[Specializations]',
+            status: 'in-consultation',
+            patientsToday: Math.floor(Math.random() * 10) + 8,
+            schedule: '9:00 AM - 6:00 PM',
+            avatar: null
+        },
+        {
+            id: 3,
+            firstName: '[First Name]',
+            lastName: '[Last Name]',
+            email: '[Email]',
+            phone: '[Phone]',
+            department: '[Department]',
+            license: '[License Number]',
+            specializations: '[Specializations]',
+            status: 'on-break',
+            patientsToday: Math.floor(Math.random() * 10) + 3,
+            schedule: '8:00 AM - 4:00 PM',
+            avatar: null
+        },
+        {
+            id: 4,
+            firstName: '[First Name]',
+            lastName: '[Last Name]',
+            email: '[Email]',
+            phone: '[Phone]',
+            department: '[Department]',
+            license: '[License Number]',
+            specializations: '[Specializations]',
+            status: 'on-leave',
+            patientsToday: 0,
+            schedule: 'Not Available',
+            avatar: null
+        }
+    ];
+    
+    doctorsState.doctors = doctors;
+    renderDoctorsList(doctors);
+    
+    // Select first doctor by default
+    if (doctors.length > 0) {
+        selectDoctor(0);
+    }
+}
+
+function renderDoctorsList(doctors) {
+    const listContainer = document.getElementById('doctorsList');
+    if (!listContainer) return;
+    
+    // Clear existing items
+    listContainer.innerHTML = '';
+    
+    // Add doctor items
+    doctors.forEach((doctor, index) => {
+        const doctorItem = createDoctorListItem(doctor, index);
+        listContainer.appendChild(doctorItem);
+    });
+    
+    // Re-setup listeners
+    setupDoctorListListeners();
+}
+
+function createDoctorListItem(doctor, index) {
+    const div = document.createElement('div');
+    div.className = `group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-50 dark:border-slate-800 transition-colors ${index === 0 ? 'border-primary bg-blue-50/50 dark:bg-primary/10' : ''}`;
+    div.innerHTML = `
+        <div class="relative shrink-0">
+            <div class="size-12 rounded-full bg-slate-200 flex items-center justify-center">
+                <span class="material-symbols-outlined text-slate-500">person</span>
+            </div>
+            ${doctor.status === 'available' ? '<span class="absolute bottom-0 right-0 block size-3 rounded-full bg-green-500 ring-2 ring-white dark:ring-[#1a2632]"></span>' : ''}
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">${doctor.firstName} ${doctor.lastName}</h3>
+                <span class="text-xs text-slate-400">${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">ID: #DR-${String(doctor.id).padStart(4, '0')}</p>
+            <div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+                <span class="material-symbols-outlined text-[14px]">event</span>
+                <span>Last visit: ${new Date().toLocaleDateString()}</span>
+            </div>
+        </div>
+    `;
+    
+    div.addEventListener('click', () => selectDoctor(index));
+    return div;
+}
+
+function filterDoctors() {
+    let filtered = doctorsState.doctors;
+    
+    // Apply search filter
+    if (doctorsState.filters.search) {
+        filtered = filtered.filter(doctor => 
+            doctor.firstName.toLowerCase().includes(doctorsState.filters.search.toLowerCase()) ||
+            doctor.lastName.toLowerCase().includes(doctorsState.filters.search.toLowerCase()) ||
+            doctor.email.toLowerCase().includes(doctorsState.filters.search.toLowerCase())
+        );
+    }
+    
+    // Apply department filter
+    if (doctorsState.filters.department) {
+        filtered = filtered.filter(doctor => doctor.department === doctorsState.filters.department);
+    }
+    
+    // Apply status filter
+    if (doctorsState.filters.status) {
+        filtered = filtered.filter(doctor => doctor.status === doctorsState.filters.status);
+    }
+    
+    renderDoctors(filtered);
+}
+
+function viewDoctor(id) {
+    const doctor = doctorsState.doctors.find(d => d.id === id);
+    if (doctor) {
+        showNotification(`Viewing doctor: ${doctor.firstName} ${doctor.lastName}`);
+    }
+}
+
+function editDoctor(id) {
+    const doctor = doctorsState.doctors.find(d => d.id === id);
+    if (doctor) {
+        showNotification(`Editing doctor: ${doctor.firstName} ${doctor.lastName}`);
+        // Open edit modal with doctor data
+        openAddDoctorModal();
+    }
+}
+
+function deleteDoctor(id) {
+    const doctor = doctorsState.doctors.find(d => d.id === id);
+    if (doctor && confirm(`Are you sure you want to remove Dr. ${doctor.firstName} ${doctor.lastName}?`)) {
+        doctorsState.doctors = doctorsState.doctors.filter(d => d.id !== id);
+        renderDoctors(doctorsState.doctors);
+        showNotification('Doctor removed successfully');
+        updateStatistics();
+    }
+}
+
+function exportDoctors() {
+    showNotification('Exporting doctors data...');
+    setTimeout(() => {
+        showNotification('Doctors data exported successfully');
+    }, 1500);
+}
+
+function openAddDoctorModal() {
+    document.getElementById('addDoctorModal').classList.remove('hidden');
+}
+
+function closeAddDoctorModal() {
+    document.getElementById('addDoctorModal').classList.add('hidden');
+    // Clear form
+    document.getElementById('doctorFirstName').value = '';
+    document.getElementById('doctorLastName').value = '';
+    document.getElementById('doctorEmail').value = '';
+    document.getElementById('doctorPhone').value = '';
+    document.getElementById('doctorDepartment').value = '';
+    document.getElementById('doctorLicense').value = '';
+    document.getElementById('doctorSpecializations').value = '';
+    document.getElementById('doctorStartTime').value = '';
+    document.getElementById('doctorEndTime').value = '';
+}
+
+function addDoctor() {
+    // Get form values
+    const firstName = document.getElementById('doctorFirstName').value;
+    const lastName = document.getElementById('doctorLastName').value;
+    const email = document.getElementById('doctorEmail').value;
+    const phone = document.getElementById('doctorPhone').value;
+    const department = document.getElementById('doctorDepartment').value;
+    const license = document.getElementById('doctorLicense').value;
+    const specializations = document.getElementById('doctorSpecializations').value;
+    const startTime = document.getElementById('doctorStartTime').value;
+    const endTime = document.getElementById('doctorEndTime').value;
+    
+    // Validate required fields
+    if (!firstName || !lastName || !email || !phone || !department || !license) {
+        showNotification('Please fill in all required fields');
+        return;
+    }
+    
+    // Create new doctor
+    const newDoctor = {
+        id: doctorsState.doctors.length + 1,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        phone: phone,
+        department: department,
+        license: license,
+        specializations: specializations,
+        status: 'available',
+        patientsToday: 0,
+        schedule: startTime && endTime ? `${startTime} - ${endTime}` : 'Not Set'
+    };
+    
+    doctorsState.doctors.push(newDoctor);
+    renderDoctors(doctorsState.doctors);
+    updateStatistics();
+    
+    showNotification('Doctor accepted successfully');
+    closeAddDoctorModal();
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">info</span>
+            <p class="text-sm text-slate-700 dark:text-slate-300">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Auto-refresh data every 30 seconds
+setInterval(() => {
+    updateStatistics();
+}, 30000);
+</script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="debug.js"></script>
+</body></html>

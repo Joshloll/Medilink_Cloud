@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>System Settings - MediLink Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-slate-50 dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Clinic Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Appointments.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Patients.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Doctors.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">stethoscope</span>
+<span class="text-sm font-medium">Doctors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Documents.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined font-variation-fill">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Portrait of logged in admin" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAc8_Xc7LXUkTYJ01p-NLvPMLfMxmjYPZTmHQ1eBcm_0L-vUohYT46eJIze00Ik-E4Ga8JFbF9f9--VF3jhDUwKPi2kLd2mX1Qyhg8JgKtufrr2mQa9p-IZRgbURreMg7vgOf7J1wLQmdxcEEuKDbx2-fatxInVqJVM31wCFthCnp2RRJN4UiintlT3d_u-SkO1g7bseR5co6plQ0KzAXiah178UAExu5X1zVIfUMRL1ta5dO2itJlmDR2C8SOG3V-bXhuKs1VXvmpJ');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Dr. A. Taylor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-6 py-4 shrink-0">
+<div class="flex justify-between items-center">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">System Settings</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage clinic configuration, users, and system preferences</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Settings Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6">
+<!-- Settings Navigation -->
+<div class="flex gap-6 mb-6 border-b border-slate-200 dark:border-slate-800">
+<button class="pb-3 px-1 border-b-2 border-primary text-primary font-semibold text-sm">General</button>
+<button class="pb-3 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Users & Roles</button>
+<button class="pb-3 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Clinic Info</button>
+<button class="pb-3 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Security</button>
+<button class="pb-3 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Integrations</button>
+<button class="pb-3 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Backup</button>
+</div>
+
+<!-- General Settings -->
+<div class="space-y-6">
+<!-- Clinic Information -->
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">business</span>
+Clinic Information
+</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Clinic Name</label>
+<input type="text" value="MediLink Cloud Medical Center" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+<input type="tel" value="+1 (555) 123-4567" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+<input type="email" value="info@medilinkcloud.com" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Website</label>
+<input type="url" value="www.medilinkcloud.com" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Address</label>
+<input type="text" value="123 Medical Center Drive, Springfield, IL 62704" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+</div>
+</div>
+
+<!-- Working Hours -->
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">schedule</span>
+Working Hours
+</h3>
+<div class="space-y-4">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Monday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="08:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="18:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Tuesday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="08:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="18:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Wednesday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="08:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="18:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Thursday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="08:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="18:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Friday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="08:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="18:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Saturday</span>
+<div class="flex items-center gap-2">
+<input type="time" value="09:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+<span class="text-slate-500">to</span>
+<input type="time" value="14:00" class="px-2 py-1 border-slate-200 dark:border-slate-700 rounded bg-slate-50 dark:bg-slate-800 text-sm">
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-700 dark:text-slate-300">Sunday</span>
+<span class="text-sm text-slate-500 dark:text-slate-400">Closed</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- User Management -->
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">people</span>
+User Management
+</h3>
+<button onclick="openAddUserModal()" class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2 px-4 text-sm font-semibold">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Add User</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">User</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Role</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Last Active</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAc8_Xc7LXUkTYJ01p-NLvPMLfMxmjYPZTmHQ1eBcm_0L-vUohYT46eJIze00Ik-E4Ga8JFbF9f9--VF3jhDUwKPi2kLd2mX1Qyhg8JgKtufrr2mQa9p-IZRgbURreMg7vgOf7J1wLQmdxcEEuKDbx2-fatxInVqJVM31wCFthCnp2RRJN4UiintlT3d_u-SkO1g7bseR5co6plQ0KzAXiah178UAExu5X1zVIfUMRL1ta5dO2itJlmDR2C8SOG3V-bXhuKs1VXvmpJ');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Dr. A. Taylor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">a.taylor@medilinkcloud.com</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+Administrator
+</span>
+</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-2 rounded-full bg-green-500"></span>
+Active
+</span>
+</td>
+<td class="px-4 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">2 hours ago</span>
+</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-4 py-3">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSEfj4kPBX8n82gcR1J7cn3pZ11iy0wi1HZard-TCuo8Z2aD2sCmMHzjgmaiFknMD5Mj0UHdnS3k-2aViF-7XNXP9ShhQisHEpU6glO2LiOX9PEL0w1a5g9KA0-nmwEEyf79FjTt93_fnH1mPkiBRn3F3-rBlJY5_k8v9-qf0v_CY4_bU-PB3jzjR64HkvhoKPdW4mUd-sE9OkRLFSHu0MaxjGWidszeTZm8flS8rao1OmHZ71riobADDW5VFxkVN4_No7n8KEVPIn');"></div>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Dr. S. Williams</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">s.williams@medilinkcloud.com</p>
+</div>
+</div>
+</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+Doctor
+</span>
+</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-2 rounded-full bg-green-500"></span>
+Active
+</span>
+</td>
+<td class="px-4 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">1 day ago</span>
+</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- System Preferences -->
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">tune</span>
+System Preferences
+</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">Email Notifications</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Send email notifications for appointments and updates</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" checked class="sr-only peer">
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">SMS Reminders</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Send SMS reminders for appointments</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" checked class="sr-only peer">
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">Auto Backup</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Automatically backup data daily</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" checked class="sr-only peer">
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-blue-600"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm font-medium text-slate-700 dark:text-slate-300">Maintenance Mode</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Temporarily disable user access for maintenance</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" class="sr-only peer">
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-slate-600 peer-checked:bg-blue-600"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Add User Modal -->
+<div id="addUserModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-lg w-full mx-4">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Add New User</h2>
+<button onclick="closeAddUserModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<div class="space-y-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Full Name *</label>
+<input type="text" placeholder="Enter full name" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address *</label>
+<input type="email" placeholder="Enter email address" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Role *</label>
+<select class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">Select Role</option>
+<option value="admin">Administrator</option>
+<option value="doctor">Doctor</option>
+<option value="nurse">Nurse</option>
+<option value="receptionist">Receptionist</option>
+<option value="lab-tech">Lab Technician</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Department</label>
+<select class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">Select Department</option>
+<option value="general">General Practice</option>
+<option value="cardiology">Cardiology</option>
+<option value="pediatrics">Pediatrics</option>
+<option value="radiology">Radiology</option>
+<option value="lab">Laboratory</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone Number</label>
+<input type="tel" placeholder="Enter phone number" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+<button onclick="closeAddUserModal()" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+<button onclick="addUser()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Add User</button>
+</div>
+</div>
+</div>
+
+<script>
+// Admin Settings State Management
+const settingsState = {
+    user: {
+        name: '[Admin Name]',
+        email: 'admin@medilinkcloud.com',
+        role: 'System Administrator'
+    },
+    clinic: {
+        name: '[Clinic Name]',
+        phone: '[Phone]',
+        email: '[Email]',
+        website: '[Website]',
+        address: '[Address]'
+    },
+    users: [],
+    settings: {
+        emailNotifications: true,
+        smsReminders: true,
+        autoBackup: true,
+        maintenanceMode: false
+    },
+    workingHours: {
+        monday: { start: '08:00', end: '18:00' },
+        tuesday: { start: '08:00', end: '18:00' },
+        wednesday: { start: '08:00', end: '18:00' },
+        thursday: { start: '08:00', end: '18:00' },
+        friday: { start: '08:00', end: '18:00' },
+        saturday: { start: '09:00', end: '14:00' },
+        sunday: { closed: true }
+    }
+};
+
+// Initialize Settings Page
+document.addEventListener('DOMContentLoaded', function() {
+    initializeSettings();
+    setupEventListeners();
+    loadSettingsData();
+});
+
+function initializeSettings() {
+    // Set user information
+    const userName = localStorage.getItem('adminName') || '[Admin Name]';
+    settingsState.user.name = userName;
+    
+    // Update UI with user info
+    const adminNameElement = document.getElementById('adminName');
+    if (adminNameElement) {
+        adminNameElement.textContent = userName;
+    }
+    
+    // Set profile image placeholder
+    const profileImage = document.getElementById('adminProfileImage');
+    if (profileImage) {
+        profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+    }
+}
+
+function setupEventListeners() {
+    // Add User Button
+    const addUserBtn = document.querySelector('button[onclick="openAddUserModal()"]');
+    if (addUserBtn) {
+        addUserBtn.addEventListener('click', function() {
+            openAddUserModal();
+        });
+    }
+    
+    // Save Changes Button
+    const saveBtn = document.querySelector('button:has(.material-symbols-outlined.save)');
+    if (saveBtn) {
+        saveBtn.addEventListener('click', function() {
+            saveAllSettings();
+        });
+    }
+    
+    // Tab Navigation
+    const tabButtons = document.querySelectorAll('.pb-4.px-1');
+    tabButtons.forEach((btn, index) => {
+        btn.addEventListener('click', function() {
+            switchTab(index);
+        });
+    });
+    
+    // Toggle Switches
+    const toggles = document.querySelectorAll('input[type="checkbox"]');
+    toggles.forEach(toggle => {
+        toggle.addEventListener('change', function() {
+            updateSetting(toggle.id, this.checked);
+        });
+    });
+    
+    // Form Inputs
+    const inputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[type="url"], input[type="date"], select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('change', function() {
+            updateFormValue(this);
+        });
+    });
+    
+    // User Action Buttons
+    setupUserActionListeners();
+}
+
+function setupUserActionListeners() {
+    // Add click listeners to user action buttons
+    const actionButtons = document.querySelectorAll('button:has(.material-symbols-outlined.edit), button:has(.material-symbols-outlined.delete)');
+    actionButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            handleUserAction(this);
+        });
+    });
+}
+
+function loadSettingsData() {
+    // Simulate loading data from API
+    setTimeout(() => {
+        loadClinicInfo();
+        loadUsers();
+        loadSystemSettings();
+        loadWorkingHours();
+    }, 1000);
+}
+
+function loadClinicInfo() {
+    // Update clinic information
+    const clinicInputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[type="url"]');
+    if (clinicInputs[0]) clinicInputs[0].value = settingsState.clinic.name;
+    if (clinicInputs[1]) clinicInputs[1].value = settingsState.clinic.phone;
+    if (clinicInputs[2]) clinicInputs[2].value = settingsState.clinic.email;
+    if (clinicInputs[3]) clinicInputs[3].value = settingsState.clinic.website;
+    if (clinicInputs[4]) clinicInputs[4].value = settingsState.clinic.address;
+}
+
+function loadUsers() {
+    // Generate placeholder users
+    const users = [
+        {
+            id: 1,
+            name: '[User Name]',
+            email: '[Email]',
+            role: 'Administrator',
+            status: 'active',
+            lastActive: '2 hours ago',
+            avatar: null
+        },
+        {
+            id: 2,
+            name: '[User Name]',
+            email: '[Email]',
+            role: 'Doctor',
+            status: 'active',
+            lastActive: '1 day ago',
+            avatar: null
+        },
+        {
+            id: 3,
+            name: '[User Name]',
+            email: '[Email]',
+            role: 'Nurse',
+            status: 'active',
+            lastActive: '3 hours ago',
+            avatar: null
+        }
+    ];
+    
+    settingsState.users = users;
+    renderUsers(users);
+}
+
+function renderUsers(users) {
+    const tbody = document.querySelector('tbody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    users.forEach(user => {
+        const row = createUserRow(user);
+        tbody.appendChild(row);
+    });
+    
+    // Re-setup listeners
+    setupUserActionListeners();
+}
+
+function createUserRow(user) {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors';
+    
+    const roleColors = {
+        'Administrator': 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400',
+        'Doctor': 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400',
+        'Nurse': 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400',
+        'Receptionist': 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400',
+        'Lab Technician': 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300'
+    };
+    
+    const statusColors = {
+        'active': 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+        'inactive': 'bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300'
+    };
+    
+    tr.innerHTML = `
+        <td class="px-4 py-3">
+            <div class="flex items-center gap-3">
+                <div class="size-8 rounded-full bg-slate-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-slate-500 text-sm">person</span>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-slate-900 dark:text-white">${user.name}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">${user.email}</p>
+                </div>
+            </div>
+        </td>
+        <td class="px-4 py-3">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${roleColors[user.role] || roleColors['Lab Technician']}">
+                ${user.role}
+            </span>
+        </td>
+        <td class="px-4 py-3">
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${statusColors[user.status]}">
+                <span class="size-2 rounded-full bg-${user.status === 'active' ? 'green' : 'slate'}-500"></span>
+                Active
+            </span>
+        </td>
+        <td class="px-4 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${user.lastActive}</span>
+        </td>
+        <td class="px-4 py-3 text-right">
+            <div class="flex items-center justify-end gap-2">
+                <button class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button class="text-slate-400 hover:text-red-600 transition-colors">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </td>
+    `;
+    
+    return tr;
+}
+
+function loadSystemSettings() {
+    // Update toggle switches
+    const toggles = {
+        'emailNotifications': settingsState.settings.emailNotifications,
+        'smsReminders': settingsState.settings.smsReminders,
+        'autoBackup': settingsState.settings.autoBackup,
+        'maintenanceMode': settingsState.settings.maintenanceMode
+    };
+    
+    Object.keys(toggles).forEach(key => {
+        const toggle = document.getElementById(key);
+        if (toggle) {
+            toggle.checked = toggles[key];
+        }
+    });
+}
+
+function loadWorkingHours() {
+    // Update working hours inputs
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    days.forEach(day => {
+        const startTimeInput = document.querySelector(`input[type="time"]:nth-of-type(${days.indexOf(day) * 2 + 1})`);
+        const endTimeInput = document.querySelector(`input[type="time"]:nth-of-type(${days.indexOf(day) * 2 + 2})`);
+        
+        if (startTimeInput && settingsState.workingHours[day]) {
+            startTimeInput.value = settingsState.workingHours[day].start;
+        }
+        if (endTimeInput && settingsState.workingHours[day]) {
+            endTimeInput.value = settingsState.workingHours[day].end;
+        }
+    });
+}
+
+function switchTab(index) {
+    const tabs = document.querySelectorAll('.pb-4.px-1');
+    const tabContents = [
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border',
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border:nth-of-type(2)',
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border:nth-of-type(3)',
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border:nth-of-type(4)',
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border:nth-of-type(5)',
+        '.bg-white.dark\\:\\[\\#1a2632\\].rounded-xl.border:nth-of-type(6)'
+    ];
+    
+    // Update active tab
+    tabs.forEach((tab, i) => {
+        if (i === index) {
+            tab.classList.add('border-b-2', 'border-primary', 'text-primary', 'font-semibold');
+            tab.classList.remove('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+        } else {
+            tab.classList.remove('border-b-2', 'border-primary', 'text-primary', 'font-semibold');
+            tab.classList.add('border-transparent', 'text-slate-500', 'dark:text-slate-400');
+        }
+    });
+    
+    // Show corresponding content
+    const tabContentsElements = document.querySelectorAll(tabContents[index]);
+    if (tabContentsElements[index]) {
+        tabContentsElements[index].scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    const tabNames = ['General', 'Users & Roles', 'Clinic Info', 'Security', 'Integrations', 'Backup'];
+    showNotification(`Switched to ${tabNames[index]} settings`);
+}
+
+function updateSetting(settingId, value) {
+    settingsState.settings[settingId] = value;
+    showNotification(`${settingId} ${value ? 'enabled' : 'disabled'}`);
+}
+
+function updateFormValue(input) {
+    const value = input.value;
+    const inputType = input.type || input.tagName.toLowerCase();
+    
+    // Update corresponding state
+    if (inputType === 'text' || inputType === 'tel' || inputType === 'email' || inputType === 'url') {
+        if (input.placeholder && input.placeholder.includes('Clinic')) {
+            settingsState.clinic.name = value;
+        } else if (input.placeholder && input.placeholder.includes('Phone')) {
+            settingsState.clinic.phone = value;
+        } else if (input.placeholder && input.placeholder.includes('Email')) {
+            settingsState.clinic.email = value;
+        } else if (input.placeholder && input.placeholder.includes('Website')) {
+            settingsState.clinic.website = value;
+        }
+    }
+    
+    showNotification('Setting updated');
+}
+
+function handleUserAction(button) {
+    const icon = button.querySelector('.material-symbols-outlined');
+    const action = icon ? icon.textContent : '';
+    
+    switch(action) {
+        case 'edit':
+            showNotification('Editing user');
+            break;
+        case 'delete':
+            if (confirm('Are you sure you want to delete this user?')) {
+                showNotification('User deleted successfully');
+                // Remove from state and re-render
+                const row = button.closest('tr');
+                if (row) row.remove();
+            }
+            break;
+        default:
+            showNotification('Unknown action');
+    }
+}
+
+function openAddUserModal() {
+    document.getElementById('addUserModal').classList.remove('hidden');
+}
+
+function closeAddUserModal() {
+    document.getElementById('addUserModal').classList.add('hidden');
+    // Clear form
+    const modal = document.getElementById('addUserModal');
+    const inputs = modal.querySelectorAll('input, select');
+    inputs.forEach(input => {
+        if (input.type === 'text' || input.type === 'email' || input.type === 'tel') {
+            input.value = '';
+        } else if (input.tagName.toLowerCase() === 'select') {
+            input.selectedIndex = 0;
+        }
+    });
+}
+
+function addUser() {
+    // Get form values
+    const modal = document.getElementById('addUserModal');
+    const inputs = modal.querySelectorAll('input, select');
+    const fullName = inputs[0].value;
+    const email = inputs[1].value;
+    const role = inputs[2].value;
+    const department = inputs[3].value;
+    const phone = inputs[4].value;
+    
+    // Validate required fields
+    if (!fullName || !email || !role) {
+        showNotification('Please fill in all required fields');
+        return;
+    }
+    
+    // Create new user
+    const newUser = {
+        id: settingsState.users.length + 1,
+        name: fullName,
+        email: email,
+        role: role,
+        department: department || 'General',
+        status: 'active',
+        lastActive: 'Just now',
+        avatar: null
+    };
+    
+    settingsState.users.push(newUser);
+    renderUsers(settingsState.users);
+    
+    showNotification('User added successfully');
+    closeAddUserModal();
+}
+
+function saveAllSettings() {
+    // Save all settings to state
+    showNotification('Saving all settings...');
+    
+    // Simulate saving to backend
+    setTimeout(() => {
+        // Save clinic info
+        const clinicInputs = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="email"], input[type="url"]');
+        if (clinicInputs[0]) settingsState.clinic.name = clinicInputs[0].value;
+        if (clinicInputs[1]) settingsState.clinic.phone = clinicInputs[1].value;
+        if (clinicInputs[2]) settingsState.clinic.email = clinicInputs[2].value;
+        if (clinicInputs[3]) settingsState.clinic.website = clinicInputs[3].value;
+        if (clinicInputs[4]) settingsState.clinic.address = clinicInputs[4].value;
+        
+        // Save working hours
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        days.forEach(day => {
+            const startTimeInput = document.querySelector(`input[type="time"]:nth-of-type(${days.indexOf(day) * 2 + 1})`);
+            const endTimeInput = document.querySelector(`input[type="time"]:nth-of-type(${days.indexOf(day) * 2 + 2})`);
+            
+            if (startTimeInput && endTimeInput) {
+                settingsState.workingHours[day] = {
+                    start: startTimeInput.value,
+                    end: endTimeInput.value
+                };
+            }
+        });
+        
+        // Save to localStorage (simulated backend)
+        localStorage.setItem('adminSettings', JSON.stringify(settingsState));
+        
+        showNotification('All settings saved successfully');
+    }, 1500);
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">info</span>
+            <p class="text-sm text-slate-700 dark:text-slate-300">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Load saved settings on page load
+const savedSettings = localStorage.getItem('adminSettings');
+if (savedSettings) {
+    try {
+        const parsed = JSON.parse(savedSettings);
+        Object.assign(settingsState, parsed);
+    } catch (e) {
+        console.error('Error loading saved settings:', e);
+    }
+}
+
+// Auto-save settings every 5 minutes
+setInterval(() => {
+    localStorage.setItem('adminSettings', JSON.stringify(settingsState));
+}, 300000);
+</script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="debug.js"></script>
+</body></html>

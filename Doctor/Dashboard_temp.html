@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediLink Cloud - Doctor Dashboard</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.375rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen w-full flex">
+<!-- Sidebar -->
+<aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151f2b] h-full shrink-0">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<!-- User Profile Summary in Sidebar -->
+<div class="flex gap-3 items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" data-alt="Portrait of Dr. Sarah Mitchell" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA24MAFa8RcTDxqdV0mQvAZwEypWuwj9NMwUFl7aGsIk35mf6bBezsDe8mp-WP2GuvTlj2R1-l_cddJgAzZfGN7bTwuuWsRzJS0YAXTxJgt2XR7Wakd_4ILLXheodY8ZcITJ6LGxpOTEURb5G7zdG2y3swCtdISVx53_TBd3eEQ5jlEderwj_-V5dI3AFSdbYG19cEMXiSqYTdE6okZYNG6u3EXeyUqwlIxBLHV-s8cZCrC6hfpa5GFymFiA6mftaj8dd80yb25Qy-B");'></div>
+<div class="flex flex-col overflow-hidden">
+<h1 class="text-slate-900 dark:text-white text-sm font-semibold truncate">Dr. Sarah Mitchell</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate">General Practitioner</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-[24px] fill-1">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Schedule.html">
+<span class="material-symbols-outlined text-[24px]">calendar_month</span>
+<span class="text-sm font-medium">Schedule</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Patients.html">
+<span class="material-symbols-outlined text-[24px]">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Records.html">
+<span class="material-symbols-outlined text-[24px]">description</span>
+<span class="text-sm font-medium">Records</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Settings.html">
+<span class="material-symbols-outlined text-[24px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="p-2">
+<button class="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span>Sign Out</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex flex-1 flex-col h-full overflow-hidden relative">
+<!-- Top Navigation -->
+<header class="flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151f2b] px-6 shrink-0 z-20">
+<!-- Logo area -->
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 text-primary flex items-center justify-center bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined">medical_services</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">MediLink Cloud</h2>
+</div>
+<!-- Search & Actions -->
+<div class="flex items-center gap-6">
+<!-- Search -->
+<div class="hidden md:flex relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="block w-64 rounded-lg border-0 bg-slate-100 dark:bg-slate-800 py-2 pl-10 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6 transition-all" placeholder="Search patients or records..." type="text"/>
+</div>
+<!-- Icons -->
+<div class="flex items-center gap-3">
+<button class="flex size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 rounded-full bg-red-500 border-2 border-white dark:border-slate-800"></span>
+</button>
+<button class="flex size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chat</span>
+</button>
+<!-- Mobile Menu Trigger -->
+<button class="flex lg:hidden size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">menu</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Main Scrollable Area -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
+<div class="mx-auto max-w-7xl flex flex flex-col gap-6">
+<!-- Page Header + Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">Welcome back, Dr. Mitchell</h1>
+<p class="text-slate-500 dark:text-slate-400">Here's your practice overview for today, October 24, 2023.</p>
+</div>
+<button class="flex items-center gap-2 rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2.5 text-sm font-bold shadow-sm shadow-blue-500/20 transition-all">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>New Appointment</span>
+</button>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Patients</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">1,247</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+12 this month</p>
+</div>
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-symbols-outlined">group</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Appointments Today</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">12</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">3 pending</p>
+</div>
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center">
+<span class="material-symbols-outlined">event_available</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">8</p>
+<p class="text-xs text-amber-600 dark:text-amber-400 mt-1">2 urgent</p>
+</div>
+<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Revenue This Month</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$24,580</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+18% vs last month</p>
+</div>
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
+<span class="material-symbols-outlined">payments</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Today's Schedule Overview -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Upcoming Appointments -->
+<div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Today's Appointments</h3>
+<a href="Schedule.html" class="text-primary text-sm font-semibold hover:underline">View Full Schedule</a>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+<div class="size-10 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 flex items-center justify-center">
+<span class="material-symbols-outlined">videocam</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<p class="font-semibold text-slate-900 dark:text-white">Sarah Connor</p>
+<span class="text-xs text-slate-500 dark:text-slate-400">9:15 AM - 10:30 AM</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400">Video Consultation</p>
+</div>
+<span class="px-2 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 text-xs font-medium rounded">Confirmed</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+<div class="size-10 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 flex items-center justify-center">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<p class="font-semibold text-slate-900 dark:text-white">Michael Smith</p>
+<span class="text-xs text-slate-500 dark:text-slate-400">1:30 PM - 2:00 PM</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400">General Checkup</p>
+</div>
+<span class="px-2 py-1 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 text-xs font-medium rounded">Pending</span>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-700/50 rounded-lg">
+<div class="size-10 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-300 flex items-center justify-center">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<p class="font-semibold text-slate-900 dark:text-white">Alice Johnson</p>
+<span class="text-xs text-slate-500 dark:text-slate-400">8:15 AM - 9:00 AM</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400">Follow-up Visit</p>
+</div>
+<span class="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium rounded">Completed</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Recent Activity -->
+<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent Activity</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300 flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[16px]">description</span>
+</div>
+<div class="flex-1">
+<p class="text-sm text-slate-900 dark:text-white">Medical record updated for <span class="font-semibold">Robert Fox</span></p>
+<p class="text-xs text-slate-500 dark:text-slate-400">2 hours ago</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-300 flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+</div>
+<div class="flex-1">
+<p class="text-sm text-slate-900 dark:text-white">Appointment completed with <span class="font-semibold">Alice Johnson</span></p>
+<p class="text-xs text-slate-500 dark:text-slate-400">3 hours ago</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[16px]">medication</span>
+</div>
+<div class="flex-1">
+<p class="text-sm text-slate-900 dark:text-white">Prescription issued for <span class="font-semibold">David Brown</span></p>
+<p class="text-xs text-slate-500 dark:text-slate-400">5 hours ago</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="size-8 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300 flex items-center justify-center flex-shrink-0 mt-1">
+<span class="material-symbols-outlined text-[16px]">pending_actions</span>
+</div>
+<div class="flex-1">
+<p class="text-sm text-slate-900 dark:text-white">Lab results ready for <span class="font-semibold">Emily Davis</span></p>
+<p class="text-xs text-slate-500 dark:text-slate-400">6 hours ago</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center justify-between mb-3">
+<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+</div>
+<h4 class="font-semibold text-slate-900 dark:text-white">New Patient</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Register new patient</p>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center justify-between mb-3">
+<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center">
+<span class="material-symbols-outlined">medication</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+</div>
+<h4 class="font-semibold text-slate-900 dark:text-white">Prescribe</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Issue prescription</p>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center justify-between mb-3">
+<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 flex items-center justify-center">
+<span class="material-symbols-outlined">science</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+</div>
+<h4 class="font-semibold text-slate-900 dark:text-white">Lab Results</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">Review test results</p>
+</div>
+<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
+<div class="flex items-center justify-between mb-3">
+<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-300 flex items-center justify-center">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
+</div>
+<h4 class="font-semibold text-slate-900 dark:text-white">Analytics</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400">View reports</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

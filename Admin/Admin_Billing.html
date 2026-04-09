@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Billing Management - MediLink Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-slate-50 dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Clinic Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Appointments.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Patients.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Doctors.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">stethoscope</span>
+<span class="text-sm font-medium">Doctors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined font-variation-fill">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Documents.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Settings.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Portrait of logged in admin" id="adminProfileImage"></div>
+<div class="text-right hidden sm:block">
+<p class="text-sm font-medium text-slate-900 dark:text-white" id="adminName">[Admin Name]</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-6 py-4 shrink-0">
+<div class="flex justify-between items-center">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Billing Management</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage invoices, payments, and billing reports</p>
+</div>
+<div class="flex gap-3">
+<button onclick="openCreateInvoiceModal()" class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">receipt_long</span>
+<span>Create Invoice</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+<span>Export Report</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Stats Cards -->
+<div class="p-6 pb-0">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Total Revenue</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="totalRevenue">$0</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+15% this month</p>
+</div>
+<div class="size-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">trending_up</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Pending Invoices</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="pendingInvoices">0</p>
+<p class="text-xs text-amber-600 dark:text-amber-400 mt-1">Awaiting payment</p>
+</div>
+<div class="size-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">pending</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Overdue Amount</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="overdueAmount">$0</p>
+<p class="text-xs text-red-600 dark:text-red-400 mt-1">5 invoices</p>
+</div>
+<div class="size-12 rounded-lg bg-red-100 dark:bg-red-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600 dark:text-red-400 text-2xl">warning</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Paid This Month</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white" id="paidThisMonth">0</p>
+<p class="text-xs text-blue-600 dark:text-blue-400 mt-1">On track</p>
+</div>
+<div class="size-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">payments</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Filters and Search -->
+<div class="p-6 pt-4">
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 p-4">
+<div class="flex flex-col lg:flex-row gap-4">
+<div class="flex-1">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input type="text" placeholder="Search invoices..." class="w-full pl-10 pr-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+</div>
+<div class="flex gap-3">
+<select class="text-sm px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">All Status</option>
+<option value="paid">Paid</option>
+<option value="pending">Pending</option>
+<option value="overdue">Overdue</option>
+<option value="cancelled">Cancelled</option>
+</select>
+<select class="text-sm px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">All Types</option>
+<option value="consultation">Consultation</option>
+<option value="procedure">Procedure</option>
+<option value="medication">Medication</option>
+<option value="lab">Lab Tests</option>
+</select>
+<input type="date" class="text-sm px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+</div>
+</div>
+</div>
+
+<!-- Invoices Table -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 pt-0">
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 overflow-hidden">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<tr>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Invoice</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Patient</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Service</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Amount</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Date</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Status</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800" id="invoicesTableBody">
+<!-- Invoices will be populated here -->
+</tbody>
+</table>
+</div>
+</div>
+</main>
+
+<!-- Create Invoice Modal -->
+<div id="createInvoiceModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Create Invoice</h2>
+<button onclick="closeCreateInvoiceModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Patient *</label>
+<select class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">Select Patient</option>
+<option value="john-doe">John Doe (#ML-4920)</option>
+<option value="jane-smith">Jane Smith (#ML-4921)</option>
+<option value="robert-johnson">Robert Johnson (#ML-4922)</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Service Type *</label>
+<select class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">Select Service</option>
+<option value="consultation">General Consultation</option>
+<option value="procedure">Medical Procedure</option>
+<option value="lab">Lab Tests</option>
+<option value="medication">Medication</option>
+</select>
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Amount *</label>
+<input type="number" placeholder="0.00" min="0" step="0.01" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div>
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Due Date *</label>
+<input type="date" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<div class="md:col-span-2">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Description</label>
+<textarea placeholder="Invoice description..." rows="3" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"></textarea>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+<button onclick="closeCreateInvoiceModal()" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+<button onclick="createInvoice()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Create Invoice</button>
+</div>
+</div>
+</div>
+
+<script>
+// Admin Billing State Management
+const billingState = {
+    user: {
+        name: '[Admin Name]',
+        email: 'admin@medilinkcloud.com',
+        role: 'System Administrator'
+    },
+    stats: {
+        totalRevenue: 0,
+        pendingInvoices: 0,
+        overdueAmount: 0,
+        paidThisMonth: 0
+    },
+    invoices: [],
+    filters: {
+        search: '',
+        status: '',
+        type: '',
+        date: ''
+    }
+};
+
+// Initialize Billing Page
+document.addEventListener('DOMContentLoaded', function() {
+    initializeBilling();
+    setupEventListeners();
+    loadBillingData();
+});
+
+function initializeBilling() {
+    // Set user information
+    const userName = localStorage.getItem('adminName') || '[Admin Name]';
+    billingState.user.name = userName;
+    
+    // Update UI with user info
+    document.getElementById('adminName').textContent = userName;
+    
+    // Set profile image placeholder
+    const profileImage = document.getElementById('adminProfileImage');
+    if (profileImage) {
+        profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+    }
+}
+
+function setupEventListeners() {
+    // Create Invoice Button
+    document.querySelector('button[onclick="openCreateInvoiceModal()"]').addEventListener('click', function() {
+        openCreateInvoiceModal();
+    });
+    
+    // Export Button
+    document.querySelector('button:has(.material-symbols-outlined.download)').addEventListener('click', function() {
+        exportBillingReport();
+    });
+    
+    // Search Input
+    document.querySelector('input[placeholder="Search invoices..."]').addEventListener('input', function(e) {
+        billingState.filters.search = e.target.value;
+        filterInvoices();
+    });
+    
+    // Status Filter
+    document.querySelectorAll('select')[0].addEventListener('change', function(e) {
+        billingState.filters.status = e.target.value;
+        filterInvoices();
+    });
+    
+    // Type Filter
+    document.querySelectorAll('select')[1].addEventListener('change', function(e) {
+        billingState.filters.type = e.target.value;
+        filterInvoices();
+    });
+    
+    // Date Filter
+    document.querySelectorAll('input[type="date"]')[0].addEventListener('change', function(e) {
+        billingState.filters.date = e.target.value;
+        filterInvoices();
+    });
+}
+
+function loadBillingData() {
+    // Simulate loading data from API
+    setTimeout(() => {
+        updateStatistics();
+        loadInvoices();
+    }, 1000);
+}
+
+function updateStatistics() {
+    // Simulate real-time statistics
+    billingState.stats = {
+        totalRevenue: Math.floor(Math.random() * 50000) + 100000,
+        pendingInvoices: Math.floor(Math.random() * 20) + 15,
+        overdueAmount: Math.floor(Math.random() * 5000) + 2000,
+        paidThisMonth: Math.floor(Math.random() * 30000) + 70000
+    };
+    
+    // Update UI
+    document.getElementById('totalRevenue').textContent = `$${billingState.stats.totalRevenue.toLocaleString()}`;
+    document.getElementById('pendingInvoices').textContent = billingState.stats.pendingInvoices;
+    document.getElementById('overdueAmount').textContent = `$${billingState.stats.overdueAmount.toLocaleString()}`;
+    document.getElementById('paidThisMonth').textContent = `$${billingState.stats.paidThisMonth.toLocaleString()}`;
+}
+
+function loadInvoices() {
+    // Generate placeholder invoices
+    const invoices = [
+        {
+            id: 'INV-001',
+            patient: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            service: '[Service Type]',
+            amount: 150.00,
+            date: '2023-10-24',
+            dueDate: '2023-11-07',
+            status: 'pending'
+        },
+        {
+            id: 'INV-002',
+            patient: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            service: '[Service Type]',
+            amount: 250.00,
+            date: '2023-10-23',
+            dueDate: '2023-11-06',
+            status: 'paid'
+        },
+        {
+            id: 'INV-003',
+            patient: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            service: '[Service Type]',
+            amount: 500.00,
+            date: '2023-10-22',
+            dueDate: '2023-10-29',
+            status: 'overdue'
+        },
+        {
+            id: 'INV-004',
+            patient: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            service: '[Service Type]',
+            amount: 75.00,
+            date: '2023-10-21',
+            dueDate: '2023-10-28',
+            status: 'cancelled'
+        }
+    ];
+    
+    billingState.invoices = invoices;
+    renderInvoices(invoices);
+}
+
+function renderInvoices(invoices) {
+    const tbody = document.getElementById('invoicesTableBody');
+    tbody.innerHTML = '';
+    
+    invoices.forEach(invoice => {
+        const row = createInvoiceRow(invoice);
+        tbody.appendChild(row);
+    });
+}
+
+function createInvoiceRow(invoice) {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors';
+    
+    tr.innerHTML = `
+        <td class="px-6 py-4">
+            <div class="flex items-center gap-3">
+                <div class="size-10 rounded-full bg-slate-200 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-slate-500">receipt</span>
+                </div>
+                <div>
+                    <p class="text-sm font-medium text-slate-900 dark:text-white">${invoice.id}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">${invoice.patientId}</p>
+                </div>
+            </div>
+        </td>
+        <td class="px-6 py-4">
+            <div>
+                <p class="text-sm font-medium text-slate-900 dark:text-white">${invoice.patient}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">${invoice.patientId}</p>
+            </div>
+        </td>
+        <td class="px-6 py-4">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${invoice.service}</span>
+        </td>
+        <td class="px-6 py-4">
+            <span class="text-sm font-medium text-slate-900 dark:text-white">$${invoice.amount.toFixed(2)}</span>
+        </td>
+        <td class="px-6 py-4">
+            <div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">${invoice.date}</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Due: ${invoice.dueDate}</p>
+            </div>
+        </td>
+        <td class="px-6 py-4">
+            ${getStatusBadge(invoice.status)}
+        </td>
+        <td class="px-6 py-4 text-right">
+            <div class="flex items-center justify-end gap-2">
+                <button onclick="viewInvoice('${invoice.id}')" class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+                <button onclick="downloadInvoice('${invoice.id}')" class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <button onclick="sendReminder('${invoice.id}')" class="text-slate-400 hover:text-amber-600 transition-colors">
+                    <span class="material-symbols-outlined">notifications</span>
+                </button>
+                <button onclick="deleteInvoice('${invoice.id}')" class="text-slate-400 hover:text-red-600 transition-colors">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </td>
+    `;
+    
+    return tr;
+}
+
+function getStatusBadge(status) {
+    const statusConfig = {
+        'paid': { color: 'green', text: 'Paid' },
+        'pending': { color: 'amber', text: 'Pending' },
+        'overdue': { color: 'red', text: 'Overdue' },
+        'cancelled': { color: 'slate', text: 'Cancelled' }
+    };
+    
+    const config = statusConfig[status] || statusConfig.pending;
+    
+    return `
+        <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-${config.color}-100 text-${config.color}-800 dark:bg-${config.color}-900/30 dark:text-${config.color}-400">
+            <span class="size-2 rounded-full bg-${config.color}-500"></span>
+            ${config.text}
+        </span>
+    `;
+}
+
+function filterInvoices() {
+    let filtered = billingState.invoices;
+    
+    // Apply search filter
+    if (billingState.filters.search) {
+        filtered = filtered.filter(invoice => 
+            invoice.id.toLowerCase().includes(billingState.filters.search.toLowerCase()) ||
+            invoice.patient.toLowerCase().includes(billingState.filters.search.toLowerCase()) ||
+            invoice.patientId.toLowerCase().includes(billingState.filters.search.toLowerCase())
+        );
+    }
+    
+    // Apply status filter
+    if (billingState.filters.status) {
+        filtered = filtered.filter(invoice => invoice.status === billingState.filters.status);
+    }
+    
+    // Apply type filter
+    if (billingState.filters.type) {
+        filtered = filtered.filter(invoice => invoice.service === billingState.filters.type);
+    }
+    
+    // Apply date filter
+    if (billingState.filters.date) {
+        filtered = filtered.filter(invoice => invoice.date === billingState.filters.date);
+    }
+    
+    renderInvoices(filtered);
+}
+
+function viewInvoice(id) {
+    const invoice = billingState.invoices.find(inv => inv.id === id);
+    if (invoice) {
+        showNotification(`Viewing invoice: ${invoice.id} for ${invoice.patient}`);
+    }
+}
+
+function downloadInvoice(id) {
+    const invoice = billingState.invoices.find(inv => inv.id === id);
+    if (invoice) {
+        showNotification(`Downloading invoice: ${invoice.id}`);
+        setTimeout(() => {
+            showNotification(`Invoice ${invoice.id} downloaded successfully`);
+        }, 1500);
+    }
+}
+
+function sendReminder(id) {
+    const invoice = billingState.invoices.find(inv => inv.id === id);
+    if (invoice) {
+        showNotification(`Sending payment reminder for: ${invoice.id}`);
+        setTimeout(() => {
+            showNotification(`Payment reminder sent to ${invoice.patient}`);
+        }, 1000);
+    }
+}
+
+function deleteInvoice(id) {
+    const invoice = billingState.invoices.find(inv => inv.id === id);
+    if (invoice && confirm(`Are you sure you want to delete invoice ${invoice.id}?`)) {
+        billingState.invoices = billingState.invoices.filter(inv => inv.id !== id);
+        renderInvoices(billingState.invoices);
+        updateStatistics();
+        showNotification('Invoice deleted successfully');
+    }
+}
+
+function exportBillingReport() {
+    showNotification('Exporting billing report...');
+    setTimeout(() => {
+        showNotification('Billing report exported successfully');
+    }, 2000);
+}
+
+function openCreateInvoiceModal() {
+    document.getElementById('createInvoiceModal').classList.remove('hidden');
+}
+
+function closeCreateInvoiceModal() {
+    document.getElementById('createInvoiceModal').classList.add('hidden');
+    // Clear form
+    const modal = document.getElementById('createInvoiceModal');
+    const inputs = modal.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        if (input.type === 'text' || input.type === 'number' || input.type === 'date') {
+            input.value = '';
+        } else if (input.tagName.toLowerCase() === 'select') {
+            input.selectedIndex = 0;
+        }
+    });
+}
+
+function createInvoice() {
+    // Get form values
+    const modal = document.getElementById('createInvoiceModal');
+    const inputs = modal.querySelectorAll('input, select, textarea');
+    const patient = inputs[0].value;
+    const service = inputs[1].value;
+    const amount = inputs[2].value;
+    const dueDate = inputs[3].value;
+    const description = inputs[4].value;
+    
+    // Validate required fields
+    if (!patient || !service || !amount || !dueDate) {
+        showNotification('Please fill in all required fields');
+        return;
+    }
+    
+    // Create new invoice
+    const newInvoice = {
+        id: `INV-${String(billingState.invoices.length + 1).padStart(3, '0')}`,
+        patient: patient,
+        patientId: '#ML-XXXX',
+        service: service,
+        amount: parseFloat(amount),
+        date: new Date().toLocaleDateString(),
+        dueDate: dueDate,
+        status: 'pending'
+    };
+    
+    billingState.invoices.unshift(newInvoice);
+    renderInvoices(billingState.invoices);
+    updateStatistics();
+    
+    showNotification('Invoice created successfully');
+    closeCreateInvoiceModal();
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">info</span>
+            <p class="text-sm text-slate-700 dark:text-slate-300">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Auto-refresh data every 30 seconds
+setInterval(() => {
+    updateStatistics();
+}, 30000);
+</script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="debug.js"></script>
+</body></html>

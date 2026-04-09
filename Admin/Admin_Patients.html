@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Patient Record Management - MediLink Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for better look in lists */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-slate-50 dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Clinic Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Appointments.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined font-variation-fill">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Doctors.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">stethoscope</span>
+<span class="text-sm font-medium">Doctors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Billing.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Documents.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="#">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Portrait of logged in doctor" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAc8_Xc7LXUkTYJ01p-NLvPMLfMxmjYPZTmHQ1eBcm_0L-vUohYT46eJIze00Ik-E4Ga8JFbF9f9--VF3jhDUwKPi2kLd2mX1Qyhg8JgKtufrr2mQa9p-IZRgbURreMg7vgOf7J1wLQmdxcEEuKDbx2-fatxInVqJVM31wCFthCnp2RRJN4UiintlT3d_u-SkO1g7bseR5co6plQ0KzAXiah178UAExu5X1zVIfUMRL1ta5dO2itJlmDR2C8SOG3V-bXhuKs1VXvmpJ');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Dr. A. Taylor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">General Practitioner</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden relative">
+<!-- List Panel (Master) -->
+<div class="w-96 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#1a2632] h-full shrink-0">
+<!-- Header & Search -->
+<div class="p-4 border-b border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">Patients</h2>
+<span class="bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold px-2 py-1 rounded-full">Total: 1,204</span>
+</div>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg leading-5 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Search name, ID, or phone..." type="text"/>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">how_to_reg</span>
+<span>Accept New Patient</span>
+</button>
+</div>
+<!-- Scrollable List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<!-- Selected Item -->
+<div class="group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-primary bg-blue-50/50 dark:bg-primary/10 transition-colors">
+<div class="relative shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of patient John Doe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBxSVywn8tYCEcjJgu86Emxvs391VC-bWtfACvmW-3Q3zY1r5go0uVLotNQ3lisTWJqd35CP_eIdIbQ3VFb3c1o6cwKh6vg-TN6JZNdn1qiZ79JNAhQY1dffsvS6paQg0lVvr-Ld-UD0oM5lIwVjasZBND-h-WKESfXYZSaI-RagwDESD-gRJNZA16uc5RhoN0nWNYen5dpR7C09ulLAzwOD8Y15uyUcTg9KsIf2ZKSGTr7IqMzrvc-ylh1nDpkNVcGppBLv8zjXj2w');"></div>
+<span class="absolute bottom-0 right-0 block size-3 rounded-full bg-green-500 ring-2 ring-white dark:ring-[#1a2632]"></span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">John Doe</h3>
+<span class="text-xs text-slate-400">10:45 AM</span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">ID: #ML-4920 â¢ 39 yrs</p>
+<div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Last visit: Oct 24, 2023</span>
+</div>
+</div>
+</div>
+<!-- Regular Item -->
+<div class="group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-50 dark:border-slate-800 transition-colors">
+<div class="relative shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of patient Jane Smith" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCpfCY6oVc_e_tPA7KJfGpO8pz5e5yKCCyJ5V3KpU48q2wGLP2JQWDVCb7pksWTZv6ErhOHRVFbuKr0tr23Ows1Ns-6qd16_ptdn7d4TbWXTH5jB5OqRakposORj2qzl7Gp6pHke1EOUF33wpLkH76z67434TlMRiv9SQqETVRZ-OBFV0bhKj5_Jsoc5cQqbhwakV2nRAfsfVNeHKas30peBETf3Mz6Lu5ZMZx6cZGJ8dRynsoSRxmll_qWDjqMO4J4OX4lnkSj9K_3');"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Jane Smith</h3>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">ID: #ML-4921 â¢ 28 yrs</p>
+<div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Last visit: Sep 12, 2023</span>
+</div>
+</div>
+</div>
+<!-- Regular Item -->
+<div class="group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-50 dark:border-slate-800 transition-colors">
+<div class="relative shrink-0">
+<div class="flex items-center justify-center size-12 rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 font-bold text-lg">RJ</div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Robert Johnson</h3>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">ID: #ML-4922 â¢ 54 yrs</p>
+<div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Last visit: Aug 05, 2023</span>
+</div>
+</div>
+</div>
+<!-- Regular Item -->
+<div class="group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-50 dark:border-slate-800 transition-colors">
+<div class="relative shrink-0">
+<div class="size-12 rounded-full bg-cover bg-center" data-alt="Portrait of patient Michael Brown" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAHyBtrEDg6vgquWS0YNpjhzOvZyC5sgZ6F8DnWtbMbw12WCBu0bm-iynq_gnAul7nCvUd-O1xBAIyIfkDl-DpWiDmSJC7ScQtXnyZXRQeSYOTmMykPWfBEqQwWm5VFo_7p457alo-AuQZdggQrNfO4OSHfVnvWH4KyljVCQAYVlbDG4-B6u-A3gcu19GkMYqXGD7dRQzZ4UQPMDJUWXErtqBzUjm-Px0YaB8x4sOCHkRNg4rUYpA6N-thPjEWV_wOkukIkxNNHJcH8');"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex justify-between items-start mb-1">
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">Michael Brown</h3>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">ID: #ML-4923 â¢ 42 yrs</p>
+<div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+<span class="material-symbols-outlined text-[14px]">event</span>
+<span>Last visit: Jul 19, 2023</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Detail View (Detail) -->
+<div class="flex-1 flex flex-col h-full bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Sticky Detail Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-8 py-6 shrink-0 z-10 shadow-sm">
+<div class="flex justify-between items-start">
+<div class="flex items-start gap-6">
+<div class="relative">
+<div class="size-24 rounded-xl shadow-lg bg-cover bg-center" data-alt="Large portrait of patient John Doe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJZEJlgPdvWEEXJENr5EO2NyD8eh12G5-ooCMXokDkUBSOXffGv43urNFG8anHJ9GEMyXuNqkSazQwRAJLe-tlo-lKoic_utQ9aYr7Q07JaBAdoDM_ajDPzGOifozlKcxOwscXTIr7EqP6oVIgGbEO_uFsdjVnolu6EldJrrscmxmU2Z2TXWf4K-Mo3MaiXqKeWq7krDfRHAx3CjnHNMy3q8IwNK7gQL87B2VFxGbgbfmyPbf_Z0JTrAzzjnFJFeZJCa8AQ__zyWLQ');"></div>
+<button class="absolute -bottom-2 -right-2 bg-white dark:bg-slate-700 p-1.5 rounded-full shadow-md border border-slate-100 dark:border-slate-600 hover:text-primary text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[18px]">photo_camera</span>
+</button>
+</div>
+<div>
+<div class="flex items-center gap-3 mb-1">
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">John Doe</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800">Active</span>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-100 dark:border-blue-800">Insured</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400 mt-2">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">fingerprint</span>
+                                    ID: #ML-4920
+                                </span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">cake</span>
+                                    Jan 12, 1985 (39 yrs)
+                                </span>
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]">transgender</span>
+                                    Male
+                                </span>
+</div>
+</div>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center gap-2 rounded-lg border border-red-200 dark:border-red-900 bg-white dark:bg-transparent hover:bg-red-50 dark:hover:bg-red-900/20 text-red-600 dark:text-red-400 py-2 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+<span class="hidden xl:inline">Delete Record</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 py-2 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">print</span>
+<span class="hidden xl:inline">Print Record</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2 px-6 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">save</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+<!-- Tabs -->
+<div class="flex gap-8 mt-8 border-b border-slate-200 dark:border-slate-800 -mb-[25px]">
+<button class="pb-4 px-1 border-b-2 border-primary text-primary font-semibold text-sm">Basic Info</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Medical History</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Visits (4)</button>
+<button class="pb-4 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 font-medium text-sm transition-colors">Documents</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="max-w-5xl mx-auto space-y-8">
+<!-- Basic Information Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">person</span>
+                            Contact &amp; Personal
+                        </h3>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Field Group -->
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">First Name</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="John"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Last Name</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="Doe"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Date of Birth</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="date" value="1985-01-12"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Phone Number</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="tel" value="+1 (555) 123-4567"/>
+</div>
+<div class="space-y-1.5 md:col-span-2">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Email Address</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="email" value="john.doe@example.com"/>
+</div>
+<div class="space-y-1.5 md:col-span-3">
+<label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Residential Address</label>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="123 Maple Avenue, Springfield, IL 62704"/>
+</div>
+</div>
+</section>
+<!-- Insurance Info Card -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">health_and_safety</span>
+                                Insurance Information
+                            </h3>
+<button class="text-primary text-sm font-medium hover:underline">Edit Details</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700">
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Provider</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">BlueCross BlueShield</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Plan Type</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">PPO Gold</p>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Policy Number</p>
+<div class="flex items-center gap-2">
+<p class="text-base font-medium text-slate-900 dark:text-white">BC-88921-â¢â¢â¢â¢</p>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-[18px]">visibility</span></button>
+</div>
+</div>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Expiration Date</p>
+<p class="text-base font-medium text-slate-900 dark:text-white">Dec 31, 2024</p>
+</div>
+</div>
+</section>
+<!-- Recent Visits Summary Table -->
+<section class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="px-6 py-5 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                                Recent Visit History
+                            </h3>
+<a class="text-sm text-primary font-semibold hover:text-blue-700 flex items-center gap-1" href="#">View Full History <span class="material-symbols-outlined text-[16px]">arrow_forward</span></a>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-sm text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 uppercase text-xs">
+<tr>
+<th class="px-6 py-3 font-semibold">Date</th>
+<th class="px-6 py-3 font-semibold">Provider</th>
+<th class="px-6 py-3 font-semibold">Reason</th>
+<th class="px-6 py-3 font-semibold">Diagnosis/Notes</th>
+<th class="px-6 py-3 font-semibold">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Oct 24, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSEfj4kPBX8n82gcR1J7cn3pZ11iy0wi1HZard-TCuo8Z2aD2sCmMHzjgmaiFknMD5Mj0UHdnS3k-2aViF-7XNXP9ShhQisHEpU6glO2LiOX9PEL0w1a5g9KA0-nmwEEyf79FjTt93_fnH1mPkiBRn3F3-rBlJY5_k8v9-qf0v_CY4_bU-PB3jzjR64HkvhoKPdW4mUd-sE9OkRLFSHu0MaxjGWidszeTZm8flS8rao1OmHZ71riobADDW5VFxkVN4_No7n8KEVPIn');"></div>
+<span class="text-slate-700 dark:text-slate-300">Dr. S. Williams</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Annual Checkup</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">BP Normal, Labs requested.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Completed
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Aug 12, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADfofgo7xppQMlxgTvxSxqaf3AghRzR6Bx_Na2jz6LJSlEbu2_xy1gT4cE9sNLyO7qXtoU97AI7csYqqQQQAlfq-gbkRC-m8ILUX6g2ll3aPHSCe8gF2-EUSN3Lj7xEBap8H-sDJ-vBY9-NyfXv1GhcgZjagEp26Lm2y1vAptEbVljJhkFPvfI1DRBsJNS_jTvLzVlgk2h-Mv83FoWITfSYpTmksSG2hAJHAPZOhLbsCjsx_0-mDhpfYWcqZcW5BBJS4e0HiDfTIJK');"></div>
+<span class="text-slate-700 dark:text-slate-300">Dr. A. Taylor</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Consultation</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Mild migraine symptoms reported.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Completed
+                                            </span>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Feb 02, 2023</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmckXSjBp0LL6sUZQihl_UoWGaqNqS57aklFbJDfhg_ofzMvDlCLB2Y79Ny8tlFxAovfgljjXi_KF4h7wlNyD3pmstzvlseEKaH3QpmmYFKTK9I4fuV0vZW3AiNg7irAvfh4HYzM9OQeLzkmpgtemXeXy_eXk9X_rFEfEtroOaCCx6ZL2-n1ahFKfaCenZaNRkoi70-Yxli3c2_5vAVe1yLKsQ6fEJFqRSwDAEZs2ApQP6nafsFV3R9VEoD6h4q6uc20JsBpgqgKC9');"></div>
+<span class="text-slate-700 dark:text-slate-300">Dr. S. Williams</span>
+</div>
+</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Follow-up</td>
+<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Prescription renewal.</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                                Completed
+                                            </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer Space -->
+<div class="h-20"></div>
+</div>
+</div>
+</main>
+<script>
+// Admin Patients State Management
+const patientsState = {
+    user: {
+        name: '[Admin Name]',
+        email: 'admin@medilinkcloud.com',
+        role: 'System Administrator'
+    },
+    stats: {
+        totalPatients: 0,
+        newPatients: 0,
+        activePatients: 0,
+        inactivePatients: 0
+    },
+    patients: [],
+    selectedPatient: null,
+    filters: {
+        search: '',
+        status: ''
+    }
+};
+
+// Initialize Patients Page
+document.addEventListener('DOMContentLoaded', function() {
+    initializePatients();
+    setupEventListeners();
+    loadPatientsData();
+});
+
+function initializePatients() {
+    // Set user information
+    const userName = localStorage.getItem('adminName') || '[Admin Name]';
+    patientsState.user.name = userName;
+    
+    // Update UI with user info
+    const adminNameElement = document.getElementById('adminName');
+    if (adminNameElement) {
+        adminNameElement.textContent = userName;
+    }
+    
+    // Set profile image placeholder
+    const profileImage = document.getElementById('adminProfileImage');
+    if (profileImage) {
+        profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+    }
+}
+
+function setupEventListeners() {
+    // Add New Patient Button
+    const addPatientBtn = document.querySelector('button:has(.material-symbols-outlined.add)');
+    if (addPatientBtn) {
+        addPatientBtn.addEventListener('click', function() {
+            showAddPatientModal();
+        });
+    }
+    
+    // Search Input
+    const searchInput = document.querySelector('input[placeholder*="Search"]');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            patientsState.filters.search = e.target.value;
+            filterPatients();
+        });
+    }
+    
+    // Patient List Items
+    setupPatientListListeners();
+}
+
+function setupPatientListListeners() {
+    // Add click listeners to patient items
+    const patientItems = document.querySelectorAll('.group.cursor-pointer');
+    patientItems.forEach((item, index) => {
+        item.addEventListener('click', function() {
+            selectPatient(index);
+        });
+    });
+}
+
+function loadPatientsData() {
+    // Simulate loading data from API
+    setTimeout(() => {
+        updateStatistics();
+        loadPatients();
+    }, 1000);
+}
+
+function updateStatistics() {
+    // Simulate real-time statistics
+    patientsState.stats = {
+        totalPatients: Math.floor(Math.random() * 500) + 1000,
+        newPatients: Math.floor(Math.random() * 20) + 30,
+        activePatients: Math.floor(Math.random() * 400) + 800,
+        inactivePatients: Math.floor(Math.random() * 50) + 100
+    };
+    
+    // Update UI
+    const totalElement = document.querySelector('.bg-slate-100 .text-xs.font-semibold');
+    if (totalElement) {
+        totalElement.textContent = `Total: ${patientsState.stats.totalPatients}`;
+    }
+}
+
+function loadPatients() {
+    // Generate placeholder patients
+    const patients = [
+        {
+            id: 1,
+            name: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            age: '[Age]',
+            lastVisit: '[Date]',
+            status: 'active',
+            avatar: null
+        },
+        {
+            id: 2,
+            name: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            age: '[Age]',
+            lastVisit: '[Date]',
+            status: 'active',
+            avatar: null
+        },
+        {
+            id: 3,
+            name: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            age: '[Age]',
+            lastVisit: '[Date]',
+            status: 'inactive',
+            avatar: null
+        },
+        {
+            id: 4,
+            name: '[Patient Name]',
+            patientId: '#ML-XXXX',
+            age: '[Age]',
+            lastVisit: '[Date]',
+            status: 'active',
+            avatar: null
+        }
+    ];
+    
+    patientsState.patients = patients;
+    renderPatientList(patients);
+    
+    // Select first patient by default
+    if (patients.length > 0) {
+        selectPatient(0);
+    }
+}
+
+function renderPatientList(patients) {
+    const listContainer = document.querySelector('.flex-1.overflow-y-auto');
+    if (!listContainer) return;
+    
+    // Clear existing items except first one (template)
+    const existingItems = listContainer.querySelectorAll('.group.cursor-pointer');
+    existingItems.forEach((item, index) => {
+        if (index > 0) item.remove();
+    });
+    
+    // Add patient items
+    patients.forEach((patient, index) => {
+        const patientItem = createPatientListItem(patient, index);
+        listContainer.appendChild(patientItem);
+    });
+    
+    // Re-setup listeners
+    setupPatientListListeners();
+}
+
+function createPatientListItem(patient, index) {
+    const div = document.createElement('div');
+    div.className = `group flex cursor-pointer items-start gap-3 p-4 border-l-4 border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50 border-b border-slate-50 dark:border-slate-800 transition-colors`;
+    div.innerHTML = `
+        <div class="relative shrink-0">
+            <div class="size-12 rounded-full bg-slate-200 flex items-center justify-center">
+                <span class="material-symbols-outlined text-slate-500">person</span>
+            </div>
+            ${patient.status === 'active' ? '<span class="absolute bottom-0 right-0 block size-3 rounded-full bg-green-500 ring-2 ring-white dark:ring-[#1a2632]"></span>' : ''}
+        </div>
+        <div class="flex-1 min-w-0">
+            <div class="flex justify-between items-start mb-1">
+                <h3 class="text-sm font-semibold text-slate-900 dark:text-white truncate">${patient.name}</h3>
+                <span class="text-xs text-slate-400">${new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</span>
+            </div>
+            <p class="text-xs text-slate-500 dark:text-slate-400 truncate mb-1">${patient.patientId} â¢ ${patient.age} yrs</p>
+            <div class="flex items-center gap-1 text-xs text-slate-400 dark:text-slate-500">
+                <span class="material-symbols-outlined text-[14px]">event</span>
+                <span>Last visit: ${patient.lastVisit}</span>
+            </div>
+        </div>
+    `;
+    
+    div.addEventListener('click', () => selectPatient(index));
+    return div;
+}
+
+function selectPatient(index) {
+    const patient = patientsState.patients[index];
+    if (!patient) return;
+    
+    patientsState.selectedPatient = patient;
+    
+    // Update selected state in list
+    const patientItems = document.querySelectorAll('.group.cursor-pointer');
+    patientItems.forEach((item, i) => {
+        if (i === index) {
+            item.classList.add('border-primary', 'bg-blue-50/50', 'dark:bg-primary/10');
+            item.classList.remove('border-transparent');
+        } else {
+            item.classList.remove('border-primary', 'bg-blue-50/50', 'dark:bg-primary/10');
+            item.classList.add('border-transparent');
+        }
+    });
+    
+    // Update detail view
+    updatePatientDetail(patient);
+}
+
+function updatePatientDetail(patient) {
+    // Update patient name
+    const nameElement = document.querySelector('.text-2xl.font-bold');
+    if (nameElement) {
+        nameElement.textContent = patient.name;
+    }
+    
+    // Update patient info
+    const infoElements = document.querySelectorAll('.flex.items-center.gap-1.5 span');
+    if (infoElements[0]) infoElements[1].textContent = `ID: ${patient.patientId}`;
+    if (infoElements[2]) infoElements[3].textContent = patient.age;
+    
+    // Update status badges
+    updateStatusBadges(patient);
+    
+    // Update recent visits
+    updateRecentVisits(patient);
+}
+
+function updateStatusBadges(patient) {
+    const badges = document.querySelectorAll('.px-2.5.py-0.5.rounded-full');
+    if (badges[0]) {
+        badges[0].className = patient.status === 'active' 
+            ? 'px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800'
+            : 'px-2.5 py-0.5 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 text-xs font-semibold border border-slate-200 dark:border-slate-600';
+        badges[0].textContent = patient.status === 'active' ? 'Active' : 'Inactive';
+    }
+}
+
+function updateRecentVisits(patient) {
+    const visitRows = document.querySelectorAll('tbody tr');
+    visitRows.forEach((row, index) => {
+        if (index < 3) {
+            const cells = row.querySelectorAll('td');
+            if (cells[0]) cells[0].textContent = patient.lastVisit;
+            if (cells[1]) cells[1].innerHTML = `
+                <div class="flex items-center gap-2">
+                    <div class="size-6 rounded-full bg-slate-200 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-slate-500 text-sm">medical_services</span>
+                    </div>
+                    <span class="text-slate-700 dark:text-slate-300">[Doctor Name]</span>
+                </div>
+            `;
+            if (cells[2]) cells[2].textContent = '[Consultation Type]';
+            if (cells[3]) cells[2].textContent = '[Notes]';
+        }
+    });
+}
+
+function filterPatients() {
+    let filtered = patientsState.patients;
+    
+    if (patientsState.filters.search) {
+        filtered = filtered.filter(patient => 
+            patient.name.toLowerCase().includes(patientsState.filters.search.toLowerCase()) ||
+            patient.patientId.toLowerCase().includes(patientsState.filters.search.toLowerCase())
+        );
+    }
+    
+    renderPatientList(filtered);
+}
+
+function showAddPatientModal() {
+    // Create accept patient modal
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-lg w-full mx-4">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">Accept New Patient</h2>
+                    <button onclick="closeModal(this)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Full Name *</label>
+                        <input type="text" placeholder="Enter full name" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Date of Birth *</label>
+                        <input type="date" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Phone Number *</label>
+                        <input type="tel" placeholder="Enter phone number" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email Address</label>
+                        <input type="email" placeholder="Enter email address" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+                <button onclick="closeModal(this)" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+                <button onclick="addPatient(this)" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Accept Patient</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function addPatient(button) {
+    // Get form values
+    const modal = button.closest('.fixed');
+    const inputs = modal.querySelectorAll('input');
+    const name = inputs[0].value;
+    const dob = inputs[1].value;
+    const phone = inputs[2].value;
+    const email = inputs[3].value;
+    
+    // Validate
+    if (!name || !dob || !phone) {
+        showNotification('Please fill in all required fields');
+        return;
+    }
+    
+    // Create new patient
+    const newPatient = {
+        id: patientsState.patients.length + 1,
+        name: name,
+        patientId: `#ML-${String(patientsState.patients.length + 4920).padStart(4, '0')}`,
+        age: calculateAge(dob),
+        lastVisit: new Date().toLocaleDateString(),
+        status: 'active',
+        avatar: null
+    };
+    
+    patientsState.patients.push(newPatient);
+    renderPatientList(patientsState.patients);
+    updateStatistics();
+    
+    showNotification('Patient accepted successfully');
+    closeModal(button);
+}
+
+function calculateAge(dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return `${age} yrs`;
+}
+
+function closeModal(button) {
+    const modal = button.closest('.fixed');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">info</span>
+            <p class="text-sm text-slate-700 dark:text-slate-300">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Auto-refresh data every 30 seconds
+setInterval(() => {
+    updateStatistics();
+}, 30000);
+</script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="debug.js"></script>
+</body></html>

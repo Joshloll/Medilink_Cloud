@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediLink Cloud - Medical Records</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#137fec",
+                "primary-dark": "#0b63be",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101922",
+                "card-light": "#ffffff",
+                "card-dark": "#1e2936",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark h-full hidden lg:flex flex-shrink-0 z-20">
+<div class="flex flex-col h-full justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- Branding -->
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-10 shadow-sm" data-alt="MediLink abstract blue logo with white cross" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxI3pjrPKcPkRoL588sNS-yKX6G80NqVVkMieXpypt1lj312V87i-erOI8i4mqLjhj3QP28m5KRbbcziNuQY2PZzKxVMlJj24uAOgGhfQMyZFRnWUfDtcqnc4I3VrvQTbPnQ19nsh1ddL8Zo4-cJg3Ts_sGHmbKXa99HRr8V3rHK5zYGXhdgieZc99_a35nHHDRJyj16qqi53ARoZSf3Bme6i5wcgDNt5nEcxCd0qKNrfb0CJ_P5cOOTeQ5jArpJ100fP10o1aH0gl");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-none tracking-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Patient Portal</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Patient Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="My Appointments.html">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">My Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 transform hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-sm font-semibold">Medical Records</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Prescriptions.html">
+<span class="material-symbols-outlined">medication</span>
+<span class="text-sm font-medium">Prescriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="mt-auto">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-12 bg-slate-100 dark:bg-slate-800 text-primary dark:text-primary-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.02] text-sm font-bold tracking-wide">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span>Get Help</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark px-6 py-4 z-10 shrink-0">
+<!-- Mobile Menu Toggle (Hidden on Desktop) -->
+<button class="lg:hidden mr-4 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Page Title & Breadcrumb -->
+<div class="flex items-center gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight hidden sm:block">Medical Records</h2>
+</div>
+<!-- Search & Actions -->
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<!-- Search Bar -->
+<div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-2 w-full max-w-xs transition-colors focus-within:ring-2 focus-within:ring-primary/20">
+<span class="material-symbols-outlined text-slate-400">search</span>
+<input class="bg-transparent border-none text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-0 w-full ml-2" placeholder="Search records..."/>
+</div>
+<!-- Notifications & Icons -->
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-card-dark"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden md:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Patient ID: #88392</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-sm cursor-pointer" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 sm:p-6 lg:p-10">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black tracking-tight">Medical Records</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Access your complete medical history and test results</p>
+</div>
+<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/25 transition-all duration-300 transform hover:scale-[1.05] active:scale-95">
+<span class="material-symbols-outlined">download</span>
+<span class="text-sm font-bold">Download All Records</span>
+</button>
+</div>
+<!-- Quick Stats -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-blue-500 text-[24px]">folder</span>
+<span class="text-2xl font-bold text-slate-900 dark:text-white">24</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Records</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-green-500 text-[24px]">science</span>
+<span class="text-2xl font-bold text-slate-900 dark:text-white">8</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Lab Results</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-purple-500 text-[24px]">image</span>
+<span class="text-2xl font-bold text-slate-900 dark:text-white">5</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Imaging</p>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex items-center justify-between mb-2">
+<span class="material-symbols-outlined text-orange-500 text-[24px]">medication</span>
+<span class="text-2xl font-bold text-slate-900 dark:text-white">12</span>
+</div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Prescriptions</p>
+</div>
+</div>
+<!-- Records Table -->
+<div class="bg-white dark:bg-card-dark rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Recent Records</h3>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+Filter
+</button>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 dark:text-slate-400 text-xs uppercase font-semibold tracking-wider border-b border-slate-100 dark:border-slate-700">
+<th class="p-4 pl-6">Date</th>
+<th class="p-4">Type</th>
+<th class="p-4">Description</th>
+<th class="p-4">Doctor</th>
+<th class="p-4">Status</th>
+<th class="p-4 text-right pr-6">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
+<td class="p-4 pl-6 text-slate-600 dark:text-slate-300">Oct 10, 2023</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">description</span>
+Visit Summary
+</span>
+</td>
+<td class="p-4 text-slate-900 dark:text-white font-medium">Annual Checkup</td>
+<td class="p-4 text-slate-600 dark:text-slate-300">Dr. Sarah Miller</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-current"></span>
+Available
+</span>
+</td>
+<td class="p-4 text-right pr-6">
+<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
+<td class="p-4 pl-6 text-slate-600 dark:text-slate-300">Sep 25, 2023</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-300 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">science</span>
+Lab Result
+</span>
+</td>
+<td class="p-4 text-slate-900 dark:text-white font-medium">Blood Test Panel</td>
+<td class="p-4 text-slate-600 dark:text-slate-300">City Labs</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-current"></span>
+Available
+</span>
+</td>
+<td class="p-4 text-right pr-6">
+<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
+<td class="p-4 pl-6 text-slate-600 dark:text-slate-300">Sep 15, 2023</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">image</span>
+Imaging
+</span>
+</td>
+<td class="p-4 text-slate-900 dark:text-white font-medium">Chest X-Ray</td>
+<td class="p-4 text-slate-600 dark:text-slate-300">Dr. James Wilson</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
+<span class="size-1.5 rounded-full bg-current"></span>
+Available
+</span>
+</td>
+<td class="p-4 text-right pr-6">
+<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
+<span class="material-symbols-outlined">download</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
+<td class="p-4 pl-6 text-slate-600 dark:text-slate-300">Aug 28, 2023</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">description</span>
+Visit Summary
+</span>
+</td>
+<td class="p-4 text-slate-900 dark:text-white font-medium">Cardiology Consultation</td>
+<td class="p-4 text-slate-600 dark:text-slate-300">Dr. Emily Chen</td>
+<td class="p-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+<span class="size-1.5 rounded-full bg-current"></span>
+Processing
+</span>
+</td>
+<td class="p-4 text-right pr-6">
+<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

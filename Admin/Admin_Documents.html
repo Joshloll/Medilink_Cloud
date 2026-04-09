@@ -1,0 +1,1026 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Document Management - MediLink Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #475569;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen overflow-hidden flex">
+<!-- Sidebar Navigation -->
+<aside class="w-64 bg-slate-50 dark:bg-[#15202b] border-r border-slate-200 dark:border-slate-800 flex flex-col h-full shrink-0 z-20">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary text-3xl">medical_services</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-base font-bold leading-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium">Clinic Admin</p>
+</div>
+</div>
+<nav class="flex-1 px-4 flex flex-col gap-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Dashboard.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Appointments.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">calendar_month</span>
+<span class="text-sm font-medium">Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Patients.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">group</span>
+<span class="text-sm font-medium">Patients</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Doctors.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">stethoscope</span>
+<span class="text-sm font-medium">Doctors</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Billing.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">payments</span>
+<span class="text-sm font-medium">Billing</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary-400" href="#">
+<span class="material-symbols-outlined font-variation-fill">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors group" href="Admin_Settings.html">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="size-9 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Portrait of logged in admin" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAc8_Xc7LXUkTYJ01p-NLvPMLfMxmjYPZTmHQ1eBcm_0L-vUohYT46eJIze00Ik-E4Ga8JFbF9f9--VF3jhDUwKPi2kLd2mX1Qyhg8JgKtufrr2mQa9p-IZRgbURreMg7vgOf7J1wLQmdxcEEuKDbx2-fatxInVqJVM31wCFthCnp2RRJN4UiintlT3d_u-SkO1g7bseR5co6plQ0KzAXiah178UAExu5X1zVIfUMRL1ta5dO2itJlmDR2C8SOG3V-bXhuKs1VXvmpJ');"></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-slate-900 dark:text-white">Dr. A. Taylor</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">System Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-full overflow-hidden">
+<!-- Header -->
+<header class="bg-white dark:bg-[#1a2632] border-b border-slate-200 dark:border-slate-800 px-6 py-4 shrink-0">
+<div class="flex justify-between items-center">
+<div>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white">Document Management</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Manage all clinic documents, medical records, and files</p>
+</div>
+<div class="flex gap-3">
+<button onclick="openUploadModal()" class="flex items-center justify-center gap-2 rounded-lg bg-primary hover:bg-blue-600 transition-colors text-white py-2.5 px-4 text-sm font-semibold shadow-sm shadow-blue-500/20">
+<span class="material-symbols-outlined text-[20px]">upload</span>
+<span>Upload Document</span>
+</button>
+<button class="flex items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-transparent hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 py-2.5 px-4 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[20px]">folder</span>
+<span>New Folder</span>
+</button>
+</div>
+</div>
+</header>
+
+<!-- Stats Cards -->
+<div class="p-6 pb-0">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Total Documents</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">3,847</p>
+<p class="text-xs text-green-600 dark:text-green-400 mt-1">+124 this week</p>
+</div>
+<div class="size-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400 text-2xl">description</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Medical Records</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">1,293</p>
+<p class="text-xs text-blue-600 dark:text-blue-400 mt-1">Patient files</p>
+</div>
+<div class="size-12 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-600 dark:text-purple-400 text-2xl">medical_information</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Lab Reports</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">892</p>
+<p class="text-xs text-amber-600 dark:text-amber-400 mt-1">Pending review</p>
+</div>
+<div class="size-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 text-2xl">biotech</span>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2632] p-4 rounded-lg border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between">
+<div>
+<p class="text-sm text-slate-500 dark:text-slate-400">Storage Used</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">24.7 GB</p>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Of 100 GB</p>
+</div>
+<div class="size-12 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400 text-2xl">storage</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- File Browser -->
+<div class="flex-1 overflow-hidden p-6 pt-4">
+<div class="bg-white dark:bg-[#1a2632] rounded-lg border border-slate-200 dark:border-slate-800 h-full flex flex-col">
+<!-- Toolbar -->
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">folder</span>
+<span>Root</span>
+<span class="material-symbols-outlined">chevron_right</span>
+<span>Medical Records</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="text-primary">
+<span class="material-symbols-outlined">list</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+</div>
+<input type="text" placeholder="Search documents..." class="pl-9 pr-3 py-1.5 text-sm border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+</div>
+<select class="text-sm px-3 py-1.5 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="">All Types</option>
+<option value="pdf">PDF</option>
+<option value="doc">Word</option>
+<option value="img">Images</option>
+<option value="lab">Lab Reports</option>
+</select>
+</div>
+</div>
+
+<!-- File List -->
+<div class="flex-1 overflow-y-auto custom-scrollbar">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 sticky top-0">
+<tr>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Name</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Type</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Size</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Modified</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Shared With</th>
+<th class="px-6 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<!-- Folder -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-500">folder</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Patient Records</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Contains 1,293 files</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Folder</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">--</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Oct 23, 2023</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">All Doctors</span>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">edit</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- PDF File -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-red-500">picture_as_pdf</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">John_Doe_Medical_Record_2023.pdf</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Patient ID: #ML-4920</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">PDF</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">2.4 MB</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Oct 24, 2023</span>
+</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-600 dark:text-slate-400">Dr. Williams</span>
+<span class="text-xs text-slate-400">+2</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Lab Report -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-purple-500">science</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Blood_Test_Results_Jane_Smith.pdf</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Patient ID: #ML-4921</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Lab Report</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">1.2 MB</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Oct 24, 2023</span>
+</td>
+<td class="px-6 py-3">
+<div class="flex items-center gap-2">
+<span class="text-sm text-slate-600 dark:text-slate-400">Dr. Taylor</span>
+<span class="text-xs text-amber-500">Pending</span>
+</div>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Image File -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">image</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">X-Ray_Chest_Robert_Johnson.jpg</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Patient ID: #ML-4922</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Image</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">4.8 MB</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Oct 23, 2023</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Radiology Team</span>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Word Document -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+<td class="px-6 py-3">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-500">description</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">Consultation_Notes_Michael_Brown.docx</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Patient ID: #ML-4923</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Word</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">856 KB</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Oct 22, 2023</span>
+</td>
+<td class="px-6 py-3">
+<span class="text-sm text-slate-600 dark:text-slate-400">Dr. Lee</span>
+</td>
+<td class="px-6 py-3 text-right">
+<div class="flex items-center justify-end gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">share</span>
+</button>
+<button class="text-slate-400 hover:text-red-600 transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+
+<!-- Upload Modal -->
+<div id="uploadModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-lg w-full mx-4">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex justify-between items-center">
+<h2 class="text-xl font-bold text-slate-900 dark:text-white">Upload Document</h2>
+<button onclick="closeUploadModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<div class="p-6">
+<div class="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-8 text-center">
+<span class="material-symbols-outlined text-4xl text-slate-400 mb-4">cloud_upload</span>
+<p class="text-slate-600 dark:text-slate-400 mb-2">Drag and drop files here</p>
+<p class="text-sm text-slate-500 dark:text-slate-500 mb-4">or</p>
+<button class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors text-sm">Browse Files</button>
+<p class="text-xs text-slate-500 dark:text-slate-500 mt-4">Supported formats: PDF, DOC, DOCX, JPG, PNG</p>
+</div>
+<div class="mt-4">
+<label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Document Category</label>
+<select class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary">
+<option value="medical">Medical Record</option>
+<option value="lab">Lab Report</option>
+<option value="imaging">Medical Imaging</option>
+<option value="prescription">Prescription</option>
+<option value="other">Other</option>
+</select>
+</div>
+</div>
+<div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+<button onclick="closeUploadModal()" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+<button onclick="uploadDocument()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Upload</button>
+</div>
+</div>
+</div>
+
+<script>
+// Admin Documents State Management
+const documentsState = {
+    user: {
+        name: '[Admin Name]',
+        email: 'admin@medilinkcloud.com',
+        role: 'System Administrator'
+    },
+    stats: {
+        totalDocuments: 0,
+        medicalRecords: 0,
+        labReports: 0,
+        storageUsed: 0
+    },
+    documents: [],
+    folders: [],
+    currentPath: 'Root/Medical Records',
+    filters: {
+        search: '',
+        type: ''
+    }
+};
+
+// Initialize Documents Page
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDocuments();
+    setupEventListeners();
+    loadDocumentsData();
+});
+
+function initializeDocuments() {
+    // Set user information
+    const userName = localStorage.getItem('adminName') || '[Admin Name]';
+    documentsState.user.name = userName;
+    
+    // Update UI with user info
+    const adminNameElement = document.getElementById('adminName');
+    if (adminNameElement) {
+        adminNameElement.textContent = userName;
+    }
+    
+    // Set profile image placeholder
+    const profileImage = document.getElementById('adminProfileImage');
+    if (profileImage) {
+        profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+    }
+}
+
+function setupEventListeners() {
+    // Upload Document Button
+    const uploadBtn = document.querySelector('button[onclick="openUploadModal()"]');
+    if (uploadBtn) {
+        uploadBtn.addEventListener('click', function() {
+            openUploadModal();
+        });
+    }
+    
+    // New Folder Button
+    const folderBtn = document.querySelector('button:has(.material-symbols-outlined.folder)');
+    if (folderBtn) {
+        folderBtn.addEventListener('click', function() {
+            showCreateFolderModal();
+        });
+    }
+    
+    // Search Input
+    const searchInput = document.querySelector('input[placeholder*="Search documents"]');
+    if (searchInput) {
+        searchInput.addEventListener('input', function(e) {
+            documentsState.filters.search = e.target.value;
+            filterDocuments();
+        });
+    }
+    
+    // Type Filter
+    const typeFilter = document.querySelector('select');
+    if (typeFilter) {
+        typeFilter.addEventListener('change', function(e) {
+            documentsState.filters.type = e.target.value;
+            filterDocuments();
+        });
+    }
+    
+    // View Toggle Buttons
+    const viewButtons = document.querySelectorAll('button:has(.material-symbols-outlined.grid_view), button:has(.material-symbols-outlined.list)');
+    viewButtons.forEach(btn => {
+        btn.addEventListener('click', function() {
+            toggleView(this);
+        });
+    });
+    
+    // File/Folder Actions
+    setupFileActionListeners();
+}
+
+function setupFileActionListeners() {
+    // Add click listeners to action buttons
+    const actionButtons = document.querySelectorAll('button:has(.material-symbols-outlined.visibility), button:has(.material-symbols-outlined.edit), button:has(.material-symbols-outlined.delete), button:has(.material-symbols-outlined.share), button:has(.material-symbols-outlined.download)');
+    actionButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            handleFileAction(this);
+        });
+    });
+    
+    // Add click listeners to file/folder rows
+    const fileRows = document.querySelectorAll('tbody tr, .group.cursor-pointer');
+    fileRows.forEach(row => {
+        row.addEventListener('click', function() {
+            handleFileClick(this);
+        });
+    });
+}
+
+function loadDocumentsData() {
+    // Simulate loading data from API
+    setTimeout(() => {
+        updateStatistics();
+        loadDocuments();
+        loadFolders();
+    }, 1000);
+}
+
+function updateStatistics() {
+    // Simulate real-time statistics
+    documentsState.stats = {
+        totalDocuments: Math.floor(Math.random() * 1000) + 3000,
+        medicalRecords: Math.floor(Math.random() * 500) + 1000,
+        labReports: Math.floor(Math.random() * 200) + 700,
+        storageUsed: Math.floor(Math.random() * 30) + 20
+    };
+    
+    // Update UI
+    const statElements = document.querySelectorAll('.text-2xl.font-bold');
+    if (statElements[0]) statElements[0].textContent = documentsState.stats.totalDocuments.toLocaleString();
+    if (statElements[1]) statElements[1].textContent = documentsState.stats.medicalRecords.toLocaleString();
+    if (statElements[2]) statElements[2].textContent = documentsState.stats.labReports.toLocaleString();
+    if (statElements[3]) statElements[3].textContent = `${documentsState.stats.storageUsed} GB`;
+}
+
+function loadDocuments() {
+    // Generate placeholder documents
+    const documents = [
+        {
+            id: 1,
+            name: '[Document Name].pdf',
+            type: 'PDF',
+            size: '2.4 MB',
+            modified: 'Oct 24, 2023',
+            category: 'medical',
+            sharedWith: '[Doctor Name]'
+        },
+        {
+            id: 2,
+            name: '[Document Name].pdf',
+            type: 'Lab Report',
+            size: '1.2 MB',
+            modified: 'Oct 24, 2023',
+            category: 'lab',
+            sharedWith: '[Doctor Name]',
+            pending: true
+        },
+        {
+            id: 3,
+            name: '[Document Name].jpg',
+            type: 'Image',
+            size: '4.8 MB',
+            modified: 'Oct 23, 2023',
+            category: 'imaging',
+            sharedWith: 'Radiology Team'
+        },
+        {
+            id: 4,
+            name: '[Document Name].docx',
+            type: 'Word',
+            size: '856 KB',
+            modified: 'Oct 22, 2023',
+            category: 'consultation',
+            sharedWith: '[Doctor Name]'
+        }
+    ];
+    
+    documentsState.documents = documents;
+    renderDocuments(documents);
+}
+
+function loadFolders() {
+    // Generate placeholder folders
+    const folders = [
+        {
+            id: 1,
+            name: 'Patient Records',
+            fileCount: 1293,
+            modified: 'Oct 23, 2023',
+            sharedWith: 'All Doctors'
+        },
+        {
+            id: 2,
+            name: 'Lab Results',
+            fileCount: 456,
+            modified: 'Oct 22, 2023',
+            sharedWith: 'Lab Team'
+        },
+        {
+            id: 3,
+            name: 'Medical Imaging',
+            fileCount: 234,
+            modified: 'Oct 21, 2023',
+            sharedWith: 'Radiology Team'
+        }
+    ];
+    
+    documentsState.folders = folders;
+}
+
+function renderDocuments(documents) {
+    const tbody = document.querySelector('tbody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+    
+    // Add folders first
+    documentsState.folders.forEach(folder => {
+        const row = createFolderRow(folder);
+        tbody.appendChild(row);
+    });
+    
+    // Add documents
+    documents.forEach(doc => {
+        const row = createDocumentRow(doc);
+        tbody.appendChild(row);
+    });
+    
+    // Re-setup listeners
+    setupFileActionListeners();
+}
+
+function createFolderRow(folder) {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer';
+    tr.innerHTML = `
+        <td class="px-6 py-3">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-blue-500">folder</span>
+                <div>
+                    <p class="text-sm font-medium text-slate-900 dark:text-white">${folder.name}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Contains ${folder.fileCount} files</p>
+                </div>
+            </div>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">Folder</span>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">--</span>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${folder.modified}</span>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${folder.sharedWith}</span>
+        </td>
+        <td class="px-6 py-3 text-right">
+            <div class="flex items-center justify-end gap-2">
+                <button class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">visibility</span>
+                </button>
+                <button class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button class="text-slate-400 hover:text-red-600 transition-colors">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </td>
+    `;
+    
+    tr.addEventListener('click', function() {
+        navigateToFolder(folder);
+    });
+    
+    return tr;
+}
+
+function createDocumentRow(doc) {
+    const tr = document.createElement('tr');
+    tr.className = 'hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors';
+    
+    const icon = getFileIcon(doc.type);
+    const pendingBadge = doc.pending ? '<span class="text-xs text-amber-500">Pending</span>' : '';
+    
+    tr.innerHTML = `
+        <td class="px-6 py-3">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined ${icon.color}">${icon.icon}</span>
+                <div>
+                    <p class="text-sm font-medium text-slate-900 dark:text-white">${doc.name}</p>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Patient ID: #ML-XXXX</p>
+                </div>
+            </div>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${doc.type}</span>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${doc.size}</span>
+        </td>
+        <td class="px-6 py-3">
+            <span class="text-sm text-slate-600 dark:text-slate-400">${doc.modified}</span>
+        </td>
+        <td class="px-6 py-3">
+            <div class="flex items-center gap-2">
+                <span class="text-sm text-slate-600 dark:text-slate-400">${doc.sharedWith}</span>
+                ${pendingBadge}
+            </div>
+        </td>
+        <td class="px-6 py-3 text-right">
+            <div class="flex items-center justify-end gap-2">
+                <button class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">download</span>
+                </button>
+                <button class="text-slate-400 hover:text-primary transition-colors">
+                    <span class="material-symbols-outlined">share</span>
+                </button>
+                <button class="text-slate-400 hover:text-red-600 transition-colors">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+            </div>
+        </td>
+    `;
+    
+    return tr;
+}
+
+function getFileIcon(type) {
+    const icons = {
+        'PDF': { icon: 'picture_as_pdf', color: 'text-red-500' },
+        'Lab Report': { icon: 'science', color: 'text-purple-500' },
+        'Image': { icon: 'image', color: 'text-green-500' },
+        'Word': { icon: 'description', color: 'text-blue-500' }
+    };
+    
+    return icons[type] || { icon: 'description', color: 'text-slate-500' };
+}
+
+function navigateToFolder(folder) {
+    documentsState.currentPath = `${documentsState.currentPath}/${folder.name}`;
+    updateBreadcrumb();
+    showNotification(`Navigated to ${folder.name}`);
+}
+
+function updateBreadcrumb() {
+    const breadcrumb = document.querySelector('.flex.items-center.gap-2.text-sm');
+    if (breadcrumb) {
+        breadcrumb.innerHTML = `
+            <span class="material-symbols-outlined text-slate-400">folder</span>
+            <span class="text-slate-600 dark:text-slate-400">${documentsState.currentPath}</span>
+        `;
+    }
+}
+
+function filterDocuments() {
+    let filtered = documentsState.documents;
+    
+    // Apply search filter
+    if (documentsState.filters.search) {
+        filtered = filtered.filter(doc => 
+            doc.name.toLowerCase().includes(documentsState.filters.search.toLowerCase())
+        );
+    }
+    
+    // Apply type filter
+    if (documentsState.filters.type) {
+        filtered = filtered.filter(doc => doc.type === documentsState.filters.type);
+    }
+    
+    renderDocuments(filtered);
+}
+
+function handleFileAction(button) {
+    const icon = button.querySelector('.material-symbols-outlined');
+    const action = icon ? icon.textContent : '';
+    
+    switch(action) {
+        case 'visibility':
+            showNotification('Viewing document');
+            break;
+        case 'edit':
+            showNotification('Editing document');
+            break;
+        case 'delete':
+            if (confirm('Are you sure you want to delete this document?')) {
+                showNotification('Document deleted successfully');
+                // Remove from state and re-render
+                const row = button.closest('tr');
+                if (row) row.remove();
+            }
+            break;
+        case 'download':
+            showNotification('Downloading document...');
+            setTimeout(() => {
+                showNotification('Document downloaded successfully');
+            }, 1500);
+            break;
+        case 'share':
+            showNotification('Sharing document...');
+            break;
+        default:
+            showNotification('Unknown action');
+    }
+}
+
+function handleFileClick(element) {
+    const isFolder = element.querySelector('.material-symbols-outlined.folder');
+    if (isFolder) {
+        // Handle folder click
+        const folderName = element.querySelector('.text-sm.font-medium')?.textContent;
+        if (folderName) {
+            navigateToFolder({ name: folderName });
+        }
+    }
+}
+
+function toggleView(button) {
+    const icon = button.querySelector('.material-symbols-outlined');
+    if (!icon) return;
+    
+    // Toggle active state
+    document.querySelectorAll('button:has(.material-symbols-outlined.grid_view), button:has(.material-symbols-outlined.list)').forEach(btn => {
+        btn.classList.remove('text-primary');
+        btn.classList.add('text-slate-400');
+    });
+    
+    button.classList.remove('text-slate-400');
+    button.classList.add('text-primary');
+    
+    const viewType = icon.textContent;
+    showNotification(`Switched to ${viewType} view`);
+}
+
+function showCreateFolderModal() {
+    const modal = document.createElement('div');
+    modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+    modal.innerHTML = `
+        <div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-xl max-w-md w-full mx-4">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-800">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold text-slate-900 dark:text-white">Create New Folder</h2>
+                    <button onclick="closeModal(this)" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-300">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Folder Name *</label>
+                        <input type="text" placeholder="Enter folder name" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Description</label>
+                        <textarea placeholder="Optional description" rows="3" class="w-full px-3 py-2 border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3">
+                <button onclick="closeModal(this)" class="px-4 py-2 text-slate-700 dark:text-slate-300 bg-slate-100 dark:bg-slate-700 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors">Cancel</button>
+                <button onclick="createFolder(this)" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">Create Folder</button>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(modal);
+}
+
+function createFolder(button) {
+    const modal = button.closest('.fixed');
+    const inputs = modal.querySelectorAll('input, textarea');
+    const folderName = inputs[0].value;
+    const description = inputs[1].value;
+    
+    if (!folderName) {
+        showNotification('Please enter a folder name');
+        return;
+    }
+    
+    const newFolder = {
+        id: documentsState.folders.length + 1,
+        name: folderName,
+        fileCount: 0,
+        modified: new Date().toLocaleDateString(),
+        sharedWith: 'All Doctors'
+    };
+    
+    documentsState.folders.push(newFolder);
+    renderDocuments(documentsState.documents);
+    
+    showNotification('Folder created successfully');
+    closeModal(button);
+}
+
+function openUploadModal() {
+    document.getElementById('uploadModal').classList.remove('hidden');
+}
+
+function closeUploadModal() {
+    document.getElementById('uploadModal').classList.add('hidden');
+}
+
+function uploadDocument() {
+    const categorySelect = document.querySelector('#uploadModal select');
+    const category = categorySelect ? categorySelect.value : 'medical';
+    
+    showNotification('Uploading document...');
+    
+    setTimeout(() => {
+        const newDoc = {
+            id: documentsState.documents.length + 1,
+            name: '[New Document].pdf',
+            type: 'PDF',
+            size: '1.5 MB',
+            modified: new Date().toLocaleDateString(),
+            category: category,
+            sharedWith: '[Doctor Name]'
+        };
+        
+        documentsState.documents.unshift(newDoc);
+        renderDocuments(documentsState.documents);
+        updateStatistics();
+        
+        showNotification('Document uploaded successfully');
+        closeUploadModal();
+    }, 2000);
+}
+
+function closeModal(button) {
+    const modal = button.closest('.fixed');
+    if (modal) {
+        modal.remove();
+    }
+}
+
+function showNotification(message) {
+    const notification = document.createElement('div');
+    notification.className = 'fixed top-4 right-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 z-50 max-w-sm';
+    notification.innerHTML = `
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary">info</span>
+            <p class="text-sm text-slate-700 dark:text-slate-300">${message}</p>
+        </div>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Auto-refresh data every 30 seconds
+setInterval(() => {
+    updateStatistics();
+}, 30000);
+</script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="debug.js"></script>
+</body></html>

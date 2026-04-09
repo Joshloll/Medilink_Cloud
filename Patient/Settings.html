@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediLink Cloud - Settings</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#137fec",
+                "primary-dark": "#0b63be",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101922",
+                "card-dark": "#1e2936",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark h-full hidden lg:flex flex-shrink-0 z-20">
+<div class="flex flex-col h-full justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- Branding -->
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-10 shadow-sm" data-alt="MediLink abstract blue logo with white cross" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxI3pjrPKcPkRoL588sNS-yKX6G80NqVVkMieXpypt1lj312V87i-erOI8i4mqLjhj3QP28m5KRbbcziNuQY2PZzKxVMlJj24uAOgGhfQMyZFRnWUfDtcqnc4I3VrvQTbPnQ19nsh1ddL8Zo4-cJg3Ts_sGHmbKXa99HRr8V3rHK5zYGXhdgieZc99_a35nHHDRJyj16qqi53ARoZSf3Bme6i5wcgDNt5nEcxCd0qKNrfb0CJ_P5cOOTeQ5jArpJ100fP10o1aH0gl");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-none tracking-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Patient Portal</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Patient Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="My Appointments.html">
+<span class="material-symbols-outlined">calendar_month</span>
+<span class="text-sm font-medium">My Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Medical Records.html">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium">Medical Records</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Prescriptions.html">
+<span class="material-symbols-outlined">medication</span>
+<span class="text-sm font-medium">Prescriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 transform hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="mt-auto">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-12 bg-slate-100 dark:bg-slate-800 text-primary dark:text-primary-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.02] text-sm font-bold tracking-wide">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span>Get Help</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark px-6 py-4 z-10 shrink-0">
+<!-- Mobile Menu Toggle (Hidden on Desktop) -->
+<button class="lg:hidden mr-4 text-slate-600 dark:text-slate-300 transition-all duration-300 hover:scale-110">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Page Title & Breadcrumb -->
+<div class="flex items-center gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight hidden sm:block">Settings</h2>
+</div>
+<!-- Search & Actions -->
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<!-- Notifications & Icons -->
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all duration-300 transform hover:scale-110 relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-card-dark"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-all duration-300 transform hover:scale-110">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden md:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Patient ID: #88392</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-sm cursor-pointer" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 sm:p-6 lg:p-10">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Header Section -->
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black tracking-tight">Settings</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Manage your account settings and preferences</p>
+</div>
+<!-- Settings Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Column - Profile & Account -->
+<div class="lg:col-span-2 space-y-6">
+<!-- Profile Settings -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Profile Information</h3>
+<button class="text-primary text-sm font-semibold hover:underline transition-all duration-300">Edit Profile</button>
+</div>
+<div class="flex flex-col sm:flex-row gap-6">
+<div class="flex-shrink-0">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-24 ring-4 ring-white dark:ring-slate-700 shadow-lg" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
+</div>
+<div class="flex-1 space-y-4">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">First Name</label>
+<p class="text-slate-900 dark:text-white font-medium">Sarah</p>
+</div>
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Last Name</label>
+<p class="text-slate-900 dark:text-white font-medium">Jenkins</p>
+</div>
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Date of Birth</label>
+<p class="text-slate-900 dark:text-white font-medium">March 15, 1985</p>
+</div>
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Gender</label>
+<p class="text-slate-900 dark:text-white font-medium">Female</p>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Email</label>
+<p class="text-slate-900 dark:text-white font-medium">sarah.jenkins@email.com</p>
+</div>
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Phone</label>
+<p class="text-slate-900 dark:text-white font-medium">+1 (555) 123-4567</p>
+</div>
+</div>
+<div>
+<label class="text-sm text-slate-500 dark:text-slate-400 font-medium">Address</label>
+<p class="text-slate-900 dark:text-white font-medium">123 Main Street, Apt 4B, New York, NY 10001</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Security Settings -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Security</h3>
+<button class="text-primary text-sm font-semibold hover:underline transition-all duration-300">Manage Security</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/50 text-blue-600 dark:text-blue-300">
+<span class="material-symbols-outlined">password</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Password</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Last changed 3 months ago</p>
+</div>
+</div>
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold transition-all duration-300 transform hover:scale-[1.05]">Change</button>
+</div>
+<div class="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-xl">
+<div class="flex items-center gap-3">
+<div class="p-2 rounded-lg bg-green-100 dark:bg-green-900/50 text-green-600 dark:text-green-300">
+<span class="material-symbols-outlined">phone_android</span>
+</div>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Two-Factor Authentication</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Extra security for your account</p>
+</div>
+</div>
+<button class="px-4 py-2 rounded-lg bg-green-600 text-white text-sm font-semibold transition-all duration-300 transform hover:scale-[1.05]">Enabled</button>
+</div>
+</div>
+</div>
+<!-- Notification Settings -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Notifications</h3>
+<button class="text-primary text-sm font-semibold hover:underline transition-all duration-300">Manage All</button>
+</div>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Email Notifications</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Receive updates about your appointments and health records</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" class="sr-only peer" checked>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-medium text-slate-900 dark:text-white">SMS Notifications</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Get text messages for appointment reminders</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" class="sr-only peer" checked>
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+<div class="flex items-center justify-between">
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Push Notifications</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Receive alerts on your device</p>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input type="checkbox" class="sr-only peer">
+<div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Quick Actions -->
+<div class="space-y-6">
+<!-- Quick Actions -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Quick Actions</h3>
+<div class="space-y-3">
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 text-left">
+<span class="material-symbols-outlined text-primary">download</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Download My Data</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 text-left">
+<span class="material-symbols-outlined text-primary">privacy_tip</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Privacy Settings</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 text-left">
+<span class="material-symbols-outlined text-primary">help</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Help & Support</span>
+</button>
+<button class="w-full flex items-center gap-3 px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 text-left">
+<span class="material-symbols-outlined text-primary">logout</span>
+<span class="text-sm font-medium text-slate-900 dark:text-white">Sign Out</span>
+</button>
+</div>
+</div>
+<!-- Account Status -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Account Status</h3>
+<div class="space-y-4">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Account Active</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">All features available</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-blue-500">verified</span>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Email Verified</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">sarah.jenkins@email.com</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-amber-500">star</span>
+<div>
+<p class="font-medium text-slate-900 dark:text-white">Premium Member</p>
+<p class="text-sm text-slate-500 dark:text-slate-400">Since January 2023</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

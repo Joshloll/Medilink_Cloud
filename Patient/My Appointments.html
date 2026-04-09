@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>MediLink Cloud - My Appointments</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#137fec",
+                "primary-dark": "#0b63be",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101922",
+                "card-light": "#ffffff",
+                "card-dark": "#1e2936",
+              },
+              fontFamily: {
+                "display": ["Inter", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155; 
+        }
+        .dark ::-webkit-scrollbar-thumb:hover {
+            background: #475569; 
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display transition-colors duration-300 antialiased overflow-hidden">
+<div class="flex h-screen w-full">
+<!-- Side Navigation -->
+<aside class="flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark h-full hidden lg:flex flex-shrink-0 z-20">
+<div class="flex flex-col h-full justify-between p-4">
+<div class="flex flex-col gap-6">
+<!-- Branding -->
+<div class="flex items-center gap-3 px-2 py-2">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-xl size-10 shadow-sm" data-alt="MediLink abstract blue logo with white cross" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxI3pjrPKcPkRoL588sNS-yKX6G80NqVVkMieXpypt1lj312V87i-erOI8i4mqLjhj3QP28m5KRbbcziNuQY2PZzKxVMlJj24uAOgGhfQMyZFRnWUfDtcqnc4I3VrvQTbPnQ19nsh1ddL8Zo4-cJg3Ts_sGHmbKXa99HRr8V3rHK5zYGXhdgieZc99_a35nHHDRJyj16qqi53ARoZSf3Bme6i5wcgDNt5nEcxCd0qKNrfb0CJ_P5cOOTeQ5jArpJ100fP10o1aH0gl");'></div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-none tracking-tight">MediLink Cloud</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium mt-1">Patient Portal</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Patient Dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary text-white shadow-md shadow-primary/20 transition-all duration-300 transform hover:scale-[1.02]" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+<span class="text-sm font-semibold">My Appointments</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Medical Records.html">
+<span class="material-symbols-outlined">description</span>
+<span class="text-sm font-medium">Medical Records</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Prescriptions.html">
+<span class="material-symbols-outlined">medication</span>
+<span class="text-sm font-medium">Prescriptions</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.02]" href="Settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="mt-auto">
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-xl h-12 bg-slate-100 dark:bg-slate-800 text-primary dark:text-primary-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.02] text-sm font-bold tracking-wide">
+<span class="material-symbols-outlined text-[20px]">support_agent</span>
+<span>Get Help</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<div class="flex-1 flex flex-col h-full overflow-hidden relative">
+<!-- Top Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-card-dark px-6 py-4 z-10 shrink-0">
+<!-- Mobile Menu Toggle (Hidden on Desktop) -->
+<button class="lg:hidden mr-4 text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Page Title & Breadcrumb -->
+<div class="flex items-center gap-4">
+<h2 class="text-slate-900 dark:text-white text-xl font-bold leading-tight hidden sm:block">My Appointments</h2>
+</div>
+<!-- Search & Actions -->
+<div class="flex flex-1 justify-end items-center gap-4 sm:gap-6">
+<!-- Search Bar -->
+<div class="hidden md:flex items-center bg-slate-100 dark:bg-slate-800 rounded-xl px-4 py-2 w-full max-w-xs transition-colors focus-within:ring-2 focus-within:ring-primary/20">
+<span class="material-symbols-outlined text-slate-400">search</span>
+<input class="bg-transparent border-none text-sm text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:ring-0 w-full ml-2" placeholder="Search appointments..."/>
+</div>
+<!-- Notifications & Icons -->
+<div class="flex items-center gap-2">
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-card-dark"></span>
+</button>
+<button class="flex items-center justify-center size-10 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 transition-colors">
+<span class="material-symbols-outlined">chat_bubble</span>
+</button>
+</div>
+<!-- User Profile -->
+<div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-700">
+<div class="text-right hidden md:block">
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Sarah Jenkins</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Patient ID: #88392</p>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-sm cursor-pointer" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 sm:p-6 lg:p-10">
+<div class="max-w-7xl mx-auto flex flex-col gap-8">
+<!-- Header Section -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+<div class="flex flex-col gap-2">
+<h1 class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black tracking-tight">My Appointments</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Manage your upcoming and past appointments</p>
+</div>
+<button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/25 transition-all duration-300 transform hover:scale-[1.05] active:scale-95">
+<span class="material-symbols-outlined">add_circle</span>
+<span class="text-sm font-bold">Book New Appointment</span>
+</button>
+</div>
+<!-- Filter Tabs -->
+<div class="flex flex-wrap gap-2">
+<button class="px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold transition-all duration-300 transform hover:scale-[1.05]">All Appointments</button>
+<button class="px-4 py-2 rounded-lg bg-white dark:bg-card-dark text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.05]">Upcoming</button>
+<button class="px-4 py-2 rounded-lg bg-white dark:bg-card-dark text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.05]">Past</button>
+<button class="px-4 py-2 rounded-lg bg-white dark:bg-card-dark text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.05]">Cancelled</button>
+</div>
+<!-- Appointments List -->
+<div class="flex flex-col gap-4">
+<!-- Upcoming Appointment -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex flex-col lg:flex-row gap-6">
+<div class="flex-1">
+<div class="flex items-start justify-between mb-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-primary dark:text-blue-300 text-xs font-bold uppercase tracking-wider">
+<span class="size-2 rounded-full bg-primary animate-pulse"></span>
+Upcoming
+</div>
+<span class="text-slate-500 dark:text-slate-400 text-sm">Oct 25, 2023 • 10:00 AM</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Dr. Emily Chen</h3>
+<p class="text-slate-500 dark:text-slate-400 font-medium mb-4">Cardiology Specialist</p>
+<div class="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span>Medical Center, Room 302</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">videocam</span>
+<span>Video Consultation Available</span>
+</div>
+</div>
+<div class="flex gap-3 mt-6">
+<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">videocam</span>
+Join Call
+</button>
+<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+Reschedule
+</button>
+<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">cancel</span>
+Cancel
+</button>
+</div>
+</div>
+<div class="w-full lg:w-48 aspect-video lg:aspect-square rounded-xl bg-cover bg-center shadow-inner" data-alt="Portrait of Dr. Emily Chen, asian female doctor with stethoscope" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBybefGYcjWRcP-pgEKVf8mF3bayPGfaAslRew-lLOH85dzPqUrKM1kMhjevhmE9zXxhxvqkg23Uv8IS8GpQklu18bzUmu4Q14XBP8BEskU4_H_MM4UkWyA0CEcBooKE_aYdDFIODwwvsmcQy6dAJ7a5INv40hEMzG74AboWjuhMYiZPSnuIdTajYbXAIbk8mxRUZcpWhOvOczvekd3XtvismXgpiEnAtmOk2DdESbvuSQRbPGepw3DofxGOEViL0DMd9PLB9Nw-osE");'></div>
+</div>
+</div>
+<!-- Past Appointment -->
+<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 opacity-75 transition-all duration-300 hover:opacity-100 hover:shadow-lg hover:scale-[1.01]">
+<div class="flex flex-col lg:flex-row gap-6">
+<div class="flex-1">
+<div class="flex items-start justify-between mb-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-300 text-xs font-bold uppercase tracking-wider">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+Completed
+</div>
+<span class="text-slate-500 dark:text-slate-400 text-sm">Oct 10, 2023 • 2:00 PM</span>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Dr. Sarah Miller</h3>
+<p class="text-slate-500 dark:text-slate-400 font-medium mb-4">General Practice</p>
+<div class="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<span>Main Clinic, Room 105</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">description</span>
+<span>Annual Checkup</span>
+</div>
+</div>
+<div class="flex gap-3 mt-6">
+<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">download</span>
+View Report
+</button>
+<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
+<span class="material-symbols-outlined text-[18px]">calendar_month</span>
+Book Follow-up
+</button>
+</div>
+</div>
+<div class="w-full lg:w-48 aspect-video lg:aspect-square rounded-xl bg-cover bg-center shadow-inner" data-alt="Portrait of Dr. Sarah Miller" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWgdUZzZ5mii_Y3meJFIZcwo9E_EcNESlqBbDQb5N6pHif8KM2Bu81WbQCiDXp9rf3mS7fY_-Q2s4XkPD191HFkK7m4mU2ux8vntnjbyWXh6r4bfOfpZANR6xRHR5o6I48RpcM8VUixn3IwovPmMYc25c64ECaO4hswoz7yRAbn7ymlKs66vY9X-6HWkUn7XHYSSGvjIVHsre51NHWOgTwg8EHeJ_ImdGJ5B2JxLX53NNWfkYiUsbnkm2tLzl6zYi31fK1OMC-QwHK");'></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

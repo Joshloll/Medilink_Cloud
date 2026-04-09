@@ -1,0 +1,80 @@
+<!-- Navigation Fix Script -->
+<script>
+// Fix navigation links in all Doctor pages
+const pages = ['Dashboard.html', 'Patients.html', 'Records.html', 'Settings.html', 'Schedule.html'];
+
+const navigationLinks = {
+    'Dashboard.html': [
+        { href: '#', icon: 'dashboard', label: 'Dashboard', active: true },
+        { href: 'Schedule.html', icon: 'calendar_month', label: 'Schedule' },
+        { href: 'Patients.html', icon: 'group', label: 'Patients' },
+        { href: 'Records.html', icon: 'description', label: 'Records' },
+        { href: 'Settings.html', icon: 'settings', label: 'Settings' }
+    ],
+    'Patients.html': [
+        { href: 'Dashboard.html', icon: 'dashboard', label: 'Dashboard' },
+        { href: 'Schedule.html', icon: 'calendar_month', label: 'Schedule' },
+        { href: '#', icon: 'group', label: 'Patients', active: true },
+        { href: 'Records.html', icon: 'description', label: 'Records' },
+        { href: 'Settings.html', icon: 'settings', label: 'Settings' }
+    ],
+    'Records.html': [
+        { href: 'Dashboard.html', icon: 'dashboard', label: 'Dashboard' },
+        { href: 'Schedule.html', icon: 'calendar_month', label: 'Schedule' },
+        { href: 'Patients.html', icon: 'group', label: 'Patients' },
+        { href: '#', icon: 'description', label: 'Records', active: true },
+        { href: 'Settings.html', icon: 'settings', label: 'Settings' }
+    ],
+    'Settings.html': [
+        { href: 'Dashboard.html', icon: 'dashboard', label: 'Dashboard' },
+        { href: 'Schedule.html', icon: 'calendar_month', label: 'Schedule' },
+        { href: 'Patients.html', icon: 'group', label: 'Patients' },
+        { href: 'Records.html', icon: 'description', label: 'Record' },
+        { href: '#', icon: 'settings', label: 'Settings', active: true }
+    ],
+    'Schedule.html': [
+        { href: 'Dashboard.html', icon: 'dashboard', label: 'Dashboard' },
+        { href: '#', icon: 'calendar_month', label: 'Schedule', active: true },
+        { href: 'Patients.html', icon: 'group', label: 'Patients' },
+        { href: 'Records.html', icon: 'description', label: 'Records' },
+        { href: 'Settings.html', icon: 'settings', label: 'Settings' }
+    ]
+};
+
+// Function to update navigation in a file
+function updateNavigation(pageName, links) {
+    const fs = require('fs');
+    let content = fs.readFileSync(`./${pageName}`, 'utf8');
+    
+    // Replace navigation section
+    const navStart = content.indexOf('<nav class="flex flex-col gap-1">');
+    const navEnd = content.indexOf('</nav>');
+    
+    if (navStart !== -1 && navEnd !== -1) {
+        const beforeNav = content.substring(0, navStart);
+        const afterNav = content.substring(navEnd);
+        
+        let newNav = '<nav class="flex flex-col gap-1">';
+        links.forEach(link => {
+            const activeClass = link.active ? 'bg-primary/10 text-primary dark:text-primary' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group';
+            const fillIcon = link.active ? 'fill-1' : '';
+            newNav += `<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg ${activeClass}" href="${link.href}">`;
+            newNav += `<span class="material-symbols-outlined text-[24px] ${fillIcon}">${link.icon}</span>`;
+            newNav += `<span class="text-sm font-medium">${link.label}</span>`;
+            newNav += '</a>';
+        });
+        newNav += '</nav>';
+        
+        const newContent = beforeNav + newNav + afterNav;
+        fs.writeFileSync(`./${pageName}`, newContent);
+        console.log(`Updated navigation in ${pageName}`);
+    }
+}
+
+// Update all pages
+pages.forEach(page => {
+    updateNavigation(page, navigationLinks[page]);
+});
+
+console.log('Navigation links updated for all Doctor pages!');
+</script>

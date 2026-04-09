@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>MediLink Cloud - Patient Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
+    <div id="app" class="flex h-screen w-full">
+        <!-- Navigation will be rendered here -->
+        <nav id="navigation"></nav>
+        
+        <!-- Main content area -->
+        <main id="main-content" class="flex-1 flex flex-col h-full overflow-hidden relative">
+            <!-- Header will be rendered here -->
+            <header id="header"></header>
+            
+            <!-- Page content will be rendered here -->
+            <div id="page-content" class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark"></div>
+        </main>
+    </div>
+
+    <!-- JavaScript modules -->
+    <script src="services/api.js"></script>
+    <script src="services/state.js"></script>
+    <script src="components/navigation.js"></script>
+    <script src="components/header.js"></script>
+    <script src="components/dashboard.js"></script>
+    <script src="components/appointments.js"></script>
+    <script src="components/records.js"></script>
+    <script src="components/prescriptions.js"></script>
+    <script src="components/settings.js"></script>
+    <script src="app.js"></script>
+    <!-- Touch Reader Debug Tool -->
+    <script src="../debug.js"></script>
+</body>
+</html>
