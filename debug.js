@@ -381,7 +381,7 @@ class TouchReader {
         if (!historyContainer) return;
         
         historyContainer.innerHTML = this.lastClickedElements.map((item, index) => `
-            <div class="touch-reader-history-item" onclick="touchReader.copyToClipboard(${JSON.stringify(item).replace(/"/g, '\\/')})">
+            <div class="touch-reader-history-item" onclick="touchReader.copyHistoryItem(${index})">
                 <div style="font-weight: 500; margin-bottom: 2px;">${item.text || 'No text'}</div>
                 <div style="font-size: 10px; color: #64748b;">${item.id ? `#${item.id}` : item.tagName}</div>
                 <div style="font-size: 9px; color: #9ca3af;">${new Date().toLocaleTimeString()}</div>
@@ -431,6 +431,13 @@ class TouchReader {
             tagName: elementInfo.tagName,
             timestamp: new Date().toISOString()
         });
+    }
+
+    copyHistoryItem(index) {
+        if (index >= 0 && index < this.lastClickedElements.length) {
+            const item = this.lastClickedElements[index];
+            this.copyToClipboard(item);
+        }
     }
 
     clearHistory() {
