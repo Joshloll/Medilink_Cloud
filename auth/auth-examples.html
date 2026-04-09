@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Authentication Examples - MediLink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900">
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-4xl">
+            <h1 class="text-3xl font-bold text-center mb-8 text-slate-900 dark:text-white">MediLink Authentication Examples</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Login Form -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-slate-900 dark:text-white">Login Form</h2>
+                    
+                    <form data-action="login" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">mail</span>
+                                </div>
+                                <input type="email" name="email" required
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter your email">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">lock</span>
+                                </div>
+                                <input type="password" name="password"
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter your password">
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <label class="flex items-center">
+                                <input type="checkbox" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                                <span class="ml-2 text-sm text-slate-600 dark:text-slate-400">Remember me</span>
+                            </label>
+                            <a href="#" class="text-sm text-blue-600 hover:text-blue-500">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                            Sign In
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            Don't have an account? 
+                            <a href="#" class="text-blue-600 hover:text-blue-500 font-medium">Register here</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Registration Form -->
+                <div class="bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-slate-900 dark:text-white">Registration Form</h2>
+                    
+                    <form data-action="register" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Full Name</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">person</span>
+                                </div>
+                                <input type="text" name="name" required
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter your full name">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Email Address</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">mail</span>
+                                </div>
+                                <input type="email" name="email" required
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter your email">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Phone Number</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">phone</span>
+                                </div>
+                                <input type="tel" name="phone"
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="+1 (555) 123-4567">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Role</label>
+                            <select name="role" required
+                                class="w-full px-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <option value="">Select your role</option>
+                                <option value="doctor">Doctor</option>
+                                <option value="patient">Patient</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">lock</span>
+                                </div>
+                                <input type="password" name="password" required
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Create a password">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">Confirm Password</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <span class="material-symbols-outlined text-slate-400">lock</span>
+                                </div>
+                                <input type="password" name="confirmPassword" required
+                                    class="w-full pl-10 pr-3 py-2 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Confirm your password">
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="terms" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500">
+                            <label for="terms" class="ml-2 text-sm text-slate-600 dark:text-slate-400">
+                                I agree to the Terms of Service and Privacy Policy
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full py-2 px-4 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            Already have an account? 
+                            <a href="#" class="text-blue-600 hover:text-blue-500 font-medium">Sign in here</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Approval Panel -->
+            <div class="mt-8 bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Pending User Approvals</h2>
+                    <button data-action="pre-register-user" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-2">person_add</span>
+                        Pre-register User
+                    </button>
+                </div>
+                
+                <div id="pending-users-container">
+                    <!-- Pending users will be rendered here -->
+                    <div class="text-center py-8">
+                        <span class="material-symbols-outlined text-4xl text-slate-300">person_add</span>
+                        <p class="text-slate-600 dark:text-slate-400 mt-2">Loading pending users...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- All Users Panel -->
+            <div class="mt-8 bg-white dark:bg-slate-800 rounded-xl shadow-lg p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-semibold text-slate-900 dark:text-white">All Users</h2>
+                    <button onclick="renderAllUsers()" class="px-4 py-2 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors">
+                        <span class="material-symbols-outlined text-[18px] align-middle mr-2">refresh</span>
+                        Refresh
+                    </button>
+                </div>
+                
+                <div id="all-users-container">
+                    <!-- All users will be rendered here -->
+                    <div class="text-center py-8">
+                        <span class="material-symbols-outlined text-4xl text-slate-300">group</span>
+                        <p class="text-slate-600 dark:text-slate-400 mt-2">Loading users...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Accounts Info -->
+            <div class="mt-8 bg-blue-50 dark:bg-blue-900/20 rounded-xl p-6 border border-blue-200 dark:border-blue-800">
+                <h3 class="text-lg font-semibold mb-4 text-blue-900 dark:text-blue-100">Test Accounts</h3>
+                <div class="space-y-2 text-sm">
+                    <div class="font-mono bg-white dark:bg-slate-800 p-2 rounded border border-blue-200 dark:border-blue-700">
+                        <strong>Admin:</strong> admin@medilink.com (Auto-approved)
+                    </div>
+                    <div class="font-mono bg-white dark:bg-slate-800 p-2 rounded border border-blue-200 dark:border-blue-700">
+                        <strong>Doctor:</strong> doctor1@medilink.com (Auto-approved)
+                    </div>
+                    <div class="font-mono bg-white dark:bg-slate-800 p-2 rounded border border-blue-200 dark:border-blue-700">
+                        <strong>Doctor:</strong> doctor2@medilink.com (Auto-approved)
+                    </div>
+                    <div class="font-mono bg-white dark:bg-slate-800 p-2 rounded border border-blue-200 dark:border-blue-700">
+                        <strong>Patient:</strong> patient1@medilink.com (Auto-approved)
+                    </div>
+                    <div class="font-mono bg-white dark:bg-slate-800 p-2 rounded border border-blue-200 dark:border-blue-700">
+                        <strong>Patient:</strong> patient2@medilink.com (Auto-approved)
+                    </div>
+                </div>
+                <p class="text-xs text-blue-700 dark:text-blue-300 mt-4">
+                    Note: Pre-registered accounts (createdByAdmin: true) are auto-approved. 
+                    New registrations require admin approval.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load Authentication Scripts -->
+    <script type="module">
+        import authService from './authService.js';
+        import AuthUI from './authUI.js';
+
+        // Initialize the authentication system
+        document.addEventListener('DOMContentLoaded', () => {
+            // Render pending users after a short delay to simulate loading
+            setTimeout(() => {
+                renderPendingUsers();
+                renderAllUsers();
+            }, 1000);
+        });
+
+        // Make functions globally available
+        window.renderPendingUsers = () => {
+            window.authUI.renderPendingUsers();
+        };
+        
+        window.renderAllUsers = () => {
+            window.authUI.renderAllUsers();
+        };
+    </script>
+</body>
+</html>

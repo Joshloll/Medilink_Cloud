@@ -158,62 +158,8 @@
 </div>
 </div>
 <!-- Stats Grid -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<!-- Stat Card 1 -->
-<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
-<div class="flex justify-between items-start">
-<div class="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400">
-<span class="material-symbols-outlined">calendar_today</span>
-</div>
-<span class="flex items-center text-xs font-medium text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900/20 px-2 py-0.5 rounded-full">
-<span class="material-symbols-outlined text-[14px] mr-1">trending_up</span>
-                                +5%
-                            </span>
-</div>
-<div class="mt-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Appointments Today</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white" id="appointmentsToday">0</p>
-</div>
-</div>
-<!-- Stat Card 2 -->
-<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
-<div class="flex justify-between items-start">
-<div class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400">
-<span class="material-symbols-outlined">airline_seat_recline_normal</span>
-</div>
-<span class="flex items-center text-xs font-medium text-orange-600 dark:text-orange-400 bg-orange-50 dark:bg-orange-900/20 px-2 py-0.5 rounded-full">
-                                +2 Waiting
-                            </span>
-</div>
-<div class="mt-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Patients Waiting</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white" id="patientsWaiting">0</p>
-</div>
-</div>
-<!-- Stat Card 3 -->
-<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
-<div class="flex justify-between items-start">
-<div class="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400">
-<span class="material-symbols-outlined">medical_services</span>
-</div>
-</div>
-<div class="mt-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Doctors on Duty</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white" id="doctorsOnDuty">0</p>
-</div>
-</div>
-<!-- Stat Card 4 -->
-<div class="p-5 rounded-xl bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark shadow-sm flex flex-col gap-1">
-<div class="flex justify-between items-start">
-<div class="p-2 rounded-lg bg-amber-50 dark:bg-amber-900/20 text-amber-600 dark:text-amber-400">
-<span class="material-symbols-outlined">biotech</span>
-</div>
-<span class="flex items-center text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-full">
-                                0 Priority
-                            </span>
-</div>
-<div class="mt-2">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Labs</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="dashboard-stats">
+<!-- Stats will be dynamically rendered here -->
 <p class="text-2xl font-bold text-slate-900 dark:text-white" id="pendingLabs">0</p>
 </div>
 </div>
@@ -224,136 +170,11 @@
 <div class="xl:col-span-2 flex flex-col gap-4">
 <div class="flex items-center justify-between">
 <h3 class="text-lg font-bold text-slate-900 dark:text-white">Live Schedule</h3>
-<a class="text-sm font-medium text-primary hover:text-blue-600" href="#">View Full Schedule</a>
+<span class="text-xs text-slate-500">Next 24 hours</span>
 </div>
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark overflow-hidden shadow-sm">
-<div class="overflow-x-auto">
-<table class="w-full text-left text-sm">
-<thead class="bg-slate-50 dark:bg-slate-800/50 border-b border-border-light dark:border-border-dark">
-<tr>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">Time</th>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">Patient</th>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300 hidden sm:table-cell">Doctor</th>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300 hidden md:table-cell">Reason</th>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300">Status</th>
-<th class="px-6 py-4 font-semibold text-slate-700 dark:text-slate-300 text-right">Action</th>
-</tr>
-</thead>
-<tbody class="divide-y divide-border-light dark:divide-border-dark">
-<!-- Row 1 -->
-<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">09:00 AM</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of John Doe" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHcgJ2iROoE4fF6uxz4GPDRDczjIeFKvkBcdmViI2GQujCg1BSEZBtNITy1iJFBnmyfKem-R_UHZNOblZ3-CB880_ARBhvNQdMNfmodmXtgsdsA-tV90jKtILsH2h4aTmltq89h-g5vDIx98RK9LqkY6EkDAfOBLbElIA-GckrLf9Jn9uTbPl2Sqnwnj8alnxmvQ7c2M8JwhIJ0I-jMYr141zsxa84sSl1rJBcYAgkRwCOZBbNLn_jqVyAd3jQiKUZijpP6l_HssLE')"></div>
-<div>
-<div class="font-medium text-slate-900 dark:text-white">John Doe</div>
-<div class="text-xs text-slate-500">ID: #4928</div>
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-4" id="live-schedule">
+<!-- Schedule will be dynamically rendered here -->
 </div>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400 hidden sm:table-cell">Dr. Smith</td>
-<td class="px-6 py-4 hidden md:table-cell">
-<span class="inline-flex items-center rounded-md bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-medium text-blue-700 dark:text-blue-300 ring-1 ring-inset ring-blue-700/10">Annual Checkup</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-1.5">
-<span class="size-2 rounded-full bg-green-500 animate-pulse"></span>
-<span class="text-slate-700 dark:text-slate-300">In Progress</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 2 -->
-<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">09:30 AM</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of Jane Miller" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCNTskn7UVIQNK0Q0AgngK71B2Kx-lWaoKDVri_EiQxLCW4L0eKQLfa3hJvdE5_KJV9MlXwfLd2don1TnIiOoyjmAMcr81rpjRNN3gOrcYIyY3XJFRIDse-Gm1D43hrpm2bNZzsAbzsGWPqOwEaxG83NNpI2YU9pP_uJrRTup0h1XYn1k--H16NzazjMbRAGqbVk-aS_5E8G-c2zwtcys4_1UdgYxJp_TMlXLWrN05e0M4Cjb_HAIuIzG15XgNLTDlEqr8L9Id5k2XO')"></div>
-<div>
-<div class="font-medium text-slate-900 dark:text-white">Jane Miller</div>
-<div class="text-xs text-slate-500">ID: #4929</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400 hidden sm:table-cell">Dr. Jones</td>
-<td class="px-6 py-4 hidden md:table-cell">
-<span class="inline-flex items-center rounded-md bg-purple-50 dark:bg-purple-900/30 px-2 py-1 text-xs font-medium text-purple-700 dark:text-purple-300 ring-1 ring-inset ring-purple-700/10">Follow-up</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-1.5">
-<span class="size-2 rounded-full bg-orange-500"></span>
-<span class="text-slate-700 dark:text-slate-300">Waiting Room</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 3 -->
-<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">10:00 AM</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of Robert Fox" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA8669_zuSSsORaYd7YG_0uAHl729RJLDjJhqjlbO5IxDnGq9jC-y7Fc0usaQ_VVglloZlI7p1xpcX15ZACNhZjr6v_NPXp7rQDbQImCGcPcwz-qtDQfIrsX3VpUcIMKpZBOd-N57kRdueZx5e-MnlyQGqTvD2zlmI-U3O69_soI7czcUZ4wsdyq-sPNNcu8Vooxa9DqcvtMV6oOmKuKgLhPVNuDXpiY6Gzy5TPDaFqVue30CLAG2ygQ_qti0LqJmBnEFAqOCztRd3T')"></div>
-<div>
-<div class="font-medium text-slate-900 dark:text-white">Robert Fox</div>
-<div class="text-xs text-slate-500">ID: #4930</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400 hidden sm:table-cell">Dr. Smith</td>
-<td class="px-6 py-4 hidden md:table-cell">
-<span class="inline-flex items-center rounded-md bg-green-50 dark:bg-green-900/30 px-2 py-1 text-xs font-medium text-green-700 dark:text-green-300 ring-1 ring-inset ring-green-600/20">New Patient</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-1.5">
-<span class="size-2 rounded-full bg-slate-300 dark:bg-slate-600"></span>
-<span class="text-slate-700 dark:text-slate-300">Scheduled</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-<!-- Row 4 -->
-<tr class="group hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">10:15 AM</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Avatar of Alice Cooper" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuABfUwRh5QH-R8IKUdSTdK9xc9-9_-nbNtVdBQ2tjVD8_IUFCk5cLnXhPyGM5gxoTjVud3HGCGCd-DFfTfLnG2E663mks1ZVopMEASce3ZHJk6XzFdlZRWPRag9HxDhUaDAp5Dchf7JVRyp4yGlgnKeI-QmmxYXz3p9dDEhex0O_JcByLH6nrsAQRbde2CwdSfqBARCiXhJMX6VPmSXYUsff7cslngd8X8xosysoU2ZfEWsKQjsr6-AGp7BPGTlstQ_nnn6I_EOHp5C')"></div>
-<div>
-<div class="font-medium text-slate-900 dark:text-white">Alice Cooper</div>
-<div class="text-xs text-slate-500">ID: #4931</div>
-</div>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400 hidden sm:table-cell">Dr. Lee</td>
-<td class="px-6 py-4 hidden md:table-cell">
-<span class="inline-flex items-center rounded-md bg-amber-50 dark:bg-amber-900/30 px-2 py-1 text-xs font-medium text-amber-700 dark:text-amber-300 ring-1 ring-inset ring-amber-600/20">Lab Work</span>
-</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-1.5">
-<span class="size-2 rounded-full bg-blue-500"></span>
-<span class="text-slate-700 dark:text-slate-300">Checked In</span>
-</div>
-</td>
-<td class="px-6 py-4 text-right">
-<button class="text-slate-400 hover:text-primary transition-colors">
-<span class="material-symbols-outlined">more_vert</span>
-</button>
-</td>
-</tr>
-</tbody>
-</table>
 </div>
 </div>
 </div>
@@ -409,6 +230,27 @@
 </div>
 </div>
 <span class="text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded">On Break</span>
+</div>
+</div>
+</div>
+<!-- User Approvals -->
+<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm p-6">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-lg font-bold text-slate-900 dark:text-white">User Approvals</h2>
+<div class="flex gap-2">
+<button data-action="pre-register-user" class="px-3 py-1.5 bg-primary text-white text-sm rounded-lg hover:bg-blue-600">
+<span class="material-symbols-outlined text-[16px] align-middle mr-1">person_add</span>
+Pre-register
+</button>
+<span class="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-1 rounded-full text-xs font-semibold">
+<span id="pendingCount">0</span> Pending
+</span>
+</div>
+</div>
+<div id="pending-users-container">
+<div class="text-center py-8">
+<span class="material-symbols-outlined text-4xl text-slate-300">person_add</span>
+<p class="text-slate-600 dark:text-slate-400 mt-2">No pending users</p>
 </div>
 </div>
 </div>
@@ -697,6 +539,9 @@ setInterval(() => {
     updateStatistics();
 }, 30000);
 </script>
+    <!-- Authentication System -->
+    <script type="module" src="../auth/authService.js"></script>
+    <script type="module" src="../auth/authUI.js"></script>
     <!-- Touch Reader Debug Tool -->
-    <script src="../debug.js"></script>
+    <script src="debug.js"></script>
 </body></html>
