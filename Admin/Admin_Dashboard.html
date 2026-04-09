@@ -159,121 +159,92 @@
 </div>
 <!-- Stats Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="dashboard-stats">
-<!-- Stats will be dynamically rendered here -->
-<p class="text-2xl font-bold text-slate-900 dark:text-white" id="pendingLabs">0</p>
+<!-- Stat Cards -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Patients</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mt-2" id="totalPatients">0</p>
+</div>
+<div class="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+<span class="material-symbols-outlined text-2xl text-blue-600 dark:text-blue-400">groups</span>
+</div>
+</div>
+
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Doctors</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mt-2" id="totalDoctors">0</p>
+</div>
+<div class="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+<span class="material-symbols-outlined text-2xl text-green-600 dark:text-green-400">stethoscope</span>
+</div>
+</div>
+
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Appointments Today</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mt-2" id="appointmentsToday">0</p>
+</div>
+<div class="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+<span class="material-symbols-outlined text-2xl text-purple-600 dark:text-purple-400">calendar_month</span>
+</div>
+</div>
+
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-6 flex items-center justify-between">
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Approvals</p>
+<p class="text-3xl font-bold text-slate-900 dark:text-white mt-2" id="pendingApprovals">0</p>
+</div>
+<div class="bg-amber-100 dark:bg-amber-900/30 p-3 rounded-lg">
+<span class="material-symbols-outlined text-2xl text-amber-600 dark:text-amber-400">person_add</span>
 </div>
 </div>
 </div>
-<!-- Main Layout Grid (Schedule & Doctor Status) -->
-<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
-<!-- Live Schedule (Takes up 2 cols on large screens) -->
-<div class="xl:col-span-2 flex flex-col gap-4">
-<div class="flex items-center justify-between">
-<h3 class="text-lg font-bold text-slate-900 dark:text-white">Live Schedule</h3>
-<span class="text-xs text-slate-500">Next 24 hours</span>
 </div>
-<div class="bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-4" id="live-schedule">
-<!-- Schedule will be dynamically rendered here -->
-</div>
-</div>
-</div>
-</div>
-<!-- Right Column: Doctor Availability & Notifications -->
-<div class="flex flex-col gap-6">
-<!-- Doctor Availability Widget -->
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5">
+<!-- System Overview Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Doctor Status Widget -->
+<div class="lg:col-span-1 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5">
 <div class="flex items-center justify-between mb-4">
 <h3 class="text-lg font-bold text-slate-900 dark:text-white">Doctor Status</h3>
 <button class="text-slate-400 hover:text-primary">
 <span class="material-symbols-outlined">more_horiz</span>
 </button>
 </div>
-<div class="space-y-4">
-<!-- Doctor 1 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="relative">
-<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Dr. Smith Profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAE4wBSjCeHCweeMUnPfkaTd8I0m88Q6r2x3CAp37e6SdqowAzOmkUjLHGF9DjDSa_i0k92680EDSTdQdHBump2JmNpj-1BuWvIxc_p4gIjiXrF-bz72Si_BNQ2zNC8-ImsecQ5s7ffdHvdKIYND9oykm4Nk0A0pAIEf0cydFW5eRTxd9EljFvRcNNCkl4cRquEuyHRZ02oUQdZGtUYhuulsqZmRdy3dGCxmy9K0m69gH-X5qpXmRUOly4dKJwcdsv3EwwcFET_ASOC')"></div>
-<div class="absolute bottom-0 right-0 size-3 rounded-full bg-red-500 border-2 border-surface-light dark:border-surface-dark"></div>
-</div>
-<div>
-<p class="text-sm font-semibold text-slate-900 dark:text-white">Dr. Smith</p>
-<p class="text-xs text-slate-500">General Practice</p>
-</div>
-</div>
-<span class="text-xs font-medium text-red-500 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded">In Consult</span>
-</div>
-<!-- Doctor 2 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="relative">
-<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Dr. Jones Profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCewJ8Mze6HkTANfR8Q-qhr3L2VE6ByqVInBr3SrADZLf8AaicQlgME4dziL1IpnZu0aPfLWDoKVo16ljkSG4ZAZaidcMoYi5r3WSSF7HgL0XPGTnLXGPPt8Q6Tsc-obzXNze1rvuWLLVXjCDiCRevQi9qf5DZLmLUyXUyBPtGkZtTLNvIf4K4Bf4gmfMbIFzab9r8LWbEn4J3oXozh4diCCTGMrZeZXzYMxvXtjWnQCm4hIaEuRBsrd6PrBi5oe7Y4fFb99Rh6fEBt')"></div>
-<div class="absolute bottom-0 right-0 size-3 rounded-full bg-green-500 border-2 border-surface-light dark:border-surface-dark"></div>
-</div>
-<div>
-<p class="text-sm font-semibold text-slate-900 dark:text-white">Dr. Jones</p>
-<p class="text-xs text-slate-500">Pediatrics</p>
-</div>
-</div>
-<span class="text-xs font-medium text-green-600 bg-green-50 dark:bg-green-900/20 px-2 py-1 rounded">Available</span>
-</div>
-<!-- Doctor 3 -->
-<div class="flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="relative">
-<div class="size-10 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Dr. Lee Profile" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMWX1lDWa2heeqITJSAV6q8fR4ruUTD2qj7yRL5wZ5NQB0EJYThZlkrwPs0sRG2SrSXTPy0N1XNyzoOmtPalz4kwtkDwtubkURZ0xefHoJIcmg3QQG9orC0MAG3y0iooJqiCJHOA7EafSyLiBoNEKpItBs--qzZO2P6YkFo6fKhqE4RFx-Di6-D7L19mMYhMziEyrl6jawRVEcnDx9bn7iTaYo1WJqt52hFm0SEZLHzQbLT60uVMIyN7RKQXDZi1li6wvC3ENffgKB')"></div>
-<div class="absolute bottom-0 right-0 size-3 rounded-full bg-amber-500 border-2 border-surface-light dark:border-surface-dark"></div>
-</div>
-<div>
-<p class="text-sm font-semibold text-slate-900 dark:text-white">Dr. Lee</p>
-<p class="text-xs text-slate-500">Cardiology</p>
-</div>
-</div>
-<span class="text-xs font-medium text-amber-600 bg-amber-50 dark:bg-amber-900/20 px-2 py-1 rounded">On Break</span>
+<div class="space-y-4" id="doctor-status-list">
+<!-- Doctor statuses will be dynamically rendered here -->
+<div class="text-center py-8">
+<span class="material-symbols-outlined text-4xl text-slate-300">stethoscope</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No doctors available</p>
 </div>
 </div>
 </div>
 <!-- User Approvals -->
-<div class="bg-white dark:bg-[#1a2632] rounded-xl shadow-sm p-6">
+<div class="lg:col-span-1 bg-surface-light dark:bg-surface-dark rounded-xl border border-border-light dark:border-border-dark shadow-sm p-5">
 <div class="flex justify-between items-center mb-4">
-<h2 class="text-lg font-bold text-slate-900 dark:text-white">User Approvals</h2>
-<div class="flex gap-2">
-<button data-action="pre-register-user" class="px-3 py-1.5 bg-primary text-white text-sm rounded-lg hover:bg-blue-600">
-<span class="material-symbols-outlined text-[16px] align-middle mr-1">person_add</span>
-Pre-register
-</button>
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">Pending Approvals</h3>
 <span class="bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400 px-2 py-1 rounded-full text-xs font-semibold">
-<span id="pendingCount">0</span> Pending
+<span id="pendingCount">0</span> Users
 </span>
-</div>
 </div>
 <div id="pending-users-container">
 <div class="text-center py-8">
 <span class="material-symbols-outlined text-4xl text-slate-300">person_add</span>
-<p class="text-slate-600 dark:text-slate-400 mt-2">No pending users</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No pending approvals</p>
 </div>
 </div>
 </div>
+
 <!-- Alerts / Recent Activity -->
-<div class="rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5 flex-1">
-<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Urgent Alerts</h3>
-<div class="space-y-3">
-<div class="flex gap-3 p-3 rounded-lg bg-red-50 dark:bg-red-900/10 border border-red-100 dark:border-red-900/30">
-<span class="material-symbols-outlined text-red-600 dark:text-red-400 mt-0.5">warning</span>
-<div>
-<p class="text-sm font-semibold text-red-800 dark:text-red-300">Lab Results Delayed</p>
-<p class="text-xs text-red-600 dark:text-red-400">Patient #4922 - Critical Values</p>
+<div class="lg:col-span-1 rounded-xl border border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark shadow-sm p-5">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">System Alerts</h3>
+<div class="space-y-3" id="alerts-container">
+<!-- Alerts will be dynamically rendered here -->
+<div class="text-center py-8">
+<span class="material-symbols-outlined text-4xl text-slate-300">notifications</span>
+<p class="text-slate-500 dark:text-slate-400 text-sm mt-2">All systems running smoothly</p>
 </div>
 </div>
-<div class="flex gap-3 p-3 rounded-lg bg-amber-50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30">
-<span class="material-symbols-outlined text-amber-600 dark:text-amber-400 mt-0.5">receipt_long</span>
-<div>
-<p class="text-sm font-semibold text-amber-800 dark:text-amber-300">3 Unpaid Invoices</p>
-<p class="text-xs text-amber-600 dark:text-amber-400">Pending approval for > 30 days</p>
-</div>
-</div>
-</div>
-<button class="w-full mt-4 text-sm text-center text-primary font-medium hover:underline">View All Notifications</button>
 </div>
 </div>
 </div>
@@ -335,35 +306,44 @@ function getGreeting(name) {
 
 function setupEventListeners() {
     // Book Appointment Button
-    document.querySelector('button:has(.material-symbols-outlined.calendar_add_on)').addEventListener('click', function() {
-        window.location.href = 'Admin_Appointments.html';
-    });
+    const bookBtn = document.querySelector('button:has(.material-symbols-outlined.calendar_add_on)');
+    if (bookBtn) {
+        bookBtn.addEventListener('click', function() {
+            window.location.href = 'Admin_Appointments.html';
+        });
+    }
     
-    // Register Patient Button
-    document.querySelector('button:has(.material-symbols-outlined.person_add)').addEventListener('click', function() {
-        window.location.href = 'Admin_Patients.html';
-    });
-    
-    // View Full Schedule Link
-    document.querySelector('a[href="#"]').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'Admin_Appointments.html';
-    });
+    // Accept Patient Button
+    const acceptPatientBtn = document.querySelector('button:has(.material-symbols-outlined.how_to_reg)');
+    if (acceptPatientBtn) {
+        acceptPatientBtn.addEventListener('click', function() {
+            window.location.href = 'Admin_Patients.html';
+        });
+    }
     
     // Notifications Button
-    document.querySelector('button:has(.material-symbols-outlined.notifications)').addEventListener('click', function() {
-        showNotification('No new notifications');
-    });
+    const notifBtn = document.querySelector('button:has(.material-symbols-outlined.notifications)');
+    if (notifBtn) {
+        notifBtn.addEventListener('click', function() {
+            showNotification('No new notifications');
+        });
+    }
     
     // Chat Button
-    document.querySelector('button:has(.material-symbols-outlined.chat)').addEventListener('click', function() {
-        showNotification('Chat feature coming soon');
-    });
+    const chatBtn = document.querySelector('button:has(.material-symbols-outlined.chat)');
+    if (chatBtn) {
+        chatBtn.addEventListener('click', function() {
+            showNotification('Chat feature coming soon');
+        });
+    }
     
     // Lock Screen Button
-    document.querySelector('button:has(.material-symbols-outlined.lock)').addEventListener('click', function() {
-        lockScreen();
-    });
+    const lockBtn = document.querySelector('button:has(.material-symbols-outlined.lock)');
+    if (lockBtn) {
+        lockBtn.addEventListener('click', function() {
+            lockScreen();
+        });
+    }
 }
 
 function loadDashboardData() {
@@ -384,108 +364,142 @@ function loadDashboardData() {
 }
 
 function updateStatistics() {
-    // Simulate real-time statistics
+    // Load statistics from localStorage or API
+    // For now using localStorage, will be replaced with API calls
+    
+    // Get patients count
+    const patientsData = JSON.parse(localStorage.getItem('patients') || '[]');
+    const totalPatients = patientsData.length;
+    
+    // Get doctors count
+    const doctorsData = JSON.parse(localStorage.getItem('doctors') || '[]');
+    const totalDoctors = doctorsData.length;
+    
+    // Get appointments count
+    const appointmentsData = JSON.parse(localStorage.getItem('appointments') || '[]');
+    const appointmentsToday = appointmentsData.filter(apt => {
+        const aptDate = new Date(apt.date);
+        const today = new Date();
+        return aptDate.toDateString() === today.toDateString();
+    }).length;
+    
+    // Get pending approvals
+    const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]').length;
+    
     adminState.stats = {
-        appointmentsToday: Math.floor(Math.random() * 20) + 30,
-        patientsWaiting: Math.floor(Math.random() * 10) + 5,
-        doctorsOnDuty: Math.floor(Math.random() * 3) + 3,
-        pendingLabs: Math.floor(Math.random() * 15) + 5
+        appointmentsToday: appointmentsToday,
+        totalPatients: totalPatients,
+        totalDoctors: totalDoctors,
+        pendingApprovals: pendingApprovals
     };
     
     // Update UI
-    document.getElementById('appointmentsToday').textContent = adminState.stats.appointmentsToday;
-    document.getElementById('patientsWaiting').textContent = adminState.stats.patientsWaiting;
-    document.getElementById('doctorsOnDuty').textContent = adminState.stats.doctorsOnDuty;
-    document.getElementById('pendingLabs').textContent = adminState.stats.pendingLabs;
+    document.getElementById('totalPatients').textContent = totalPatients;
+    document.getElementById('totalDoctors').textContent = totalDoctors;
+    document.getElementById('appointmentsToday').textContent = appointmentsToday;
+    document.getElementById('pendingApprovals').textContent = pendingApprovals;
+    document.getElementById('pendingCount').textContent = pendingApprovals;
 }
 
 function loadAppointments() {
-    // Generate placeholder appointments
-    const appointments = [
-        {
-            id: 1,
-            time: '09:00 AM',
-            patient: '[Patient Name]',
-            doctor: '[Doctor Name]',
-            reason: '[Consultation Type]',
-            status: 'scheduled'
-        },
-        {
-            id: 2,
-            time: '09:30 AM',
-            patient: '[Patient Name]',
-            doctor: '[Doctor Name]',
-            reason: '[Consultation Type]',
-            status: 'confirmed'
-        },
-        {
-            id: 3,
-            time: '10:00 AM',
-            patient: '[Patient Name]',
-            doctor: '[Doctor Name]',
-            reason: '[Consultation Type]',
-            status: 'in-progress'
-        },
-        {
-            id: 4,
-            time: '10:15 AM',
-            patient: '[Patient Name]',
-            doctor: '[Doctor Name]',
-            reason: '[Consultation Type]',
-            status: 'checked-in'
-        }
-    ];
-    
-    adminState.appointments = appointments;
-    // Update appointment table would go here
+    // This function is maintained for future use
+    // Currently, appointments are shown in the stats section
 }
 
 function loadDoctors() {
-    // Generate placeholder doctors
-    const doctors = [
-        {
-            id: 1,
-            name: '[Doctor Name]',
-            specialty: '[Specialty]',
-            status: 'available'
-        },
-        {
-            id: 2,
-            name: '[Doctor Name]',
-            specialty: '[Specialty]',
-            status: 'in-consult'
-        },
-        {
-            id: 3,
-            name: '[Doctor Name]',
-            specialty: '[Specialty]',
-            status: 'on-break'
-        }
-    ];
+    // Load doctors from localStorage or API
+    const doctorsData = JSON.parse(localStorage.getItem('doctors') || '[]');
+    const doctorStatusList = document.getElementById('doctor-status-list');
     
-    adminState.doctors = doctors;
-    // Update doctor status would go here
+    if (!doctorStatusList) return;
+    
+    if (doctorsData.length === 0) {
+        doctorStatusList.innerHTML = `
+            <div class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-slate-300">stethoscope</span>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No doctors available</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Display first 5 doctors with status
+    const doctorsList = doctorsData.slice(0, 5).map(doctor => {
+        const statusClass = doctor.status === 'Online' 
+            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+        
+        const statusDot = doctor.status === 'Online' 
+            ? 'bg-green-500' 
+            : 'bg-slate-400';
+        
+        return `
+            <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                        ${doctor.name ? doctor.name.charAt(0).toUpperCase() : 'D'}
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-slate-900 dark:text-white">${doctor.name || 'Unknown Doctor'}</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">${doctor.specialty || 'General Practice'}</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="${statusDot} w-2 h-2 rounded-full"></span>
+                    <span class="text-xs px-2 py-1 rounded-full ${statusClass}">${doctor.status || 'Offline'}</span>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    doctorStatusList.innerHTML = doctorsList;
 }
 
 function loadAlerts() {
-    // Generate placeholder alerts
-    const alerts = [
-        {
-            id: 1,
-            type: 'warning',
-            title: '[Alert Title]',
-            message: '[Alert Message]'
-        },
-        {
-            id: 2,
-            type: 'info',
-            title: '[Alert Title]',
-            message: '[Alert Message]'
-        }
-    ];
+    // Load alerts from localStorage or API
+    const alertsData = JSON.parse(localStorage.getItem('alerts') || '[]');
+    const alertsContainer = document.getElementById('alerts-container');
     
-    adminState.alerts = alerts;
-    // Update alerts section would go here
+    if (!alertsContainer) return;
+    
+    if (alertsData.length === 0) {
+        alertsContainer.innerHTML = `
+            <div class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-slate-300">notifications</span>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">All systems running smoothly</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Display alerts
+    const alertsList = alertsData.slice(0, 3).map(alert => {
+        const alertTypeClass = alert.type === 'error' 
+            ? 'bg-red-100 dark:bg-red-900/30 border-l-4 border-red-500' 
+            : alert.type === 'warning' 
+            ? 'bg-amber-100 dark:bg-amber-900/30 border-l-4 border-amber-500' 
+            : 'bg-blue-100 dark:bg-blue-900/30 border-l-4 border-blue-500';
+        
+        const alertIcon = alert.type === 'error' 
+            ? 'error' 
+            : alert.type === 'warning' 
+            ? 'warning' 
+            : 'info';
+        
+        return `
+            <div class="p-3 rounded-lg ${alertTypeClass} text-sm">
+                <div class="flex items-start gap-2">
+                    <span class="material-symbols-outlined text-base flex-shrink-0">${alertIcon}</span>
+                    <div>
+                        <p class="font-medium text-slate-900 dark:text-slate-100">${alert.title || 'System Alert'}</p>
+                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">${alert.message || ''}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    alertsContainer.innerHTML = alertsList;
 }
 
 function showNotification(message) {

@@ -134,8 +134,8 @@
 <!-- User Profile -->
 <div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-700">
 <div class="text-right hidden md:block">
-<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Sarah Jenkins</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Patient ID: #88392</p>
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none" id="patientNameDisplay">Patient</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1" id="patientIDDisplay">Patient ID: —</p>
 </div>
 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-sm cursor-pointer" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
 </div>
@@ -163,85 +163,10 @@
 <button class="px-4 py-2 rounded-lg bg-white dark:bg-card-dark text-slate-600 dark:text-slate-400 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-all duration-300 transform hover:scale-[1.05]">Cancelled</button>
 </div>
 <!-- Appointments List -->
-<div class="flex flex-col gap-4">
-<!-- Upcoming Appointment -->
-<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
-<div class="flex flex-col lg:flex-row gap-6">
-<div class="flex-1">
-<div class="flex items-start justify-between mb-4">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-primary dark:text-blue-300 text-xs font-bold uppercase tracking-wider">
-<span class="size-2 rounded-full bg-primary animate-pulse"></span>
-Upcoming
-</div>
-<span class="text-slate-500 dark:text-slate-400 text-sm">Oct 25, 2023 • 10:00 AM</span>
-</div>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Dr. Emily Chen</h3>
-<p class="text-slate-500 dark:text-slate-400 font-medium mb-4">Cardiology Specialist</p>
-<div class="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">location_on</span>
-<span>Medical Center, Room 302</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">videocam</span>
-<span>Video Consultation Available</span>
-</div>
-</div>
-<div class="flex gap-3 mt-6">
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">videocam</span>
-Join Call
-</button>
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">edit</span>
-Reschedule
-</button>
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">cancel</span>
-Cancel
-</button>
-</div>
-</div>
-<div class="w-full lg:w-48 aspect-video lg:aspect-square rounded-xl bg-cover bg-center shadow-inner" data-alt="Portrait of Dr. Emily Chen, asian female doctor with stethoscope" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBybefGYcjWRcP-pgEKVf8mF3bayPGfaAslRew-lLOH85dzPqUrKM1kMhjevhmE9zXxhxvqkg23Uv8IS8GpQklu18bzUmu4Q14XBP8BEskU4_H_MM4UkWyA0CEcBooKE_aYdDFIODwwvsmcQy6dAJ7a5INv40hEMzG74AboWjuhMYiZPSnuIdTajYbXAIbk8mxRUZcpWhOvOczvekd3XtvismXgpiEnAtmOk2DdESbvuSQRbPGepw3DofxGOEViL0DMd9PLB9Nw-osE");'></div>
-</div>
-</div>
-<!-- Past Appointment -->
-<div class="bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 opacity-75 transition-all duration-300 hover:opacity-100 hover:shadow-lg hover:scale-[1.01]">
-<div class="flex flex-col lg:flex-row gap-6">
-<div class="flex-1">
-<div class="flex items-start justify-between mb-4">
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-300 text-xs font-bold uppercase tracking-wider">
-<span class="material-symbols-outlined text-[14px]">check_circle</span>
-Completed
-</div>
-<span class="text-slate-500 dark:text-slate-400 text-sm">Oct 10, 2023 • 2:00 PM</span>
-</div>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Dr. Sarah Miller</h3>
-<p class="text-slate-500 dark:text-slate-400 font-medium mb-4">General Practice</p>
-<div class="flex flex-wrap gap-4 text-sm text-slate-600 dark:text-slate-300">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">location_on</span>
-<span>Main Clinic, Room 105</span>
-</div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">description</span>
-<span>Annual Checkup</span>
-</div>
-</div>
-<div class="flex gap-3 mt-6">
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">download</span>
-View Report
-</button>
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">calendar_month</span>
-Book Follow-up
-</button>
-</div>
-</div>
-<div class="w-full lg:w-48 aspect-video lg:aspect-square rounded-xl bg-cover bg-center shadow-inner" data-alt="Portrait of Dr. Sarah Miller" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWgdUZzZ5mii_Y3meJFIZcwo9E_EcNESlqBbDQb5N6pHif8KM2Bu81WbQCiDXp9rf3mS7fY_-Q2s4XkPD191HFkK7m4mU2ux8vntnjbyWXh6r4bfOfpZANR6xRHR5o6I48RpcM8VUixn3IwovPmMYc25c64ECaO4hswoz7yRAbn7ymlKs66vY9X-6HWkUn7XHYSSGvjIVHsre51NHWOgTwg8EHeJ_ImdGJ5B2JxLX53NNWfkYiUsbnkm2tLzl6zYi31fK1OMC-QwHK");'></div>
-</div>
-</div>
+<div class="flex flex-col gap-4" id="appointmentsList">
+<div class="text-center py-12">
+<span class="material-symbols-outlined text-4xl text-slate-300">calendar_month</span>
+<p class="text-slate-600 dark:text-slate-400 mt-2">No appointments found</p>
 </div>
 </div>
 </main>

@@ -347,23 +347,23 @@ Professional Information
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-700">
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">License Number</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">[License Number]</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorLicenseDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Specializations</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">[Specializations]</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorSpecialtiesDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Department</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">[Department]</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorDepartmentDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Years of Experience</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">[Years]</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorExperienceDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Education</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">[Education]</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorEducationDisplay">—</p>
 </div>
 </div>
 </section>
@@ -380,27 +380,25 @@ Schedule Information
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Working Days</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">Monday - Friday</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorWorkingDaysDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Working Hours</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">8:00 AM - 6:00 PM</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorWorkingHoursDisplay">—</p>
 </div>
 <div>
-<p class="text-text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Consultation Duration</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">30 minutes</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Consultation Duration</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorConsultationDurationDisplay">—</p>
 </div>
 <div>
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-1">Break Time</p>
-<p class="text-base font-medium text-slate-900 dark:text-white">1:00 PM - 2:00 PM</p>
+<p class="text-base font-medium text-slate-900 dark:text-white" id="doctorBreakTimeDisplay">—</p>
 </div>
 </div>
 <div class="mt-4">
 <p class="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wide font-semibold mb-2">Available Services</p>
-<div class="flex flex-wrap gap-2">
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300">General Consultation</span>
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300">Annual Checkup</span>
-<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300">Specialist Consultation</span>
+<div class="flex flex-wrap gap-2" id="availableServicesContainer">
+<!-- Services will be dynamically rendered here -->
 </div>
 </div>
 </section>
@@ -606,73 +604,18 @@ function updateStatistics() {
 }
 
 function loadDoctors() {
-    // Generate placeholder doctors
-    const doctors = [
-        {
-            id: 1,
-            firstName: '[First Name]',
-            lastName: '[Last Name]',
-            email: '[Email]',
-            phone: '[Phone]',
-            department: '[Department]',
-            license: '[License Number]',
-            specializations: '[Specializations]',
-            status: 'available',
-            patientsToday: Math.floor(Math.random() * 10) + 5,
-            schedule: '8:00 AM - 5:00 PM',
-            avatar: null
-        },
-        {
-            id: 2,
-            firstName: '[First Name]',
-            lastName: '[Last Name]',
-            email: '[Email]',
-            phone: '[Phone]',
-            department: '[Department]',
-            license: '[License Number]',
-            specializations: '[Specializations]',
-            status: 'in-consultation',
-            patientsToday: Math.floor(Math.random() * 10) + 8,
-            schedule: '9:00 AM - 6:00 PM',
-            avatar: null
-        },
-        {
-            id: 3,
-            firstName: '[First Name]',
-            lastName: '[Last Name]',
-            email: '[Email]',
-            phone: '[Phone]',
-            department: '[Department]',
-            license: '[License Number]',
-            specializations: '[Specializations]',
-            status: 'on-break',
-            patientsToday: Math.floor(Math.random() * 10) + 3,
-            schedule: '8:00 AM - 4:00 PM',
-            avatar: null
-        },
-        {
-            id: 4,
-            firstName: '[First Name]',
-            lastName: '[Last Name]',
-            email: '[Email]',
-            phone: '[Phone]',
-            department: '[Department]',
-            license: '[License Number]',
-            specializations: '[Specializations]',
-            status: 'on-leave',
-            patientsToday: 0,
-            schedule: 'Not Available',
-            avatar: null
-        }
-    ];
-    
-    doctorsState.doctors = doctors;
-    renderDoctorsList(doctors);
-    
-    // Select first doctor by default
-    if (doctors.length > 0) {
-        selectDoctor(0);
+    // Placeholder for dynamic doctors loading
+    const listContainer = document.getElementById('doctorsList');
+    if (listContainer) {
+        listContainer.innerHTML = `
+            <div class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-slate-300">people</span>
+                <p class="text-slate-600 dark:text-slate-400 mt-2">No doctors yet</p>
+            </div>
+        `;
     }
+    
+    doctorsState.doctors = [];
 }
 
 function renderDoctorsList(doctors) {

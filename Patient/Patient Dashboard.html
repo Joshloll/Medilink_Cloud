@@ -134,8 +134,8 @@
 <!-- User Profile -->
 <div class="flex items-center gap-3 pl-2 border-l border-slate-200 dark:border-slate-700">
 <div class="text-right hidden md:block">
-<p class="text-sm font-bold text-slate-900 dark:text-white leading-none">Sarah Jenkins</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Patient ID: #88392</p>
+<p class="text-sm font-bold text-slate-900 dark:text-white leading-none" id="patientName">Patient</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1" id="patientID">Patient ID: —</p>
 </div>
 <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 ring-2 ring-white dark:ring-slate-700 shadow-sm cursor-pointer" data-alt="Profile picture of Sarah Jenkins, smiling woman" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC7EVV5ypCihmYTSLn_G46OXG5ANaHMBRiwg5jjL07ySsqqpdonXwP9X7D_EVXqAHezuQLakGuBna0qhRsYHEQNBytapacC0kHXKbVQUBxmnrpM0Ok_Nald063RJcdBmpjc68W1Uypp8PA73IlgaetT7ApK9eDjULbNuc1FwR1RwGOJpCSpccRMIOqJpQUK_yrHkmaBb7MIUhHs-3opqyWFHnBN-X7Nu1TdjcOO2AXQVjf2WKonS1prMOvWbNOa46WJxFhJ9MzXA8Vq");'></div>
 </div>
@@ -147,8 +147,8 @@
 <!-- Welcome Section -->
 <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
 <div class="flex flex-col gap-2">
-<h1 class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black tracking-tight">Welcome back, Sarah</h1>
-<p class="text-slate-500 dark:text-slate-400 text-base">Today is Oct 24, 2023. You have <span class="text-primary font-bold">1 upcoming appointment</span>.</p>
+<h1 class="text-slate-900 dark:text-white text-3xl sm:text-4xl font-black tracking-tight" id="welcomeGreeting">Welcome</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Here's your health overview and upcoming appointments.</p>
 </div>
 <button class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-primary hover:bg-primary-dark text-white shadow-lg shadow-primary/25 transition-all duration-300 transform hover:scale-[1.05] active:scale-95">
 <span class="material-symbols-outlined">add_circle</span>
@@ -158,40 +158,13 @@
 <!-- Top Row: Upcoming & Quick Actions -->
 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 <!-- Upcoming Appointment Card (Span 2) -->
-<div class="lg:col-span-2 bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 relative overflow-hidden group">
+<div class="lg:col-span-2 bg-white dark:bg-card-dark rounded-2xl p-6 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col md:flex-row gap-6 relative overflow-hidden group" id="upcomingAppointmentCard">
 <!-- Decorative bg shape -->
 <div class="absolute -right-10 -top-10 size-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
-<div class="flex-1 flex flex-col justify-between gap-4 z-10">
-<div>
-<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 dark:bg-blue-900/20 text-primary dark:text-blue-300 text-xs font-bold uppercase tracking-wider mb-3">
-<span class="size-2 rounded-full bg-primary animate-pulse"></span>
-                                    Upcoming
-                                </div>
-<h3 class="text-xl font-bold text-slate-900 dark:text-white mb-1">Dr. Emily Chen</h3>
-<p class="text-slate-500 dark:text-slate-400 font-medium">Cardiology Specialist</p>
-<div class="flex flex-wrap items-center gap-x-6 gap-y-2 mt-4 text-sm text-slate-600 dark:text-slate-300">
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">event</span>
-<span>Tomorrow, Oct 25</span>
+<div class="text-center py-8 z-10">
+<span class="material-symbols-outlined text-4xl text-slate-300">calendar_month</span>
+<p class="text-slate-600 dark:text-slate-400 mt-2">No upcoming appointments</p>
 </div>
-<div class="flex items-center gap-2">
-<span class="material-symbols-outlined text-primary">schedule</span>
-<span>10:00 AM - 10:30 AM</span>
-</div>
-</div>
-</div>
-<div class="flex gap-3 mt-2">
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-primary text-white text-sm font-bold hover:bg-primary-dark transition-all duration-300 transform hover:scale-[1.05]">
-<span class="material-symbols-outlined text-[18px]">videocam</span>
-                                    Join Call
-                                </button>
-<button class="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 text-sm font-bold hover:bg-slate-200 dark:hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.05]">
-                                    Details
-                                </button>
-</div>
-</div>
-<!-- Doctor Image -->
-<div class="w-full md:w-48 aspect-video md:aspect-square rounded-xl bg-cover bg-center shadow-inner" data-alt="Portrait of Dr. Emily Chen, asian female doctor with stethoscope" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBybefGYcjWRcP-pgEKVf8mF3bayPGfaAslRew-lLOH85dzPqUrKM1kMhjevhmE9zXxhxvqkg23Uv8IS8GpQklu18bzUmu4Q14XBP8BEskU4_H_MM4UkWyA0CEcBooKE_aYdDFIODwwvsmcQy6dAJ7a5INv40hEMzG74AboWjuhMYiZPSnuIdTajYbXAIbk8mxRUZcpWhOvOczvekd3XtvismXgpiEnAtmOk2DdESbvuSQRbPGepw3DofxGOEViL0DMd9PLB9Nw-osE");'></div>
 </div>
 <!-- Quick Actions (Span 1) -->
 <div class="flex flex-col gap-4">
@@ -222,47 +195,17 @@
 <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
 <span class="material-symbols-outlined text-primary">vital_signs</span>
                         Recent Vitals
-                        <span class="text-xs font-normal text-slate-500 ml-auto">Last updated: Oct 10, 2023</span>
+                        <span class="text-xs font-normal text-slate-500 ml-auto" id="vitalsUpdateTime">—</span>
 </h3>
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-<!-- Stat 1 -->
-<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium flex items-center gap-2">
-<span class="material-symbols-outlined text-red-500 text-[20px]">favorite</span>
-                                Heart Rate
-                            </p>
-<div class="flex items-end gap-3">
-<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">72 <span class="text-lg font-medium text-slate-400">bpm</span></p>
-<span class="inline-flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-md mb-1">
-<span class="material-symbols-outlined text-[14px] mr-0.5">trending_up</span> Normal
-                                </span>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] text-center py-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm">—</p>
 </div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] text-center py-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm">—</p>
 </div>
-<!-- Stat 2 -->
-<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium flex items-center gap-2">
-<span class="material-symbols-outlined text-blue-500 text-[20px]">blood_pressure</span>
-                                Blood Pressure
-                            </p>
-<div class="flex items-end gap-3">
-<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">120/80 <span class="text-lg font-medium text-slate-400">mmHg</span></p>
-<span class="inline-flex items-center text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-md mb-1">
-<span class="material-symbols-outlined text-[14px] mr-0.5">check</span> Optimal
-                                </span>
-</div>
-</div>
-<!-- Stat 3 -->
-<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01]">
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium flex items-center gap-2">
-<span class="material-symbols-outlined text-orange-500 text-[20px]">monitor_weight</span>
-                                Weight
-                            </p>
-<div class="flex items-end gap-3">
-<p class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">68 <span class="text-lg font-medium text-slate-400">kg</span></p>
-<span class="inline-flex items-center text-xs font-bold text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-900/30 px-2 py-1 rounded-md mb-1">
-<span class="material-symbols-outlined text-[14px] mr-0.5">trending_down</span> -1 kg
-                                </span>
-</div>
+<div class="bg-white dark:bg-card-dark rounded-2xl p-5 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col gap-2 transition-all duration-300 hover:shadow-lg hover:scale-[1.01] text-center py-8">
+<p class="text-slate-500 dark:text-slate-400 text-sm">—</p>
 </div>
 </div>
 </div>
@@ -284,79 +227,11 @@
 <th class="p-4 text-right pr-6">Action</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
-<td class="p-4 pl-6">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Avatar of Dr. Sarah Miller" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAWgdUZzZ5mii_Y3meJFIZcwo9E_EcNESlqBbDQb5N6pHif8KM2Bu81WbQCiDXp9rf3mS7fY_-Q2s4XkPD191HFkK7m4mU2ux8vntnjbyWXh6r4bfOfpZANR6xRHR5o6I48RpcM8VUixn3IwovPmMYc25c64ECaO4hswoz7yRAbn7ymlKs66vY9X-6HWkUn7XHYSSGvjIVHsre51NHWOgTwg8EHeJ_ImdGJ5B2JxLX53NNWfkYiUsbnkm2tLzl6zYi31fK1OMC-QwHK");'></div>
-<div>
-<p class="font-bold text-slate-900 dark:text-white">Dr. Sarah Miller</p>
-<p class="text-xs text-slate-500 dark:text-slate-400">General Practice</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Annual Checkup</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Oct 10, 2023</td>
-<td class="p-4">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-<span class="size-1.5 rounded-full bg-current"></span>
-                                                Completed
-                                            </span>
-</td>
-<td class="p-4 text-right pr-6">
-<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
-<span class="material-symbols-outlined">download</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
-<td class="p-4 pl-6">
-<div class="flex items-center gap-3">
-<div class="size-8 rounded-full bg-slate-200 dark:bg-slate-700 bg-cover bg-center" data-alt="Avatar of Dr. James Wilson" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCYm61NGkBF2Q-XbsU-R9la5iZ9z4_FOY7ZnhOjPoyxTxQPB752j_vQbRCjsIHMMhhaB-G5aG9P9bR6dzijFw9KxxJr_ahvU1VxNSHkj_i0GewF-ZCCKC6o-vh6nzOZPPXyQp1OGERXAgpJ3jTvtYfwd4I5pA10u0fV2p0Ba9R3DaYlZxJDc0pnxUNg9s4x1uQe1OOcEyFIOSUnTwunkh8W4MLdIN4R8f_65_fWhHJrSBuSG5-Q8tDROY-ww0ygvByRKfU70CTCA3d1");'></div>
-<div>
-<p class="font-bold text-slate-900 dark:text-white">Dr. James Wilson</p>
-<p class="text-xs text-slate-500 dark:text-slate-400">Dermatology</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Consultation</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Sep 28, 2023</td>
-<td class="p-4">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400">
-<span class="size-1.5 rounded-full bg-current"></span>
-                                                Completed
-                                            </span>
-</td>
-<td class="p-4 text-right pr-6">
-<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
-<span class="material-symbols-outlined">download</span>
-</button>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-all duration-200">
-<td class="p-4 pl-6">
-<div class="flex items-center gap-3">
-<div class="size-8 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/50 text-primary">
-<span class="material-symbols-outlined text-[18px]">labs</span>
-</div>
-<div>
-<p class="font-bold text-slate-900 dark:text-white">City Labs</p>
-<p class="text-xs text-slate-500 dark:text-slate-400">Laboratory</p>
-</div>
-</div>
-</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Blood Test</td>
-<td class="p-4 text-slate-600 dark:text-slate-300">Sep 25, 2023</td>
-<td class="p-4">
-<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
-<span class="size-1.5 rounded-full bg-current"></span>
-                                                Pending Review
-                                            </span>
-</td>
-<td class="p-4 text-right pr-6">
-<button class="text-slate-400 hover:text-primary transition-all duration-300 transform hover:scale-110">
-<span class="material-symbols-outlined">visibility</span>
-</button>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm" id="activityTableBody">
+<tr>
+<td colspan="5" class="p-4 text-center py-8">
+<span class="material-symbols-outlined text-4xl text-slate-300 block mb-2">history</span>
+<p class="text-slate-600 dark:text-slate-400">No recent activity</p>
 </td>
 </tr>
 </tbody>

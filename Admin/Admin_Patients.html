@@ -200,23 +200,23 @@
 </div>
 <div>
 <div class="flex items-center gap-3 mb-1">
-<h1 class="text-2xl font-bold text-slate-900 dark:text-white">John Doe</h1>
-<span class="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800">Active</span>
-<span class="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-100 dark:border-blue-800">Insured</span>
+<h1 class="text-2xl font-bold text-slate-900 dark:text-white" id="patientNameDisplay">—</h1>
+<span class="px-2.5 py-0.5 rounded-full bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 text-xs font-semibold border border-green-200 dark:border-green-800" id="patientStatusDisplay">Active</span>
+<span class="px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 text-xs font-semibold border border-blue-100 dark:border-blue-800" id="patientInsuranceDisplay">Insured</span>
 </div>
 <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-500 dark:text-slate-400 mt-2">
 <span class="flex items-center gap-1.5">
 <span class="material-symbols-outlined text-[18px]">fingerprint</span>
-                                    ID: #ML-4920
-                                </span>
+<span id="patientIdDisplay">ID: —</span>
+</span>
 <span class="flex items-center gap-1.5">
 <span class="material-symbols-outlined text-[18px]">cake</span>
-                                    Jan 12, 1985 (39 yrs)
-                                </span>
+<span id="patientAgeDisplay">Age: —</span>
+</span>
 <span class="flex items-center gap-1.5">
 <span class="material-symbols-outlined text-[18px]">transgender</span>
-                                    Male
-                                </span>
+<span id="patientGenderDisplay">Gender: —</span>
+</span>
 </div>
 </div>
 </div>
@@ -256,27 +256,27 @@
 <!-- Field Group -->
 <div class="space-y-1.5">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">First Name</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="John"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="" placeholder="Enter first name"/>
 </div>
 <div class="space-y-1.5">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Last Name</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="Doe"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="" placeholder="Enter last name"/>
 </div>
 <div class="space-y-1.5">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Date of Birth</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="date" value="1985-01-12"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="date" value="" placeholder="Select date of birth"/>
 </div>
 <div class="space-y-1.5">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Phone Number</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="tel" value="+1 (555) 123-4567"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="tel" value="" placeholder="Enter phone number"/>
 </div>
 <div class="space-y-1.5 md:col-span-2">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Email Address</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="email" value="john.doe@example.com"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="email" value="" placeholder="Enter email address"/>
 </div>
 <div class="space-y-1.5 md:col-span-3">
 <label class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wide">Residential Address</label>
-<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="123 Maple Avenue, Springfield, IL 62704"/>
+<input class="w-full rounded-md border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:border-primary focus:ring-primary" type="text" value="" placeholder="Enter address"/>
 </div>
 </div>
 </section>
@@ -331,53 +331,12 @@
 <th class="px-6 py-3 font-semibold">Status</th>
 </tr>
 </thead>
-<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Oct 24, 2023</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDSEfj4kPBX8n82gcR1J7cn3pZ11iy0wi1HZard-TCuo8Z2aD2sCmMHzjgmaiFknMD5Mj0UHdnS3k-2aViF-7XNXP9ShhQisHEpU6glO2LiOX9PEL0w1a5g9KA0-nmwEEyf79FjTt93_fnH1mPkiBRn3F3-rBlJY5_k8v9-qf0v_CY4_bU-PB3jzjR64HkvhoKPdW4mUd-sE9OkRLFSHu0MaxjGWidszeTZm8flS8rao1OmHZ71riobADDW5VFxkVN4_No7n8KEVPIn');"></div>
-<span class="text-slate-700 dark:text-slate-300">Dr. S. Williams</span>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Annual Checkup</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">BP Normal, Labs requested.</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                Completed
-                                            </span>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Aug 12, 2023</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuADfofgo7xppQMlxgTvxSxqaf3AghRzR6Bx_Na2jz6LJSlEbu2_xy1gT4cE9sNLyO7qXtoU97AI7csYqqQQQAlfq-gbkRC-m8ILUX6g2ll3aPHSCe8gF2-EUSN3Lj7xEBap8H-sDJ-vBY9-NyfXv1GhcgZjagEp26Lm2y1vAptEbVljJhkFPvfI1DRBsJNS_jTvLzVlgk2h-Mv83FoWITfSYpTmksSG2hAJHAPZOhLbsCjsx_0-mDhpfYWcqZcW5BBJS4e0HiDfTIJK');"></div>
-<span class="text-slate-700 dark:text-slate-300">Dr. A. Taylor</span>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Consultation</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Mild migraine symptoms reported.</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                Completed
-                                            </span>
-</td>
-</tr>
-<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-<td class="px-6 py-4 font-medium text-slate-900 dark:text-white whitespace-nowrap">Feb 02, 2023</td>
-<td class="px-6 py-4">
-<div class="flex items-center gap-2">
-<div class="size-6 rounded-full bg-slate-200 bg-cover bg-center" data-alt="Doctor thumbnail" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAmckXSjBp0LL6sUZQihl_UoWGaqNqS57aklFbJDfhg_ofzMvDlCLB2Y79Ny8tlFxAovfgljjXi_KF4h7wlNyD3pmstzvlseEKaH3QpmmYFKTK9I4fuV0vZW3AiNg7irAvfh4HYzM9OQeLzkmpgtemXeXy_eXk9X_rFEfEtroOaCCx6ZL2-n1ahFKfaCenZaNRkoi70-Yxli3c2_5vAVe1yLKsQ6fEJFqRSwDAEZs2ApQP6nafsFV3R9VEoD6h4q6uc20JsBpgqgKC9');"></div>
-<span class="text-slate-700 dark:text-slate-300">Dr. S. Williams</span>
-</div>
-</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Follow-up</td>
-<td class="px-6 py-4 text-slate-600 dark:text-slate-400">Prescription renewal.</td>
-<td class="px-6 py-4">
-<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                                                Completed
-                                            </span>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="visitsTableBody">
+<!-- Visit history rows will be dynamically rendered here -->
+<tr class=\"text-center py-8\">
+<td colspan=\"5\" class=\"px-6 py-8 text-slate-600 dark:text-slate-400\">
+<span class=\"material-symbols-outlined text-4xl text-slate-300 block mb-2\">history</span>
+No visit history found
 </td>
 </tr>
 </tbody>
@@ -494,53 +453,18 @@ function updateStatistics() {
 }
 
 function loadPatients() {
-    // Generate placeholder patients
-    const patients = [
-        {
-            id: 1,
-            name: '[Patient Name]',
-            patientId: '#ML-XXXX',
-            age: '[Age]',
-            lastVisit: '[Date]',
-            status: 'active',
-            avatar: null
-        },
-        {
-            id: 2,
-            name: '[Patient Name]',
-            patientId: '#ML-XXXX',
-            age: '[Age]',
-            lastVisit: '[Date]',
-            status: 'active',
-            avatar: null
-        },
-        {
-            id: 3,
-            name: '[Patient Name]',
-            patientId: '#ML-XXXX',
-            age: '[Age]',
-            lastVisit: '[Date]',
-            status: 'inactive',
-            avatar: null
-        },
-        {
-            id: 4,
-            name: '[Patient Name]',
-            patientId: '#ML-XXXX',
-            age: '[Age]',
-            lastVisit: '[Date]',
-            status: 'active',
-            avatar: null
-        }
-    ];
-    
-    patientsState.patients = patients;
-    renderPatientList(patients);
-    
-    // Select first patient by default
-    if (patients.length > 0) {
-        selectPatient(0);
+    // Placeholder for dynamic patients loading
+    const listContainer = document.querySelector('.flex-1.overflow-y-auto.custom-scrollbar');
+    if (listContainer) {
+        listContainer.innerHTML = `
+            <div class="text-center py-8">
+                <span class="material-symbols-outlined text-4xl text-slate-300">group</span>
+                <p class="text-slate-600 dark:text-slate-400 mt-2">No patients yet</p>
+            </div>
+        `;
     }
+    
+    patientsState.patients = [];
 }
 
 function renderPatientList(patients) {
