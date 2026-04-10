@@ -44,10 +44,10 @@
 <div class="flex flex-col gap-4">
 <!-- User Profile Summary in Sidebar -->
 <div class="flex gap-3 items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
-<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" data-alt="Portrait of Dr. Sarah Mitchell" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA24MAFa8RcTDxqdV0mQvAZwEypWuwj9NMwUFl7aGsIk35mf6bBezsDe8mp-WP2GuvTlj2R1-l_cddJgAzZfGN7bTwuuWsRzJS0YAXTxJgt2XR7Wakd_4ILLXheodY8ZcITJ6LGxpOTEURb5G7zdG2y3swCtdISVx53_TBd3eEQ5jlEderwj_-V5dI3AFSdbYG19cEMXiSqYTdE6okZYNG6u3EXeyUqwlIxBLHV-s8cZCrC6hfpa5GFymFiA6mftaj8dd80yb25Qy-B");'></div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" id="doctorProfileImage" data-alt="Doctor profile picture" style='background-image: url("");'></div>
 <div class="flex flex-col overflow-hidden">
-<h1 class="text-slate-900 dark:text-white text-sm font-semibold truncate">Dr. Sarah Mitchell</h1>
-<p class="text-slate-500 dark:text-slate-400 text-xs truncate">General Practitioner</p>
+<h1 class="text-slate-900 dark:text-white text-sm font-semibold truncate" id="doctorName">—</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs truncate" id="doctorSpecialty">—</p>
 </div>
 </div>
 <!-- Navigation -->
@@ -134,7 +134,7 @@
 <button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-400">
 <span class="material-symbols-outlined text-[20px]">chevron_left</span>
 </button>
-<span class="px-3 text-sm font-semibold text-slate-900 dark:text-white min-w-[100px] text-center">Oct 24, 2023</span>
+<span class="px-3 text-sm font-semibold text-slate-900 dark:text-white min-w-[100px] text-center" id="currentDateDisplay">—</span>
 <button class="p-1 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-400">
 <span class="material-symbols-outlined text-[20px]">chevron_right</span>
 </button>
@@ -157,7 +157,8 @@
 <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
 <div>
 <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Patients Today</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">12</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">No data available</p>
 </div>
 <div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
 <span class="material-symbols-outlined">group</span>
@@ -165,7 +166,8 @@
 </div>
 <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
 <div>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">0</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">No data availableending Requests</p>
 <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">2</p>
 </div>
 <div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
@@ -175,6 +177,7 @@
 <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
 <div>
 <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Cancellations</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">No data available</p>
 <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
 </div>
 <div class="size-10 rounded-full bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center">
@@ -182,7 +185,8 @@
 </div>
 </div>
 <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-<div>
+<div>0</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-2">No data available
 <p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Available Slots</p>
 <p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">4</p>
 </div>
@@ -250,78 +254,22 @@
 <div class="h-24 border-b border-slate-100 dark:border-slate-700/50 w-full"></div>
 </div>
 <!-- Events Container -->
-<div class="grid grid-cols-5 w-full divide-x divide-slate-100 dark:divide-slate-700/50 relative z-10">
+<div class="grid grid-cols-5 w-full divide-x divide-slate-100 dark:divide-slate-700/50 relative z-10" id="scheduleEventsContainer">
 <!-- Monday -->
-<div class="relative group h-full">
-<!-- Event 1 -->
-<div class="absolute top-[24px] left-1 right-1 h-[90px] rounded bg-green-100 dark:bg-green-900/40 border-l-4 border-green-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<p class="text-xs font-bold text-green-800 dark:text-green-300">08:15 AM - 09:00 AM</p>
-<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">Alice Johnson</p>
-<p class="text-xs text-slate-600 dark:text-slate-300 mt-1 flex items-center gap-1">
-<span class="material-symbols-outlined text-[14px]">check_circle</span> Checked In
-                                        </p>
-</div>
-<!-- Event 2 -->
-<div class="absolute top-[260px] left-1 right-1 h-[60px] rounded bg-blue-100 dark:bg-blue-900/40 border-l-4 border-blue-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<p class="text-xs font-bold text-blue-800 dark:text-blue-300">10:45 AM</p>
-<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">Robert Fox</p>
-</div>
-</div>
+<div class="relative group h-full"></div>
 <!-- Tuesday (Today) -->
 <div class="relative h-full bg-slate-50/30 dark:bg-slate-800/20">
 <!-- Current Time Indicator -->
 <div class="absolute top-[320px] w-full border-t-2 border-red-500 z-20 flex items-center">
 <div class="size-2 bg-red-500 rounded-full -ml-1"></div>
 </div>
-<!-- Event 3 -->
-<div class="absolute top-[120px] left-1 right-1 h-[110px] rounded bg-purple-100 dark:bg-purple-900/40 border-l-4 border-purple-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<div class="flex justify-between items-start">
-<p class="text-xs font-bold text-purple-800 dark:text-purple-300">09:15 AM - 10:30 AM</p>
-<span class="material-symbols-outlined text-[16px] text-purple-600">videocam</span>
-</div>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
-<!-- Event 4 (Lunch) -->
-<div class="absolute top-[400px] left-1 right-1 h-[90px] rounded bg-slate-100 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 flex items-center justify-center opacity-70">
-<p class="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center gap-2">
-<span class="material-symbols-outlined text-[18px]">restaurant</span> Lunch Break
-                                        </p>
-</div>
-<!-- Event 5 -->
-<div class="absolute top-[520px] left-1 right-1 h-[80px] rounded bg-blue-100 dark:bg-blue-900/40 border-l-4 border-blue-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<p class="text-xs font-bold text-blue-800 dark:text-blue-300">01:30 PM</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
 </div>
 <!-- Wednesday -->
-<div class="relative h-full">
-<p class="text-xs font-bold text-orange-800 dark:text-orange-300">08:30 AM - 10:00 AM</p>
-<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">James Wilson</p>
-<p class="text-xs text-slate-600 dark:text-slate-300 mt-1 leading-tight">Post-surgery follow up and medication review.</p>
-<div class="mt-2 flex gap-1">
-<span class="px-1.5 py-0.5 bg-white dark:bg-slate-800 rounded text-[10px] text-slate-600 border border-slate-200 dark:border-slate-600">Urgent</span>
-</div>
-</div>
-</div>
+<div class="relative h-full"></div>
 <!-- Thursday -->
-<div class="relative h-full">
-<!-- Empty state example -->
-</div>
+<div class="relative h-full"></div>
 <!-- Friday -->
-<div class="relative h-full">
-<!-- Event 7 -->
-<div class="absolute top-[200px] left-1 right-1 h-[60px] rounded bg-blue-100 dark:bg-blue-900/40 border-l-4 border-blue-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<p class="text-xs font-bold text-blue-800 dark:text-blue-300">10:00 AM</p>
-<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">Emily Davis</p>
-</div>
-<!-- Event 8 -->
-<div class="absolute top-[280px] left-1 right-1 h-[60px] rounded bg-green-100 dark:bg-green-900/40 border-l-4 border-green-500 p-2 cursor-pointer hover:shadow-md transition-shadow">
-<p class="text-xs font-bold text-green-800 dark:text-green-300">11:00 AM</p>
-<p class="text-sm font-semibold text-slate-800 dark:text-white truncate">David Brown</p>
-</div>
-</div>
+<div class="relative h-full"></div>
 </div>
 </div>
 </div>
