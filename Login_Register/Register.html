@@ -240,61 +240,164 @@
 <script type="module">
 import { registerUser } from '../auth/auth-utils.js';
 
+// ✅ FORM VALIDATION HELPER FUNCTIONS
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+}
+
+function showAlert(type, title, description) {
+  const alertMessage = document.getElementById('alertMessage');
+  const alertIcon = document.getElementById('alertIcon');
+  const alertText = document.getElementById('alertText');
+  const alertDescription = document.getElementById('alertDescription');
+
+  const iconMap = {
+    success: 'check_circle',
+    error: 'error',
+    warning: 'warning',
+    info: 'info_outline'
+  };
+
+  const colorMap = {
+    success: 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200',
+    error: 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200',
+    info: 'bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200'
+  };
+
+  alertIcon.textContent = iconMap[type] || 'info';
+  alertText.textContent = title;
+  alertDescription.textContent = description;
+  alertMessage.className = 'rounded-lg p-4 mb-4 flex items-center gap-3 ' + (colorMap[type] || '');
+  alertMessage.classList.remove('hidden');
+
+  if (type !== 'error') {
+    setTimeout(() => alertMessage.classList.add('hidden'), 6000);
+  }
+}
+
 window.handleRegisterSubmit = async function(event) {
+  console.log('📋 Register form submitted');
   event.preventDefault();
+  console.log('✅ preventDefault() called successfully');
 
   const fullName = document.getElementById('fullName').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const confirmPassword = document.getElementById('confirmPassword').value;
+  const agreeTerms = document.getElementById('agreeTerms').checked;
   const role = document.querySelector('input[name="role"]:checked').value;
   const registerBtn = document.getElementById('registerBtn');
-  const alertMessage = document.getElementById('alertMessage');
 
-  // Validate passwords match
-  if (password !== confirmPassword) {
-    showAlert('error', 'Passwords Don\'t Match', 'Your password and confirm password must match.');
+  console.log('📝 Form data:', { fullName, email, password: '***', role, agreeTerms });
+
+  // ✅ VALIDATION: Full name empty
+  if (!fullName) {
+    console.warn('❌ Full name is empty');
+    showAlert('error', 'Name Required', 'Please enter your full name.');
     return;
   }
 
-  // Validate full name
-  if (!fullName || fullName.split(' ').length < 2) {
+  // ✅ VALIDATION: Full name must have first and last
+  if (fullName.split(' ').length < 2) {
+    console.warn('❌ Full name missing first or last name');
     showAlert('error', 'Invalid Name', 'Please enter your full name (first and last name).');
     return;
   }
 
-  // Disable button and show loading state
+  // ✅ VALIDATION: Email empty
+  if (!email) {
+    console.warn('❌ Email is empty');
+    showAlert('error', 'Email Required', 'Please enter your email address.');
+    return;
+  }
+
+  // ✅ VALIDATION: Email format
+  if (!validateEmail(email)) {
+    console.warn('❌ Email format invalid:', email);
+    showAlert('error', 'Invalid Email', 'Please enter a valid email address.');
+    return;
+  }
+
+  // ✅ VALIDATION: Password empty
+  if (!password) {
+    console.warn('❌ Password is empty');
+    showAlert('error', 'Password Required', 'Please enter a password.');
+    return;
+  }
+
+  // ✅ VALIDATION: Password minimum length
+  if (password.length < 8) {
+    console.warn('❌ Password too short:', password.length);
+    showAlert('error', 'Password Too Short', 'Password must be at least 8 characters.');
+    return;
+  }
+
+  // ✅ VALIDATION: Confirm password empty
+  if (!confirmPassword) {
+    console.warn('❌ Confirm password is empty');
+    showAlert('error', 'Confirm Password Required', 'Please confirm your password.');
+    return;
+  }
+
+  // ✅ VALIDATION: Passwords match
+  if (password !== confirmPassword) {
+    console.warn('❌ Passwords do not match');
+    showAlert('error', 'Passwords Don\'t Match', 'Your password and confirm password must match.');
+    return;
+  }
+
+  // ✅ VALIDATION: Terms and conditions
+  if (!agreeTerms) {
+    console.warn('❌ Terms not agreed');
+    showAlert('error', 'Terms Required', 'You must agree to the Terms of Service and Privacy Policy.');
+    return;
+  }
+
+  console.log('✅ All validations passed');
+
+  // ✅ Disable button and show loading state
   registerBtn.disabled = true;
   const originalText = registerBtn.innerHTML;
   registerBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Creating Account...';
+  console.log('⏳ Loading state activated');
 
   try {
+    console.log('🔐 Calling registerUser function...');
     const result = await registerUser(email, password, fullName, role);
+    console.log('✅ registerUser completed:', result);
 
     if (result.success) {
-      // Show success message
-      let message = result.message;
+      console.log('✅ Registration successful!');
+      
+      let message = result.message || 'Account created successfully!';
       if (result.status === 'pending') {
         showAlert('warning', 'Registration Pending', message);
       } else {
         showAlert('success', 'Registration Successful!', message);
       }
 
-      // Redirect after 2 seconds
       setTimeout(() => {
+        console.log('🔐 Redirecting to Login page...');
         window.location.href = 'Login.html';
       }, 2000);
     } else {
+      console.error('❌ Registration failed:', result.error);
       showAlert('error', 'Registration Failed', result.error);
+      
       registerBtn.disabled = false;
       registerBtn.innerHTML = originalText;
     }
   } catch (error) {
-    console.error('Registration error:', error);
-    showAlert('error', 'Error', 'An unexpected error occurred. Please try again.');
+    console.error('📄 Exception in register handler:', error);
+    showAlert('error', 'Error', 'An unexpected error occurred. Check the console for details.');
+    console.error('Full error object:', error);
+    
     registerBtn.disabled = false;
     registerBtn.innerHTML = originalText;
   }
+};
 };
 
 window.togglePasswordVisibility = function(fieldId, button) {
@@ -304,44 +407,15 @@ window.togglePasswordVisibility = function(fieldId, button) {
   if (field.type === 'password') {
     field.type = 'text';
     icon.textContent = 'visibility_off';
+    console.log('👁 Password visibility ("' + fieldId + '"): ON');
   } else {
     field.type = 'password';
     icon.textContent = 'visibility';
+    console.log('👁 Password visibility ("' + fieldId + '"): OFF');
   }
 };
 
-window.showAlert = function(type, title, description) {
-  const alertMessage = document.getElementById('alertMessage');
-  const alertIcon = document.getElementById('alertIcon');
-  const alertText = document.getElementById('alertText');
-  const alertDescription = document.getElementById('alertDescription');
-
-  const iconMap = {
-    success: 'check_circle',
-    error: 'error',
-    warning: 'warning'
-  };
-
-  const colorMap = {
-    success: 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200',
-    error: 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200',
-    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200'
-  };
-
-  alertIcon.textContent = iconMap[type] || 'info';
-  alertText.textContent = title;
-  alertDescription.textContent = description;
-
-  alertMessage.className = 'rounded-lg p-4 mb-4 flex items-center gap-3 ' + (colorMap[type] || '');
-  alertMessage.classList.remove('hidden');
-
-  if (type !== 'error') {
-    setTimeout(() => {
-      alertMessage.classList.add('hidden');
-    }, 6000);
-  }
-};
-
+// Add CSS animation for the loading spinner
 const style = document.createElement('style');
 style.textContent = `
   @keyframes spin {
@@ -352,6 +426,8 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+console.log('✅ Register form handlers initialized successfully');
 </script>
 </body>
 </html>

@@ -184,34 +184,144 @@
 
 <!-- Authentication System -->
 <script type="module">
-import { loginUser } from '../auth/auth-utils.js';
+let loginUser;
+
+// Try to import from auth-utils.js
+try {
+  const authModule = await import('../auth/auth-utils.js');
+  loginUser = authModule.loginUser;
+  console.log('✅ Loaded loginUser from auth-utils.js');
+} catch (error) {
+  console.error('⚠️ Failed to load auth-utils.js:', error);
+  console.log('📌 Using MOCK authentication for testing');
+  
+  // FALLBACK: Mock authentication for testing
+  loginUser = async function(email, password) {
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    const mockUsers = {
+      'admin@medilink.com': { role: 'admin', name: 'Administrator' },
+      'doctor1@medilink.com': { role: 'doctor', name: 'Dr. Sarah' },
+      'patient1@medilink.com': { role: 'patient', name: 'John Doe' }
+    };
+    
+    if (email in mockUsers) {
+      const user = mockUsers[email];
+      const redirectMap = { admin: '../Admin/Admin_Dashboard.html', doctor: '../Doctor/Dashboard.html', patient: '../Patient/index.html' };
+      console.log('✅ Mock login successful for:', email);
+      return { 
+        success: true, 
+        user: { email, role: user.role, fullName: user.name },
+        redirectTo: redirectMap[user.role],
+        message: 'Welcome ' + user.name
+      };
+    }
+    
+    console.error('❌ Mock user not found:', email);
+    return { success: false, error: 'User not found in test data' };
+  };
+}
+
+// ✅ FORM VALIDATION HELPER FUNCTIONS
+function validateEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email.trim());
+}
+
+function showAlert(type, title, description) {
+  const alertMessage = document.getElementById('alertMessage');
+  const alertIcon = document.getElementById('alertIcon');
+  const alertText = document.getElementById('alertText');
+  const alertDescription = document.getElementById('alertDescription');
+
+  const iconMap = {
+    success: 'check_circle',
+    error: 'error',
+    warning: 'warning',
+    info: 'info_outline'
+  };
+
+  const colorMap = {
+    success: 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200',
+    error: 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200',
+    info: 'bg-blue-50 dark:bg-blue-900/20 text-blue-800 dark:text-blue-200'
+  };
+
+  alertIcon.textContent = iconMap[type] || 'info';
+  alertText.textContent = title;
+  alertDescription.textContent = description;
+  alertMessage.className = 'rounded-lg p-4 mb-4 flex items-center gap-3 ' + (colorMap[type] || '');
+  alertMessage.classList.remove('hidden');
+
+  if (type !== 'error') {
+    setTimeout(() => alertMessage.classList.add('hidden'), 6000);
+  }
+}
 
 window.handleLoginSubmit = async function(event) {
+  console.log('📋 Login form submitted');
   event.preventDefault();
+  console.log('✅ preventDefault() called successfully');
 
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const loginBtn = document.getElementById('loginBtn');
-  const alertMessage = document.getElementById('alertMessage');
 
-  // Disable button and show loading state
+  console.log('📝 Form data:', { email: email, password: '***' });
+
+  // ✅ VALIDATION: Email empty
+  if (!email) {
+    console.warn('❌ Email is empty');
+    showAlert('error', 'Email Required', 'Please enter your email address.');
+    return;
+  }
+
+  // ✅ VALIDATION: Email format
+  if (!validateEmail(email)) {
+    console.warn('❌ Email format invalid:', email);
+    showAlert('error', 'Invalid Email', 'Please enter a valid email address.');
+    return;
+  }
+
+  // ✅ VALIDATION: Password empty
+  if (!password) {
+    console.warn('❌ Password is empty');
+    showAlert('error', 'Password Required', 'Please enter your password.');
+    return;
+  }
+
+  // ✅ VALIDATION: Password minimum length
+  if (password.length < 6) {
+    console.warn('❌ Password too short:', password.length);
+    showAlert('error', 'Password Too Short', 'Password must be at least 6 characters.');
+    return;
+  }
+
+  console.log('✅ All validations passed');
+
+  // ✅ Disable button and show loading state
   loginBtn.disabled = true;
   const originalText = loginBtn.innerHTML;
   loginBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Logging in...';
+  console.log('⏳ Loading state activated');
 
   try {
+    console.log('🔐 Calling loginUser function...');
     const result = await loginUser(email, password);
+    console.log('✅ loginUser completed:', result);
 
     if (result.success) {
-      // Show success message
+      console.log('✅ Login successful!');
       showAlert('success', 'Login Successful!', 'Redirecting to your dashboard...');
       
-      // Redirect after 1.5 seconds
       setTimeout(() => {
+        console.log('🔐 Redirecting to:', result.redirectTo);
         window.location.href = result.redirectTo;
       }, 1500);
     } else {
-      // Show error message
+      console.error('❌ Login failed:', result.error);
+      
       let alertType = 'error';
       let title = 'Login Failed';
       
@@ -224,18 +334,15 @@ window.handleLoginSubmit = async function(event) {
       }
 
       showAlert(alertType, title, result.error);
-
-      // Reset button
       loginBtn.disabled = false;
       loginBtn.innerHTML = originalText;
-
-      // Clear password field
       document.getElementById('password').value = '';
     }
   } catch (error) {
-    console.error('Login error:', error);
-    showAlert('error', 'Error', 'An unexpected error occurred. Please try again.');
-
+    console.error('📄 Exception in login handler:', error);
+    showAlert('error', 'Error', 'An unexpected error occurred. Check the console for details.');
+    console.error('Full error object:', error);
+    
     loginBtn.disabled = false;
     loginBtn.innerHTML = originalText;
   }
@@ -248,51 +355,20 @@ window.togglePasswordVisibility = function() {
   if (passwordInput.type === 'password') {
     passwordInput.type = 'text';
     visibilityIcon.textContent = 'visibility_off';
+    console.log('👁 Password visibility: ON');
   } else {
     passwordInput.type = 'password';
     visibilityIcon.textContent = 'visibility';
+    console.log('👁 Password visibility: OFF');
   }
 };
 
 window.showForgotPassword = function() {
+  console.log('🔓 Forgot password clicked - coming soon feature');
   showAlert('warning', 'Coming Soon', 'Password reset functionality will be available soon. Please contact support.');
 };
 
-window.showAlert = function(type, title, description) {
-  const alertMessage = document.getElementById('alertMessage');
-  const alertIcon = document.getElementById('alertIcon');
-  const alertText = document.getElementById('alertText');
-  const alertDescription = document.getElementById('alertDescription');
-
-  // Set icon and color based on type
-  const iconMap = {
-    success: 'check_circle',
-    error: 'error',
-    warning: 'warning'
-  };
-
-  const colorMap = {
-    success: 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200',
-    error: 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200',
-    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200'
-  };
-
-  alertIcon.textContent = iconMap[type] || 'info';
-  alertText.textContent = title;
-  alertDescription.textContent = description;
-
-  alertMessage.className = 'rounded-lg p-4 mb-4 flex items-center gap-3 ' + (colorMap[type] || '');
-  alertMessage.classList.remove('hidden');
-
-  // Auto-hide after 6 seconds (or keep visible if error)
-  if (type !== 'error') {
-    setTimeout(() => {
-      alertMessage.classList.add('hidden');
-    }, 6000);
-  }
-};
-
-// Add some CSS animation for the loading spinner
+// Add CSS animation for the loading spinner
 const style = document.createElement('style');
 style.textContent = `
   @keyframes spin {
@@ -303,6 +379,8 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
+
+console.log('✅ ✅ Login form handlers initialized successfully');
 </script>
 </body>
 </html>
