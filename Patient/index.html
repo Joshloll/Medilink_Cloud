@@ -1,43 +1,539 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="light" lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>MediLink Cloud - Patient Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com" rel="preconnect"/>
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Dashboard - MediLink Cloud</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link rel="stylesheet" href="style.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#137fec',
+                        'background-light': '#f6f7f8',
+                        'background-dark': '#101922',
+                    },
+                    fontFamily: { display: ['Inter', 'sans-serif'] },
+                },
+            },
+        };
+    </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden">
-    <div id="app" class="flex h-screen w-full">
-        <!-- Navigation will be rendered here -->
-        <nav id="navigation"></nav>
-        
-        <!-- Main content area -->
-        <main id="main-content" class="flex-1 flex flex-col h-full overflow-hidden relative">
-            <!-- Header will be rendered here -->
-            <header id="header"></header>
-            
-            <!-- Page content will be rendered here -->
-            <div id="page-content" class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark"></div>
-        </main>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="size-8 text-primary">
+                <span class="material-symbols-outlined text-[32px] leading-none">medical_services</span>
+            </div>
+            <h1 class="text-2xl font-bold">MediLink Cloud</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="patientNameHeader" class="text-sm font-medium text-slate-600 dark:text-slate-400">Patient</span>
+            <button onclick="logoutPatient()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span class="text-sm font-medium">Sign Out</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2" id="welcomeMessage">Welcome, Patient</h2>
+                <p class="text-slate-600 dark:text-slate-400">Manage your health and medical appointments</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Upcoming Appointments</p>
+                            <p class="text-3xl font-bold mt-2" id="upcomingAppointments">0</p>
+                        </div>
+                        <div class="text-blue-500 text-4xl">
+                            <span class="material-symbols-outlined">event_available</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Medical Records</p>
+                            <p class="text-3xl font-bold mt-2" id="medicalRecordsCount">0</p>
+                        </div>
+                        <div class="text-green-500 text-4xl">
+                            <span class="material-symbols-outlined">description</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Active Prescriptions</p>
+                            <p class="text-3xl font-bold mt-2" id="activePrescriptions">0</p>
+                        </div>
+                        <div class="text-purple-500 text-4xl">
+                            <span class="material-symbols-outlined">medication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Total Appointments</p>
+                            <p class="text-3xl font-bold mt-2" id="totalAppointments">0</p>
+                        </div>
+                        <div class="text-orange-500 text-4xl">
+                            <span class="material-symbols-outlined">history</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex gap-4 mb-6 border-b border-slate-200 dark:border-slate-700">
+                <button onclick="switchTab('appointments')" class="px-4 py-2 font-medium text-primary border-b-2 border-primary tab-button" data-tab="appointments">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">event</span>
+                    My Appointments
+                </button>
+                <button onclick="switchTab('doctors')" class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 hover:text-primary tab-button" data-tab="doctors">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">person</span>
+                    Find Doctors
+                </button>
+                <button onclick="switchTab('records')" class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 hover:text-primary tab-button" data-tab="records">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">description</span>
+                    Medical Records
+                </button>
+                <button onclick="switchTab('prescriptions')" class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 hover:text-primary tab-button" data-tab="prescriptions">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">medication</span>
+                    Prescriptions
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <!-- Appointments Tab -->
+            <div id="appointments-tab" class="tab-content">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                        <h3 class="text-lg font-semibold">My Appointments</h3>
+                        <button onclick="showBookingModal()" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium">
+                            <span class="material-symbols-outlined inline text-[18px] mr-1">add</span>
+                            Book Appointment
+                        </button>
+                    </div>
+                    <div id="appointmentsList" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <div class="p-6 text-center text-slate-500">Loading appointments...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Doctors Tab -->
+            <div id="doctors-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">Available Doctors</h3>
+                    </div>
+                    <div id="doctorsList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+                        <div class="text-center text-slate-500">Loading doctors...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records Tab -->
+            <div id="records-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">Medical Records</h3>
+                    </div>
+                    <div id="recordsList" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <div class="p-6 text-center text-slate-500">Loading medical records...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prescriptions Tab -->
+            <div id="prescriptions-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">My Prescriptions</h3>
+                    </div>
+                    <div id="prescriptionsList" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <div class="p-6 text-center text-slate-500">Loading prescriptions...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white dark:bg-slate-800 rounded-lg p-6 max-w-2xl w-full mx-4">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold">Book an Appointment</h2>
+                <button onclick="hideBookingModal()" class="text-slate-500 hover:text-slate-700">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <form onsubmit="handleBookAppointment(event)" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-2">Select Doctor</label>
+                    <select id="bookingDoctorId" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" required>
+                        <option value="">Choose a doctor...</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Date</label>
+                        <input type="date" id="bookingDate" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" required />
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Time</label>
+                        <input type="time" id="bookingTime" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" required />
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-2">Reason for Visit</label>
+                    <textarea id="bookingReason" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" rows="3" required></textarea>
+                </div>
+                <div class="flex gap-4">
+                    <button type="submit" class="flex-1 px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors font-medium">
+                        Book Appointment
+                    </button>
+                    <button type="button" onclick="hideBookingModal()" class="flex-1 px-4 py-2 bg-slate-200 dark:bg-slate-700 text-slate-900 dark:text-white rounded-lg hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors font-medium">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
-    <!-- JavaScript modules -->
-    <script src="services/api.js"></script>
-    <script src="services/state.js"></script>
-    <script src="components/navigation.js"></script>
-    <script src="components/header.js"></script>
-    <script src="components/dashboard.js"></script>
-    <script src="components/appointments.js"></script>
-    <script src="components/records.js"></script>
-    <script src="components/prescriptions.js"></script>
-    <script src="components/settings.js"></script>
-    <script src="app.js"></script>
-    <!-- Touch Reader Debug Tool -->
-    <script src="../debug.js"></script>
+    <!-- Notification -->
+    <div id="notification" class="fixed top-4 right-4 hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 max-w-sm z-50">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined" id="notificationIcon">info</span>
+            <div>
+                <p class="font-medium" id="notificationTitle"></p>
+                <p class="text-xs text-slate-600 dark:text-slate-400" id="notificationMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import {
+            verifyPatientAccess,
+            getPatientInfo,
+            getPatientDashboardStats,
+            getPatientAppointments,
+            bookAppointment,
+            cancelAppointment,
+            getAvailableDoctors,
+            getPatientMedicalRecords,
+            getPatientPrescriptions
+        } from './services/patient-service.js';
+
+        import { logoutUser } from '../auth/auth-utils.js';
+
+        // State
+        let patientData = {};
+        let appointments = [];
+        let doctors = [];
+        let records = [];
+        let prescriptions = [];
+
+        // Initialize
+        async function initialize() {
+            const accessCheck = await verifyPatientAccess();
+            if (!accessCheck.success) {
+                showNotification('error', 'Access Denied', 'Please login as a patient');
+                setTimeout(() => {
+                    window.location.href = '../Login_Register/Login.html';
+                }, 1500);
+                return;
+            }
+
+            const patientInfo = await getPatientInfo();
+            if (patientInfo.success) {
+                patientData = patientInfo.patient;
+                document.getElementById('patientNameHeader').textContent = patientData.user?.full_name || 'Patient';
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${patientData.user?.full_name || 'Patient'}!`;
+            }
+
+            const stats = await getPatientDashboardStats();
+            if (stats.success) {
+                document.getElementById('upcomingAppointments').textContent = stats.upcomingAppointments;
+                document.getElementById('medicalRecordsCount').textContent = stats.medicalRecords;
+                document.getElementById('activePrescriptions').textContent = stats.activePrescriptions;
+                document.getElementById('totalAppointments').textContent = stats.totalAppointments;
+            }
+
+            await loadAppointments();
+            await loadDoctors();
+            await loadRecords();
+            await loadPrescriptions();
+        }
+
+        // Load appointments
+        async function loadAppointments() {
+            const result = await getPatientAppointments();
+            if (result.success) {
+                appointments = result.appointments || [];
+                renderAppointments();
+            }
+        }
+
+        // Render appointments
+        function renderAppointments() {
+            const list = document.getElementById('appointmentsList');
+            if (!appointments || appointments.length === 0) {
+                list.innerHTML = '<div class="p-6 text-center text-slate-500">No appointments scheduled</div>';
+                return;
+            }
+
+            list.innerHTML = appointments.map(apt => `
+                <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                    <div class="flex-1">
+                        <h4 class="font-semibold">Dr. ${apt.doctor?.user?.full_name || 'Unknown'}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-[16px] inline">calendar_today</span>
+                            ${apt.appointment_date} at ${apt.appointment_time}
+                        </p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${apt.reason}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(apt.status)}">
+                            ${apt.status || 'Scheduled'}
+                        </span>
+                        ${apt.status === 'scheduled' ? `<button onclick="cancelApt('${apt.id}')" class="px-3 py-1 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">cancel</span>
+                        </button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        window.cancelApt = async function(aptId) {
+            const result = await cancelAppointment(aptId);
+            if (result.success) {
+                showNotification('success', 'Success', 'Appointment cancelled');
+                await loadAppointments();
+            } else {
+                showNotification('error', 'Error', result.error || 'Failed to cancel');
+            }
+        };
+
+        // Load doctors
+        async function loadDoctors() {
+            const result = await getAvailableDoctors();
+            if (result.success) {
+                doctors = result.doctors || [];
+                renderDoctors();
+                populateDoctorSelect();
+            }
+        }
+
+        // Render doctors
+        function renderDoctors() {
+            const list = document.getElementById('doctorsList');
+            if (!doctors || doctors.length === 0) {
+                list.innerHTML = '<div class="text-center text-slate-500 col-span-3">No doctors available</div>';
+                return;
+            }
+
+            list.innerHTML = doctors.map(doc => `
+                <div class="border border-slate-200 dark:border-slate-700 rounded-lg p-4">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                            ${doc.user?.full_name?.charAt(0) || 'D'}
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Dr. ${doc.user?.full_name || 'Unknown'}</h4>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">${doc.specialty || 'General Practitioner'}</p>
+                        </div>
+                    </div>
+                    <button onclick="setDoctorForBooking('${doc.id}')" class="w-full px-3 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors text-sm font-medium">
+                        Book Now
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        window.setDoctorForBooking = function(doctorId) {
+            document.getElementById('bookingDoctorId').value = doctorId;
+            showBookingModal();
+        };
+
+        // Load records
+        async function loadRecords() {
+            const result = await getPatientMedicalRecords();
+            if (result.success) {
+                records = result.records || [];
+                renderRecords();
+            }
+        }
+
+        // Render records
+        function renderRecords() {
+            const list = document.getElementById('recordsList');
+            if (!records || records.length === 0) {
+                list.innerHTML = '<div class="p-6 text-center text-slate-500">No medical records yet</div>';
+                return;
+            }
+
+            list.innerHTML = records.map(rec => `
+                <div class="p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h4 class="font-semibold">${rec.diagnosis || 'Medical Record'}</h4>
+                            <p class="text-sm text-slate-600 dark:text-slate-400">Dr. ${rec.doctor?.user?.full_name || 'Unknown'}</p>
+                            <p class="text-sm text-slate-600 dark:text-slate-400 mt-2">${rec.treatment || 'No treatment details'}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-500">${new Date(rec.created_at).toLocaleDateString()}</p>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load prescriptions
+        async function loadPrescriptions() {
+            const result = await getPatientPrescriptions();
+            if (result.success) {
+                prescriptions = result.prescriptions || [];
+                renderPrescriptions();
+            }
+        }
+
+        // Render prescriptions
+        function renderPrescriptions() {
+            const list = document.getElementById('prescriptionsList');
+            if (!prescriptions || prescriptions.length === 0) {
+                list.innerHTML = '<div class="p-6 text-center text-slate-500">No prescriptions</div>';
+                return;
+            }
+
+            list.innerHTML = prescriptions.map(presc => `
+                <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50">
+                    <div class="flex-1">
+                        <h4 class="font-semibold">${presc.medication}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${presc.dosage} - ${presc.frequency}</p>
+                        <p class="text-xs text-slate-500 mt-1">Dr. ${presc.doctor?.user?.full_name || 'Unknown'}</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium ${presc.status === 'active' ? 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400' : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400'}">
+                            ${presc.status || 'Active'}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Populate doctor select for booking
+        function populateDoctorSelect() {
+            const select = document.getElementById('bookingDoctorId');
+            select.innerHTML = '<option value="">Choose a doctor...</option>' + doctors.map(d =>
+                `<option value="${d.id}">Dr. ${d.user?.full_name || 'Unknown'} - ${d.specialty}</option>`
+            ).join('');
+        }
+
+        // Booking modal
+        window.showBookingModal = function() {
+            document.getElementById('bookingModal').classList.remove('hidden');
+        };
+
+        window.hideBookingModal = function() {
+            document.getElementById('bookingModal').classList.add('hidden');
+        };
+
+        // Handle book appointment
+        window.handleBookAppointment = async function(event) {
+            event.preventDefault();
+            const doctorId = document.getElementById('bookingDoctorId').value;
+            const date = document.getElementById('bookingDate').value;
+            const time = document.getElementById('bookingTime').value;
+            const reason = document.getElementById('bookingReason').value;
+
+            if (!doctorId) {
+                showNotification('error', 'Error', 'Please select a doctor');
+                return;
+            }
+
+            const result = await bookAppointment(doctorId, date, time, reason);
+            if (result.success) {
+                showNotification('success', 'Success', 'Appointment booked successfully');
+                hideBookingModal();
+                await loadAppointments();
+            } else {
+                showNotification('error', 'Error', result.error || 'Failed to book appointment');
+            }
+        };
+
+        // Get status color
+        function getStatusColor(status) {
+            const colors = {
+                'scheduled': 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+                'completed': 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400',
+                'cancelled': 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400',
+                'no_show': 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+            };
+            return colors[status] || colors['scheduled'];
+        }
+
+        // Switch tab
+        window.switchTab = function(tabName) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('border-b-primary', 'text-primary', 'border-b-2');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            event.target.closest('.tab-button').classList.add('border-b-2', 'border-b-primary', 'text-primary');
+        };
+
+        // Logout
+        window.logoutPatient = async function() {
+            const result = await logoutUser();
+            if (result.success) {
+                window.location.href = '../Login_Register/Login.html';
+            }
+        };
+
+        // Show notification
+        function showNotification(type, title, message) {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notificationIcon');
+            const titleEl = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+
+            const icons = {
+                success: 'check_circle',
+                error: 'error',
+                info: 'info'
+            };
+
+            icon.textContent = icons[type] || 'info';
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+
+            notification.classList.remove('hidden');
+            setTimeout(() => notification.classList.add('hidden'), 3000);
+        }
+
+        // Initialize
+        initialize();
+    </script>
 </body>
 </html>
+

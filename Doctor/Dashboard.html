@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-
-<html class="light" lang="en"><head>
+<html class="light" lang="en">
+<head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>MediLink Cloud - Doctor Dashboard</title>
@@ -36,218 +36,389 @@
         }
     </script>
 </head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen w-full flex">
-<!-- Sidebar -->
-<aside class="hidden lg:flex w-72 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151f2b] h-full shrink-0">
-<div class="flex h-full flex-col justify-between p-4">
-<div class="flex flex-col gap-4">
-<!-- User Profile Summary in Sidebar -->
-<div class="flex gap-3 items-center p-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors cursor-pointer">
-<div class="bg-center bg-no-repeat bg-cover rounded-full size-12 shrink-0 border-2 border-white dark:border-slate-700 shadow-sm" data-alt="Portrait of Dr. Sarah Mitchell" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA24MAFa8RcTDxqdV0mQvAZwEypWuwj9NMwUFl7aGsIk35mf6bBezsDe8mp-WP2GuvTlj2R1-l_cddJgAzZfGN7bTwuuWsRzJS0YAXTxJgt2XR7Wakd_4ILLXheodY8ZcITJ6LGxpOTEURb5G7zdG2y3swCtdISVx53_TBd3eEQ5jlEderwj_-V5dI3AFSdbYG19cEMXiSqYTdE6okZYNG6u3EXeyUqwlIxBLHV-s8cZCrC6hfpa5GFymFiA6mftaj8dd80yb25Qy-B");'></div>
-<div class="flex flex-col overflow-hidden">
-<h1 class="text-slate-900 dark:text-white text-sm font-semibold truncate">Dr. Sarah Mitchell</h1>
-<p class="text-slate-500 dark:text-slate-400 text-xs truncate">General Practitioner</p>
-</div>
-</div>
-<!-- Navigation -->
-<nav class="flex flex-col gap-1">
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary transition-colors group" href="#">
-<span class="material-symbols-outlined text-[24px] fill-1">dashboard</span>
-<span class="text-sm font-medium">Dashboard</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Schedule.html">
-<span class="material-symbols-outlined text-[24px]">calendar_month</span>
-<span class="text-sm font-medium">Schedule</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Patients.html">
-<span class="material-symbols-outlined text-[24px]">group</span>
-<span class="text-sm font-medium">Patients</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Records.html">
-<span class="material-symbols-outlined text-[24px]">description</span>
-<span class="text-sm font-medium">Records</span>
-</a>
-<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-colors group" href="Settings.html">
-<span class="material-symbols-outlined text-[24px]">settings</span>
-<span class="text-sm font-medium">Settings</span>
-</a>
-</nav>
-</div>
-<!-- Bottom Action -->
-<div class="p-2">
-<button class="flex w-full items-center justify-center gap-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-2 text-sm font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-<span class="material-symbols-outlined text-[20px]">logout</span>
-<span>Sign Out</span>
-</button>
-</div>
-</div>
-</aside>
-<!-- Main Content Area -->
-<div class="flex flex-1 flex-col h-full overflow-hidden relative">
-<!-- Top Navigation -->
-<header class="flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-[#151f2b] px-6 shrink-0 z-20">
-<!-- Logo area -->
-<div class="flex items-center gap-3 text-slate-900 dark:text-white">
-<div class="size-8 text-primary flex items-center justify-center bg-primary/10 rounded-lg">
-<span class="material-symbols-outlined">medical_services</span>
-</div>
-<h2 class="text-lg font-bold tracking-tight">MediLink Cloud</h2>
-</div>
-<!-- Search & Actions -->
-<div class="flex items-center gap-6">
-<!-- Search -->
-<div class="hidden md:flex relative group">
-<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-<span class="material-symbols-outlined text-slate-400">search</span>
-</div>
-<input class="block w-64 rounded-lg border-0 bg-slate-100 dark:bg-slate-800 py-2 pl-10 pr-4 text-slate-900 dark:text-white placeholder:text-slate-400 focus:ring-2 focus:ring-primary sm:text-sm sm:leading-6 transition-all" placeholder="Search patients or records..." type="text"/>
-</div>
-<!-- Icons -->
-<div class="flex items-center gap-3">
-<button class="flex size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
-<span class="material-symbols-outlined text-[20px]">notifications</span>
-<span class="absolute top-2 right-2 size-2 rounded-full bg-red-500 border-2 border-white dark:border-slate-800"></span>
-</button>
-<button class="flex size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-<span class="material-symbols-outlined text-[20px]">chat</span>
-</button>
-<!-- Mobile Menu Trigger -->
-<button class="flex lg:hidden size-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
-<span class="material-symbols-outlined text-[20px]">menu</span>
-</button>
-</div>
-</div>
-</header>
-<!-- Main Scrollable Area -->
-<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-6">
-<div class="mx-auto max-w-7xl flex flex-col gap-6">
-<!-- Welcome Section -->
-<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-<div class="flex flex-col gap-2">
-<h1 class="text-3xl font-bold text-slate-900 dark:text-white tracking-tight" id="doctorWelcomeMessage">Welcome back</h1>
-<p class="text-slate-500 dark:text-slate-400">Here's your practice overview for today.</p>
-</div>
-<button class="flex items-center gap-2 rounded-lg bg-primary hover:bg-blue-600 text-white px-4 py-2.5 text-sm font-bold shadow-sm shadow-blue-500/20 transition-all">
-<span class="material-symbols-outlined text-[20px]">add</span>
-<span>New Appointment</span>
-</button>
-</div>
-<!-- Quick Stats -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-<div>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Patients</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
-<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-<span class="material-symbols-outlined">group</span>
-</div>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-<div>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Appointments Today</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
-<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center">
-<span class="material-symbols-outlined">event_available</span>
-</div>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-<div>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Requests</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
-<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-<span class="material-symbols-outlined">pending_actions</span>
-</div>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm flex items-center justify-between">
-<div>
-<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Revenue This Month</p>
-<p class="text-2xl font-bold text-slate-900 dark:text-white mt-1">$0</p>
-<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">No data available</p>
-</div>
-<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 flex items-center justify-center">
-<span class="material-symbols-outlined">payments</span>
-</div>
-</div>
-</div>
-<!-- Today's Schedule Overview -->
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-<!-- Upcoming Appointments -->
-<div class="lg:col-span-2 bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-<div class="flex items-center justify-between mb-4">
-<h3 class="text-lg font-bold text-slate-900 dark:text-white">Today's Appointments</h3>
-<a href="Schedule.html" class="text-primary text-sm font-semibold hover:underline">View Full Schedule</a>
-</div>
-<div class="flex flex-col items-center justify-center py-8">
-<span class="material-symbols-outlined text-4xl text-slate-300 mb-4">event_busy</span>
-<p class="text-lg font-semibold text-slate-900 dark:text-white">No appointments scheduled</p>
-<p class="text-sm text-slate-500 dark:text-slate-400">Your schedule is clear for today</p>
-</div>
-</div>
-<!-- Recent Activity -->
-<div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm">
-<h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4">Recent Activity</h3>
-<div class="flex flex-col items-center justify-center py-8">
-<span class="material-symbols-outlined text-4xl text-slate-300 mb-4">history</span>
-<p class="text-lg font-semibold text-slate-900 dark:text-white">No recent activity</p>
-<p class="text-sm text-slate-500 dark:text-slate-400">No activity to display yet</p>
-</div>
-</div>
-</div>
-</div>
-<!-- Quick Actions -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex items-center justify-between mb-3">
-<div class="size-10 rounded-full bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 flex items-center justify-center">
-<span class="material-symbols-outlined">person_add</span>
-</div>
-<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
-</div>
-<h4 class="font-semibold text-slate-900 dark:text-white">New Patient</h4>
-<p class="text-xs text-slate-500 dark:text-slate-400">Register new patient</p>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex items-center justify-between mb-3">
-<div class="size-10 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 flex items-center justify-center">
-<span class="material-symbols-outlined">medication</span>
-</div>
-<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
-</div>
-<h4 class="font-semibold text-slate-900 dark:text-white">Prescribe</h4>
-<p class="text-xs text-slate-500 dark:text-slate-400">Issue prescription</p>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex items-center justify-between mb-3">
-<div class="size-10 rounded-full bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 flex items-center justify-center">
-<span class="material-symbols-outlined">science</span>
-</div>
-<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
-</div>
-<h4 class="font-semibold text-slate-900 dark:text-white">Lab Results</h4>
-<p class="text-xs text-slate-500 dark:text-slate-400">Review test results</p>
-</div>
-<div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-<div class="flex items-center justify-between mb-3">
-<div class="size-10 rounded-full bg-amber-50 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 flex items-center justify-center">
-<span class="material-symbols-outlined">analytics</span>
-</div>
-<span class="material-symbols-outlined text-slate-400">arrow_forward</span>
-</div>
-<h4 class="font-semibold text-slate-900 dark:text-white">Analytics</h4>
-<p class="text-xs text-slate-500 dark:text-slate-400">View reports</p>
-</div>
-</div>
-</div>
-</main>
-</div>
-<!-- JavaScript modules -->
-<script type="module" src="doctor.js"></script>
-    <!-- Touch Reader Debug Tool -->
-    <script src="../debug.js"></script>
-</body></html>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display h-screen flex flex-col">
+    <!-- Header -->
+    <header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-4 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="size-8 text-primary">
+                <span class="material-symbols-outlined text-[32px] leading-none">medical_services</span>
+            </div>
+            <h1 class="text-2xl font-bold">MediLink Cloud</h1>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="doctorNameHeader" class="text-sm font-medium text-slate-600 dark:text-slate-400">Dr. ...</span>
+            <button onclick="logoutDoctor()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">logout</span>
+                <span class="text-sm font-medium">Sign Out</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-y-auto">
+        <div class="max-w-7xl mx-auto px-6 py-8">
+            <!-- Welcome Section -->
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold mb-2" id="welcomeMessage">Welcome, Doctor</h2>
+                <p class="text-slate-600 dark:text-slate-400">Here's your overview for today</p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Today's Appointments</p>
+                            <p class="text-3xl font-bold mt-2" id="appointmentsToday">0</p>
+                        </div>
+                        <div class="text-blue-500 text-4xl">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Total Patients</p>
+                            <p class="text-3xl font-bold mt-2" id="totalPatients">0</p>
+                        </div>
+                        <div class="text-green-500 text-4xl">
+                            <span class="material-symbols-outlined">group</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Pending Prescriptions</p>
+                            <p class="text-3xl font-bold mt-2" id="pendingPrescriptions">0</p>
+                        </div>
+                        <div class="text-purple-500 text-4xl">
+                            <span class="material-symbols-outlined">medication</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-lg p-6 border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-slate-600 dark:text-slate-400 text-sm font-medium">Completed This Month</p>
+                            <p class="text-3xl font-bold mt-2" id="completedThisMonth">0</p>
+                        </div>
+                        <div class="text-orange-500 text-4xl">
+                            <span class="material-symbols-outlined">check_circle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Navigation -->
+            <div class="flex gap-4 mb-6 border-b border-slate-200 dark:border-slate-700">
+                <button onclick="switchTab('appointments')" class="px-4 py-2 font-medium text-primary border-b-2 border-primary tab-button" data-tab="appointments">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">event</span>
+                    Appointments
+                </button>
+                <button onclick="switchTab('patients')" class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 hover:text-primary tab-button" data-tab="patients">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">person</span>
+                    Patients
+                </button>
+                <button onclick="switchTab('records')" class="px-4 py-2 font-medium text-slate-600 dark:text-slate-400 hover:text-primary tab-button" data-tab="records">
+                    <span class="material-symbols-outlined inline text-[20px] mr-1">description</span>
+                    Medical Records
+                </button>
+            </div>
+
+            <!-- Tab Content -->
+            <!-- Appointments Tab -->
+            <div id="appointments-tab" class="tab-content">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">My Appointments</h3>
+                    </div>
+                    <div id="appointmentsList" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <div class="p-6 text-center text-slate-500">Loading appointments...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Tab -->
+            <div id="patients-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">My Patients</h3>
+                    </div>
+                    <div id="patientsList" class="divide-y divide-slate-200 dark:divide-slate-700">
+                        <div class="p-6 text-center text-slate-500">Loading patients...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Medical Records Tab -->
+            <div id="records-tab" class="tab-content hidden">
+                <div class="bg-white dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold">Create Medical Record</h3>
+                    </div>
+                    <div class="p-6">
+                        <form id="recordForm" onsubmit="handleCreateRecord(event)">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <select id="recordPatientId" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" required>
+                                    <option value="">Select a patient...</option>
+                                </select>
+                                <input type="text" id="recordDiagnosis" placeholder="Diagnosis" class="rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white" required />
+                            </div>
+                            <textarea id="recordTreatment" placeholder="Treatment" class="w-full rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-700 p-3 text-slate-900 dark:text-white mb-4" rows="3" required></textarea>
+                            <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
+                                <span class="material-symbols-outlined inline text-[20px] mr-1">add</span>
+                                Create Record
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification -->
+    <div id="notification" class="fixed top-4 right-4 hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg shadow-lg p-4 max-w-sm z-50">
+        <div class="flex items-center gap-3">
+            <span class="material-symbols-outlined" id="notificationIcon">info</span>
+            <div>
+                <p class="font-medium" id="notificationTitle"></p>
+                <p class="text-xs text-slate-600 dark:text-slate-400" id="notificationMessage"></p>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { 
+            verifyDoctorAccess, 
+            getDoctorInfo, 
+            getDoctorDashboardStats,
+            getDoctorAppointments,
+            getDoctorPatients,
+            updateAppointmentStatus,
+            createMedicalRecord
+        } from './services/doctor-service.js';
+
+        import { logoutUser } from '../auth/auth-utils.js';
+
+        // State
+        let doctorData = {};
+        let appointments = [];
+        let patients = [];
+
+        // Initialize
+        async function initialize() {
+            // Verify doctor access
+            const accessCheck = await verifyDoctorAccess();
+            if (!accessCheck.success) {
+                showNotification('error', 'Access Denied', 'Please login as a doctor');
+                setTimeout(() => {
+                    window.location.href = '../Login_Register/Login.html';
+                }, 1500);
+                return;
+            }
+
+            // Load doctor info
+            const docInfo = await getDoctorInfo();
+            if (docInfo.success) {
+                doctorData = docInfo.doctor;
+                document.getElementById('doctorNameHeader').textContent = `Dr. ${doctorData.user?.full_name || 'Doctor'}`;
+                document.getElementById('welcomeMessage').textContent = `Welcome back, Dr. ${doctorData.user?.full_name || 'Doctor'}!`;
+            }
+
+            // Load dashboard stats
+            const stats = await getDoctorDashboardStats();
+            if (stats.success) {
+                document.getElementById('appointmentsToday').textContent = stats.appointmentsToday;
+                document.getElementById('totalPatients').textContent = stats.totalPatients;
+                document.getElementById('pendingPrescriptions').textContent = stats.pendingPrescriptions;
+                document.getElementById('completedThisMonth').textContent = stats.completedThisMonth;
+            }
+
+            // Load appointments
+            await loadAppointments();
+
+            // Load patients
+            await loadPatients();
+        }
+
+        // Load appointments
+        async function loadAppointments() {
+            const result = await getDoctorAppointments();
+            if (result.success) {
+                appointments = result.appointments || [];
+                renderAppointments();
+            }
+        }
+
+        // Render appointments
+        function renderAppointments() {
+            const list = document.getElementById('appointmentsList');
+            
+            if (!appointments || appointments.length === 0) {
+                list.innerHTML = '<div class="p-6 text-center text-slate-500">No appointments scheduled</div>';
+                return;
+            }
+
+            list.innerHTML = appointments.map(apt => `
+                <div class="p-6 flex items-center justify-between hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <div class="flex-1">
+                        <h4 class="font-semibold">${apt.patient?.user?.full_name || 'Unknown Patient'}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">
+                            <span class="material-symbols-outlined text-[16px] inline">calendar_today</span>
+                            ${apt.appointment_date} at ${apt.appointment_time}
+                        </p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400 mt-1">${apt.reason}</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(apt.status)}">
+                            ${apt.status || 'Scheduled'}
+                        </span>
+                        <button onclick="markCompleted('${apt.id}')" class="px-3 py-1 rounded-lg bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/30 transition-colors">
+                            <span class="material-symbols-outlined text-[18px]">check</span>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Get status color
+        function getStatusColor(status) {
+            const colors = {
+                'scheduled': 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+                'completed': 'bg-green-50 dark:bg-green-900/20 text-green-600 dark:text-green-400',
+                'cancelled': 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400',
+                'no_show': 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+            };
+            return colors[status] || colors['scheduled'];
+        }
+
+        // Mark appointment as completed
+        window.markCompleted = async function(appointmentId) {
+            const result = await updateAppointmentStatus(appointmentId, 'completed');
+            if (result.success) {
+                showNotification('success', 'Success', 'Appointment marked as completed');
+                await loadAppointments();
+            } else {
+                showNotification('error', 'Error', result.error || 'Failed to update appointment');
+            }
+        };
+
+        // Load patients
+        async function loadPatients() {
+            const result = await getDoctorPatients();
+            if (result.success) {
+                patients = result.patients || [];
+                renderPatients();
+                populatePatientSelect();
+            }
+        }
+
+        // Render patients
+        function renderPatients() {
+            const list = document.getElementById('patientsList');
+            
+            if (!patients || patients.length === 0) {
+                list.innerHTML = '<div class="p-6 text-center text-slate-500">No patients found</div>';
+                return;
+            }
+
+            list.innerHTML = patients.map(patient => `
+                <div class="p-6 flex items-center gap-4">
+                    <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold">
+                        ${patient.user?.full_name?.charAt(0) || 'P'}
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-semibold">${patient.user?.full_name || 'Unknown'}</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">${patient.user?.email || 'No email'}</p>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Blood Type: ${patient.blood_type || 'Not specified'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Populate patient select
+        function populatePatientSelect() {
+            const select = document.getElementById('recordPatientId');
+            if (patients.length > 0) {
+                select.innerHTML = '<option value="">Select a patient...</option>' + patients.map(p => 
+                    `<option value="${p.id}">${p.user?.full_name || 'Unknown'}</option>`
+                ).join('');
+            }
+        }
+
+        // Handle create record
+        window.handleCreateRecord = async function(event) {
+            event.preventDefault();
+            
+            const patientId = document.getElementById('recordPatientId').value;
+            const diagnosis = document.getElementById('recordDiagnosis').value;
+            const treatment = document.getElementById('recordTreatment').value;
+
+            if (!patientId) {
+                showNotification('error', 'Error', 'Please select a patient');
+                return;
+            }
+
+            const result = await createMedicalRecord(patientId, diagnosis, treatment);
+            if (result.success) {
+                showNotification('success', 'Success', 'Medical record created');
+                document.getElementById('recordForm').reset();
+            } else {
+                showNotification('error', 'Error', result.error || 'Failed to create record');
+            }
+        };
+
+        // Switch tab
+        window.switchTab = function(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            // Remove active state from buttons
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('border-b-primary', 'text-primary', 'border-b-2');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.remove('hidden');
+            // Add active state to button
+            event.target.closest('.tab-button').classList.add('border-b-2', 'border-b-primary', 'text-primary');
+        };
+
+        // Logout
+        window.logoutDoctor = async function() {
+            const result = await logoutUser();
+            if (result.success) {
+                window.location.href = '../Login_Register/Login.html';
+            }
+        };
+
+        // Show notification
+        function showNotification(type, title, message) {
+            const notification = document.getElementById('notification');
+            const icon = document.getElementById('notificationIcon');
+            const titleEl = document.getElementById('notificationTitle');
+            const messageEl = document.getElementById('notificationMessage');
+
+            const icons = {
+                success: 'check_circle',
+                error: 'error',
+                info: 'info'
+            };
+
+            icon.textContent = icons[type] || 'info';
+            titleEl.textContent = title;
+            messageEl.textContent = message;
+
+            notification.classList.remove('hidden');
+            setTimeout(() => notification.classList.add('hidden'), 3000);
+        }
+
+        // Initialize
+        initialize();
+    </script>
+</body>
+</html>

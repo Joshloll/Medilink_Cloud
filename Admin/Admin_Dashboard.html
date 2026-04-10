@@ -13,6 +13,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
 <!-- Tailwind CSS -->
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Global Styles -->
+<link rel="stylesheet" href="../css/global-styles.css">
+<!-- Global Event Handler -->
+<script type="module" src="../js/global-event-handler.js"></script>
 <!-- Theme Configuration -->
 <script id="tailwind-config">
         tailwind.config = {
@@ -91,9 +95,9 @@
 </div>
 <!-- Bottom Actions -->
 <div class="p-4 border-t border-border-light dark:border-border-dark">
-<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-md hover:bg-blue-600 transition-colors">
-<span class="material-symbols-outlined text-[20px]">lock</span>
-<span class="truncate">Lock Screen</span>
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold shadow-md hover:bg-blue-600 transition-colors" data-action="logout">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="truncate">Sign Out</span>
 </button>
 </div>
 </aside>
@@ -103,7 +107,7 @@
 <header class="h-16 flex items-center justify-between px-6 border-b border-border-light dark:border-border-dark bg-surface-light dark:bg-surface-dark flex-shrink-0 z-10">
 <div class="flex items-center gap-4">
 <!-- Mobile Menu Toggle (Visible on small screens) -->
-<button class="md:hidden text-slate-500 hover:text-slate-700">
+<button class="md:hidden text-slate-500 hover:text-slate-700" data-action="toggle-sidebar">
 <span class="material-symbols-outlined">menu</span>
 </button>
 <h2 class="hidden sm:block text-lg font-bold tracking-tight">Dashboard Overview</h2>
@@ -117,17 +121,17 @@
 </div>
 <div class="flex items-center gap-3">
 <!-- Quick Actions Menu -->
-<button class="hidden sm:flex h-9 items-center gap-2 px-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<button class="hidden sm:flex h-9 items-center gap-2 px-3 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors" data-action="create-user">
 <span class="material-symbols-outlined text-[18px]">add</span>
-<span>New</span>
+<span>New User</span>
 </button>
 <div class="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-1"></div>
-<button class="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<button class="relative p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-action="view-notifications">
 <span class="material-symbols-outlined">notifications</span>
 <span class="absolute top-1.5 right-1.5 size-2 bg-red-500 rounded-full border-2 border-surface-light dark:border-surface-dark"></span>
 </button>
-<button class="p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-<span class="material-symbols-outlined">chat</span>
+<button class="p-2 rounded-full text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" data-action="toggle-dark-mode">
+<span class="material-symbols-outlined">dark_mode</span>
 </button>
 <div class="flex items-center gap-2 ml-2 pl-2 border-l border-slate-200 dark:border-slate-700">
 <div class="text-right hidden sm:block">
@@ -147,13 +151,13 @@
 <p class="text-slate-500 dark:text-slate-400 mt-1">Here is what's happening at your clinic today.</p>
 </div>
 <div class="flex gap-2">
-<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors">
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-primary text-white text-sm font-medium shadow-sm hover:bg-blue-600 transition-colors" data-action="create-appointment">
 <span class="material-symbols-outlined text-[20px]">calendar_add_on</span>
 <span>Book Appointment</span>
 </button>
-<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<button class="flex items-center justify-center gap-2 rounded-lg h-10 px-4 bg-surface-light dark:bg-surface-dark border border-border-light dark:border-border-dark text-slate-700 dark:text-slate-200 text-sm font-medium hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" data-action="find-doctors">
 <span class="material-symbols-outlined text-[20px]">how_to_reg</span>
-<span>Accept Patient</span>
+<span>View Pending</span>
 </button>
 </div>
 </div>
@@ -251,7 +255,19 @@
 </main>
 </div>
 </div>
-<script>
+<script type="module">
+import { 
+    verifyAdminAccess,
+    getAdminInfo,
+    getDashboardStats,
+    getPendingUsers,
+    getDoctorsList,
+    getAppointments,
+    approveUserAccount,
+    rejectUserAccount,
+    logSystemActivity
+} from './admin-service.js';
+
 // Admin Dashboard State Management
 const adminState = {
     user: {
@@ -261,34 +277,50 @@ const adminState = {
     },
     stats: {
         appointmentsToday: 0,
-        patientsWaiting: 0,
-        doctorsOnDuty: 0,
-        pendingLabs: 0
+        totalPatients: 0,
+        totalDoctors: 0,
+        pendingApprovals: 0
     },
     appointments: [],
     doctors: [],
+    pendingUsers: [],
     alerts: []
 };
 
 // Initialize Dashboard
-document.addEventListener('DOMContentLoaded', function() {
-    initializeDashboard();
+document.addEventListener('DOMContentLoaded', async function() {
+    const hasAccess = await verifyAdminAccess();
+    if (!hasAccess) {
+        alert('Access denied. Admin only.');
+        window.location.href = '../Login_Register/Login.html';
+        return;
+    }
+    
+    await initializeDashboard();
     setupEventListeners();
-    loadDashboardData();
+    await loadDashboardData();
 });
 
-function initializeDashboard() {
-    // Set user information
-    const userName = localStorage.getItem('adminName') || '[Admin Name]';
-    adminState.user.name = userName;
-    
-    // Update UI with user info
-    document.getElementById('adminName').textContent = userName;
-    document.getElementById('greetingMessage').textContent = getGreeting(userName);
-    
-    // Set profile image placeholder
-    const profileImage = document.getElementById('adminProfileImage');
-    profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=137fec&color=fff&size=36')`;
+async function initializeDashboard() {
+    try {
+        // Get admin info from Supabase
+        const adminInfo = await getAdminInfo();
+        
+        if (adminInfo) {
+            adminState.user.name = adminInfo.full_name || 'Administrator';
+            adminState.user.email = adminInfo.email;
+            
+            // Update UI with user info
+            document.getElementById('adminName').textContent = adminState.user.name;
+            document.getElementById('greetingMessage').textContent = getGreeting(adminState.user.name);
+            
+            // Set profile image
+            const profileImage = document.getElementById('adminProfileImage');
+            profileImage.style.backgroundImage = `url('https://ui-avatars.com/api/?name=${encodeURIComponent(adminState.user.name)}&background=137fec&color=fff&size=36')`;
+        }
+    } catch (error) {
+        console.error('Error initializing dashboard:', error);
+    }
 }
 
 function getGreeting(name) {
@@ -317,7 +349,7 @@ function setupEventListeners() {
     const acceptPatientBtn = document.querySelector('button:has(.material-symbols-outlined.how_to_reg)');
     if (acceptPatientBtn) {
         acceptPatientBtn.addEventListener('click', function() {
-            window.location.href = 'Admin_Patients.html';
+            window.location.href = 'User_Approval.html';
         });
     }
     
@@ -325,7 +357,7 @@ function setupEventListeners() {
     const notifBtn = document.querySelector('button:has(.material-symbols-outlined.notifications)');
     if (notifBtn) {
         notifBtn.addEventListener('click', function() {
-            showNotification('No new notifications');
+            showNotificationPanel();
         });
     }
     
@@ -346,160 +378,164 @@ function setupEventListeners() {
     }
 }
 
-function loadDashboardData() {
-    // Simulate loading data from API
-    setTimeout(() => {
-        // Update statistics
-        updateStatistics();
+async function loadDashboardData() {
+    try {
+        // Load dashboard statistics from Supabase
+        const statsResult = await getDashboardStats();
+        if (statsResult.success) {
+            adminState.stats = {
+                appointmentsToday: statsResult.appointmentsToday,
+                totalPatients: statsResult.totalPatients,
+                totalDoctors: statsResult.totalDoctors,
+                pendingApprovals: statsResult.pendingApprovals
+            };
+        }
         
-        // Load appointments
-        loadAppointments();
+        // Update UI statistics
+        document.getElementById('totalPatients').textContent = adminState.stats.totalPatients;
+        document.getElementById('totalDoctors').textContent = adminState.stats.totalDoctors;
+        document.getElementById('appointmentsToday').textContent = adminState.stats.appointmentsToday;
+        document.getElementById('pendingApprovals').textContent = adminState.stats.pendingApprovals;
+        document.getElementById('pendingCount').textContent = adminState.stats.pendingApprovals;
         
-        // Load doctors
-        loadDoctors();
+        // Load doctors list
+        await loadDoctors();
         
-        // Load alerts
-        loadAlerts();
-    }, 1000);
-}
-
-function updateStatistics() {
-    // Load statistics from localStorage or API
-    // For now using localStorage, will be replaced with API calls
-    
-    // Get patients count
-    const patientsData = JSON.parse(localStorage.getItem('patients') || '[]');
-    const totalPatients = patientsData.length;
-    
-    // Get doctors count
-    const doctorsData = JSON.parse(localStorage.getItem('doctors') || '[]');
-    const totalDoctors = doctorsData.length;
-    
-    // Get appointments count
-    const appointmentsData = JSON.parse(localStorage.getItem('appointments') || '[]');
-    const appointmentsToday = appointmentsData.filter(apt => {
-        const aptDate = new Date(apt.date);
-        const today = new Date();
-        return aptDate.toDateString() === today.toDateString();
-    }).length;
-    
-    // Get pending approvals
-    const pendingApprovals = JSON.parse(localStorage.getItem('pendingApprovals') || '[]').length;
-    
-    adminState.stats = {
-        appointmentsToday: appointmentsToday,
-        totalPatients: totalPatients,
-        totalDoctors: totalDoctors,
-        pendingApprovals: pendingApprovals
-    };
-    
-    // Update UI
-    document.getElementById('totalPatients').textContent = totalPatients;
-    document.getElementById('totalDoctors').textContent = totalDoctors;
-    document.getElementById('appointmentsToday').textContent = appointmentsToday;
-    document.getElementById('pendingApprovals').textContent = pendingApprovals;
-    document.getElementById('pendingCount').textContent = pendingApprovals;
-}
-
-function loadAppointments() {
-    // This function is maintained for future use
-    // Currently, appointments are shown in the stats section
-}
-
-function loadDoctors() {
-    // Load doctors from localStorage or API
-    const doctorsData = JSON.parse(localStorage.getItem('doctors') || '[]');
-    const doctorStatusList = document.getElementById('doctor-status-list');
-    
-    if (!doctorStatusList) return;
-    
-    if (doctorsData.length === 0) {
-        doctorStatusList.innerHTML = `
-            <div class="text-center py-8">
-                <span class="material-symbols-outlined text-4xl text-slate-300">stethoscope</span>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No doctors available</p>
-            </div>
-        `;
-        return;
+        // Load pending users
+        await loadPendingUsers();
+        
+        // Log system activity
+        await logSystemActivity('dashboard_loaded', 'admin', null);
+        
+    } catch (error) {
+        console.error('Error loading dashboard data:', error);
+        showNotification('Error loading dashboard data');
     }
-    
-    // Display first 5 doctors with status
-    const doctorsList = doctorsData.slice(0, 5).map(doctor => {
-        const statusClass = doctor.status === 'Online' 
-            ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
-            : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
-        
-        const statusDot = doctor.status === 'Online' 
-            ? 'bg-green-500' 
-            : 'bg-slate-400';
-        
-        return `
-            <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
-                        ${doctor.name ? doctor.name.charAt(0).toUpperCase() : 'D'}
-                    </div>
-                    <div class="flex-1">
-                        <p class="text-sm font-medium text-slate-900 dark:text-white">${doctor.name || 'Unknown Doctor'}</p>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">${doctor.specialty || 'General Practice'}</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="${statusDot} w-2 h-2 rounded-full"></span>
-                    <span class="text-xs px-2 py-1 rounded-full ${statusClass}">${doctor.status || 'Offline'}</span>
-                </div>
-            </div>
-        `;
-    }).join('');
-    
-    doctorStatusList.innerHTML = doctorsList;
 }
 
-function loadAlerts() {
-    // Load alerts from localStorage or API
-    const alertsData = JSON.parse(localStorage.getItem('alerts') || '[]');
-    const alertsContainer = document.getElementById('alerts-container');
-    
-    if (!alertsContainer) return;
-    
-    if (alertsData.length === 0) {
-        alertsContainer.innerHTML = `
-            <div class="text-center py-8">
-                <span class="material-symbols-outlined text-4xl text-slate-300">notifications</span>
-                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">All systems running smoothly</p>
-            </div>
-        `;
-        return;
-    }
-    
-    // Display alerts
-    const alertsList = alertsData.slice(0, 3).map(alert => {
-        const alertTypeClass = alert.type === 'error' 
-            ? 'bg-red-100 dark:bg-red-900/30 border-l-4 border-red-500' 
-            : alert.type === 'warning' 
-            ? 'bg-amber-100 dark:bg-amber-900/30 border-l-4 border-amber-500' 
-            : 'bg-blue-100 dark:bg-blue-900/30 border-l-4 border-blue-500';
+async function loadDoctors() {
+    try {
+        const result = await getDoctorsList();
         
-        const alertIcon = alert.type === 'error' 
-            ? 'error' 
-            : alert.type === 'warning' 
-            ? 'warning' 
-            : 'info';
+        if (!result.success) {
+            console.error('Error loading doctors:', result.error);
+            return;
+        }
         
-        return `
-            <div class="p-3 rounded-lg ${alertTypeClass} text-sm">
-                <div class="flex items-start gap-2">
-                    <span class="material-symbols-outlined text-base flex-shrink-0">${alertIcon}</span>
-                    <div>
-                        <p class="font-medium text-slate-900 dark:text-slate-100">${alert.title || 'System Alert'}</p>
-                        <p class="text-xs text-slate-600 dark:text-slate-400 mt-1">${alert.message || ''}</p>
+        const doctors = result.doctors || [];
+        adminState.doctors = doctors;
+        
+        const doctorStatusList = document.getElementById('doctor-status-list');
+        if (!doctorStatusList) return;
+        
+        if (doctors.length === 0) {
+            doctorStatusList.innerHTML = `
+                <div class="text-center py-8">
+                    <span class="material-symbols-outlined text-4xl text-slate-300">stethoscope</span>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No doctors available</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Display first 5 doctors with status
+        const doctorsList = doctors.slice(0, 5).map(doctor => {
+            const doctorName = doctor.user?.full_name || 'Unknown Doctor';
+            const specialty = doctor.specialty || 'General Practice';
+            const status = doctor.availability_status === 'available' ? 'Online' : 'Offline';
+            const statusClass = doctor.availability_status === 'available' 
+                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400' 
+                : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400';
+            
+            const statusDot = doctor.availability_status === 'available' 
+                ? 'bg-green-500' 
+                : 'bg-slate-400';
+            
+            return `
+                <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer" onclick="viewDoctorDetails('${doctor.id}')">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center text-white font-bold text-sm">
+                            ${doctorName.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-slate-900 dark:text-white">${doctorName}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">${specialty}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="${statusDot} w-2 h-2 rounded-full"></span>
+                        <span class="text-xs px-2 py-1 rounded-full ${statusClass}">${status}</span>
                     </div>
                 </div>
-            </div>
-        `;
-    }).join('');
-    
-    alertsContainer.innerHTML = alertsList;
+            `;
+        }).join('');
+        
+        doctorStatusList.innerHTML = doctorsList;
+    } catch (error) {
+        console.error('Error in loadDoctors:', error);
+    }
+}
+
+async function loadPendingUsers() {
+    try {
+        const result = await getPendingUsers();
+        
+        if (!result.success) {
+            console.error('Error loading pending users:', result.error);
+            return;
+        }
+        
+        const pendingUsers = result.users || [];
+        adminState.pendingUsers = pendingUsers;
+        
+        const pendingUsersContainer = document.getElementById('pending-users-container');
+        if (!pendingUsersContainer) return;
+        
+        if (pendingUsers.length === 0) {
+            pendingUsersContainer.innerHTML = `
+                <div class="text-center py-8">
+                    <span class="material-symbols-outlined text-4xl text-slate-300">person_add</span>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">No pending approvals</p>
+                </div>
+            `;
+            return;
+        }
+        
+        // Display pending users
+        const usersList = pendingUsers.slice(0, 5).map(user => {
+            const initials = (user.full_name || 'U').split(' ').map(n => n[0]).join('').toUpperCase();
+            const roleClass = user.role === 'doctor' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' 
+                            : user.role === 'admin' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
+                            : 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400';
+            
+            return `
+                <div class="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-sm">
+                            ${initials}
+                        </div>
+                        <div class="flex-1">
+                            <p class="text-sm font-medium text-slate-900 dark:text-white">${user.full_name || 'Unknown'}</p>
+                            <p class="text-xs text-slate-500 dark:text-slate-400">${user.email}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs px-2 py-1 rounded-full ${roleClass} font-semibold">${user.role}</span>
+                        <button onclick="approveUser('${user.id}')" class="p-1 text-green-600 hover:bg-green-100 dark:hover:bg-green-900/30 rounded transition-colors" title="Approve">
+                            <span class="material-symbols-outlined text-lg">check_circle</span>
+                        </button>
+                        <button onclick="rejectUser('${user.id}')" class="p-1 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/30 rounded transition-colors" title="Reject">
+                            <span class="material-symbols-outlined text-lg">cancel</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+        }).join('');
+        
+        pendingUsersContainer.innerHTML = usersList;
+    } catch (error) {
+        console.error('Error in loadPendingUsers:', error);
+    }
 }
 
 function showNotification(message) {
@@ -521,17 +557,26 @@ function showNotification(message) {
     }, 3000);
 }
 
+function showNotificationPanel() {
+    if (adminState.pendingUsers.length === 0) {
+        showNotification('No new notifications');
+    } else {
+        showNotification(`You have ${adminState.pendingUsers.length} pending user approvals`);
+    }
+}
+
 function lockScreen() {
     // Create lock screen overlay
     const lockScreen = document.createElement('div');
     lockScreen.className = 'fixed inset-0 bg-slate-900 bg-opacity-95 flex items-center justify-center z-50';
+    lockScreen.id = 'lockScreenOverlay';
     lockScreen.innerHTML = `
         <div class="text-center">
             <div class="size-20 rounded-full bg-primary/20 flex items-center justify-center mx-auto mb-4">
                 <span class="material-symbols-outlined text-4xl text-primary">lock</span>
             </div>
             <h2 class="text-2xl font-bold text-white mb-2">Screen Locked</h2>
-            <p class="text-slate-400 mb-6">Press Enter to unlock</p>
+            <p class="text-slate-400 mb-6">Click to unlock</p>
             <button onclick="unlockScreen()" class="px-6 py-2 bg-primary text-white rounded-lg hover:bg-blue-600 transition-colors">
                 Unlock
             </button>
@@ -542,16 +587,90 @@ function lockScreen() {
 }
 
 function unlockScreen() {
-    const lockScreen = document.querySelector('.fixed.inset-0');
+    const lockScreen = document.getElementById('lockScreenOverlay');
     if (lockScreen) {
         lockScreen.remove();
     }
 }
 
+async function approveUser(userId) {
+    try {
+        const result = await approveUserAccount(userId);
+        
+        if (result.success) {
+            showNotification(`User ${result.user.full_name} approved`);
+            await logSystemActivity('user_approved', 'users', userId);
+            // Reload pending users
+            await loadPendingUsers();
+            // Update stats
+            const statsResult = await getDashboardStats();
+            if (statsResult.success) {
+                document.getElementById('pendingApprovals').textContent = statsResult.pendingApprovals;
+                document.getElementById('pendingCount').textContent = statsResult.pendingApprovals;
+            }
+        } else {
+            showNotification('Error approving user: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Error approving user:', error);
+        showNotification('Error approving user');
+    }
+}
+
+async function rejectUser(userId) {
+    const reason = prompt('Enter rejection reason:');
+    if (reason === null) return;
+    
+    try {
+        const result = await rejectUserAccount(userId, reason);
+        
+        if (result.success) {
+            showNotification(`User ${result.user.full_name} rejected`);
+            await logSystemActivity('user_rejected', 'users', userId, { reason });
+            // Reload pending users
+            await loadPendingUsers();
+            // Update stats
+            const statsResult = await getDashboardStats();
+            if (statsResult.success) {
+                document.getElementById('pendingApprovals').textContent = statsResult.pendingApprovals;
+                document.getElementById('pendingCount').textContent = statsResult.pendingApprovals;
+            }
+        } else {
+            showNotification('Error rejecting user: ' + result.error);
+        }
+    } catch (error) {
+        console.error('Error rejecting user:', error);
+        showNotification('Error rejecting user');
+    }
+}
+
+function viewDoctorDetails(doctorId) {
+    // Navigate to doctor details page or show modal
+    const doctor = adminState.doctors.find(d => d.id === doctorId);
+    if (doctor) {
+        showNotification(`Viewing details for Dr. ${doctor.user?.full_name}`);
+        // Could also navigate to a detail page: window.location.href = `Admin_Doctors.html?id=${doctorId}`;
+    }
+}
+
+function getGreeting(name) {
+    const hour = new Date().getHours();
+    let greeting = 'Good Morning';
+    
+    if (hour >= 12 && hour < 17) {
+        greeting = 'Good Afternoon';
+    } else if (hour >= 17) {
+        greeting = 'Good Evening';
+    }
+    
+    return `${greeting}, ${name}`;
+}
+
 // Auto-refresh data every 30 seconds
-setInterval(() => {
-    updateStatistics();
+setInterval(async () => {
+    await loadDashboardData();
 }, 30000);
+</script>
 </script>
     <!-- Authentication System -->
     <script type="module" src="../auth/authService.js"></script>

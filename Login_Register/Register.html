@@ -238,7 +238,7 @@
 </body>
 <!-- Authentication System -->
 <script type="module">
-import { registerUser } from './auth-utils.js';
+import { registerUser } from '../auth/auth-utils.js';
 
 window.handleRegisterSubmit = async function(event) {
   event.preventDefault();
@@ -269,7 +269,7 @@ window.handleRegisterSubmit = async function(event) {
   registerBtn.innerHTML = '<span class="material-symbols-outlined animate-spin">refresh</span> Creating Account...';
 
   try {
-    const result = await registerUser(email, password, role);
+    const result = await registerUser(email, password, fullName, role);
 
     if (result.success) {
       // Show success message
