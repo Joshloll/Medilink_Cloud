@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>MediLink - User Approval</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#137fec",
+            "background-light": "#f6f7f8",
+            "background-dark": "#101922",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d141b] dark:text-white antialiased">
+<div class="flex h-screen w-full flex-col overflow-hidden">
+  <!-- Header -->
+  <header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-[#e7edf3] dark:border-slate-800 bg-white dark:bg-[#1a2632] px-10 py-3 shrink-0">
+    <div class="flex items-center gap-4 text-[#0d141b] dark:text-white">
+      <div class="size-8 text-primary">
+        <span class="material-symbols-outlined text-3xl">admin_panel_settings</span>
+      </div>
+      <h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">MediLink - User Approval</h2>
+    </div>
+    <div class="flex items-center gap-4">
+      <button onclick="logoutUser()" class="text-sm font-medium text-[#4c739a] hover:text-primary transition-colors">
+        <span class="material-symbols-outlined">logout</span>
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 overflow-y-auto">
+    <div class="max-w-7xl mx-auto p-8">
+      <!-- Page Title -->
+      <div class="mb-8">
+        <h1 class="text-3xl font-black leading-tight tracking-[-0.033em] mb-2">User Management</h1>
+        <p class="text-[#4c739a] dark:text-slate-400">Approve or reject pending user registrations</p>
+      </div>
+
+      <!-- Alert Message -->
+      <div id="alertMessage" class="hidden rounded-lg p-4 mb-6 flex items-center gap-3" role="alert">
+        <span class="material-symbols-outlined text-[20px]" id="alertIcon"></span>
+        <div>
+          <p class="font-medium" id="alertText"></p>
+          <p class="text-xs opacity-75" id="alertDescription"></p>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <div class="mb-8">
+        <div class="flex border-b border-[#cfdbe7] dark:border-slate-700 gap-8">
+          <button onclick="switchTab('pending')" class="flex items-center gap-2 border-b-[3px] border-b-primary text-[#0d141b] dark:text-white pb-[13px] pt-4 px-2 tab-button" data-tab="pending">
+            <span class="material-symbols-outlined">schedule</span>
+            <p class="text-sm font-bold leading-normal tracking-[0.015em]">Pending (<span id="pendingCount">0</span>)</p>
+          </button>
+          <button onclick="switchTab('approved')" class="flex items-center gap-2 border-b-[3px] border-b-transparent text-[#4c739a] hover:text-primary dark:text-slate-400 pb-[13px] pt-4 px-2 transition-colors tab-button" data-tab="approved">
+            <span class="material-symbols-outlined">check_circle</span>
+            <p class="text-sm font-bold leading-normal tracking-[0.015em]">Approved</p>
+          </button>
+          <button onclick="switchTab('rejected')" class="flex items-center gap-2 border-b-[3px] border-b-transparent text-[#4c739a] hover:text-primary dark:text-slate-400 pb-[13px] pt-4 px-2 transition-colors tab-button" data-tab="rejected">
+            <span class="material-symbols-outlined">cancel</span>
+            <p class="text-sm font-bold leading-normal tracking-[0.015em]">Rejected</p>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pending Users Tab -->
+      <div id="pendingTab" class="tab-content">
+        <div class="bg-white dark:bg-[#1a2632] rounded-lg border border-[#e7edf3] dark:border-slate-800 overflow-hidden">
+          <div id="pendingUsers" class="divide-y divide-[#e7edf3] dark:divide-slate-800">
+            <div class="p-8 text-center text-[#4c739a] dark:text-slate-400">
+              <span class="material-symbols-outlined text-4xl opacity-50 block mb-2">hourglass_empty</span>
+              Loading pending users...
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approved Users Tab -->
+      <div id="approvedTab" class="tab-content hidden">
+        <div class="bg-white dark:bg-[#1a2632] rounded-lg border border-[#e7edf3] dark:border-slate-800 overflow-hidden">
+          <div id="approvedUsers" class="divide-y divide-[#e7edf3] dark:divide-slate-800">
+            <div class="p-8 text-center text-[#4c739a] dark:text-slate-400">
+              <span class="material-symbols-outlined text-4xl opacity-50 block mb-2">check_circle</span>
+              No approved users yet
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rejected Users Tab -->
+      <div id="rejectedTab" class="tab-content hidden">
+        <div class="bg-white dark:bg-[#1a2632] rounded-lg border border-[#e7edf3] dark:border-slate-800 overflow-hidden">
+          <div id="rejectedUsers" class="divide-y divide-[#e7edf3] dark:divide-slate-800">
+            <div class="p-8 text-center text-[#4c739a] dark:text-slate-400">
+              <span class="material-symbols-outlined text-4xl opacity-50 block mb-2">archive</span>
+              No rejected users
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Approval Modal -->
+<div id="approvalModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+  <div class="bg-white dark:bg-[#1a2632] rounded-lg max-w-md w-full p-6">
+    <h3 class="text-lg font-bold mb-4" id="modalTitle">Approve User</h3>
+    <div id="modalContent" class="mb-6">
+      <p id="userEmail" class="text-sm text-[#4c739a] dark:text-slate-400 mb-2"></p>
+      <p id="userRole" class="text-sm text-[#4c739a] dark:text-slate-400 mb-4"></p>
+      <textarea id="rejectReason" placeholder="Rejection reason (optional)" class="w-full p-2 border border-[#cfdbe7] dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-[#131d27] text-[#0d141b] dark:text-white hidden"></textarea>
+    </div>
+    <div class="flex gap-3">
+      <button onclick="closeModal()" class="flex-1 px-4 py-2 border border-[#cfdbe7] dark:border-slate-700 rounded-lg text-[#0d141b] dark:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+        Cancel
+      </button>
+      <button id="confirmBtn" onclick="confirmApproval()" class="flex-1 px-4 py-2 bg-primary hover:bg-blue-600 text-white rounded-lg transition-colors">
+        Approve
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script type="module">
+import { 
+  getPendingUsers, 
+  approveUser, 
+  rejectUser, 
+  logoutUser,
+  isAuthenticated,
+  getCurrentUser,
+  verifyUserRole
+} from '../Login_Register/auth-utils.js';
+
+let currentModal = null;
+let pendingUsers = [];
+let approvedUsers = [];
+let rejectedUsers = [];
+
+// Check authentication
+window.addEventListener('DOMContentLoaded', async function() {
+  const isLoggedIn = await isAuthenticated();
+  if (!isLoggedIn) {
+    window.location.href = '../Login_Register/Login.html';
+    return;
+  }
+
+  const user = await getCurrentUser();
+  if (!user || user.role !== 'admin') {
+    alert('Access denied. Admin only.');
+    window.location.href = '../Login_Register/Login.html';
+    return;
+  }
+
+  loadUsers();
+});
+
+window.switchTab = function(tab) {
+  // Hide all tabs
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+  
+  // Remove active border from all buttons
+  document.querySelectorAll('.tab-button').forEach(el => {
+    el.classList.remove('border-b-primary', 'text-primary', 'text-[#0d141b]', 'dark:text-white');
+    el.classList.add('border-b-transparent', 'text-[#4c739a]', 'dark:text-slate-400');
+  });
+
+  // Show selected tab
+  document.getElementById(tab + 'Tab').classList.remove('hidden');
+  
+  // Add active border to selected button
+  const button = document.querySelector(`[data-tab="${tab}"]`);
+  button.classList.remove('border-b-transparent', 'text-[#4c739a]', 'dark:text-slate-400');
+  button.classList.add('border-b-primary', 'text-[#0d141b]', 'dark:text-white');
+};
+
+async function loadUsers() {
+  const result = await getPendingUsers();
+  
+  if (result.success) {
+    pendingUsers = result.users.filter(u => u.status === 'pending');
+    approvedUsers = result.users.filter(u => u.status === 'approved');
+    rejectedUsers = result.users.filter(u => u.status === 'rejected');
+
+    document.getElementById('pendingCount').textContent = pendingUsers.length;
+
+    renderPendingUsers();
+    renderApprovedUsers();
+    renderRejectedUsers();
+  } else {
+    showAlert('error', 'Error Loading Users', result.error);
+  }
+}
+
+function renderPendingUsers() {
+  const container = document.getElementById('pendingUsers');
+  
+  if (pendingUsers.length === 0) {
+    container.innerHTML = '<div class="p-8 text-center text-[#4c739a] dark:text-slate-400"><span class="material-symbols-outlined text-4xl opacity-50 block mb-2">hourglass_empty</span> No pending users</div>';
+    return;
+  }
+
+  container.innerHTML = pendingUsers.map(user => `
+    <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-[#0d141b] dark:text-white">${user.full_name || 'N/A'}</p>
+          <p class="text-sm text-[#4c739a] dark:text-slate-400">${user.email}</p>
+          <p class="text-xs text-[#4c739a] dark:text-slate-400 mt-1">
+            <span class="inline-block px-2 py-1 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 text-xs font-semibold">
+              ${user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+            </span>
+          </p>
+        </div>
+        <div class="flex gap-2">
+          <button onclick="openApprovalModal('${user.id}', '${user.email}', '${user.role}', 'approve')" class="px-4 py-2 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 rounded-lg hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">check</span>
+            Approve
+          </button>
+          <button onclick="openApprovalModal('${user.id}', '${user.email}', '${user.role}', 'reject')" class="px-4 py-2 bg-red-100 dark:bg-red-900/30 text-red-800 dark:text-red-200 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">close</span>
+            Reject
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderApprovedUsers() {
+  const container = document.getElementById('approvedUsers');
+  
+  if (approvedUsers.length === 0) {
+    container.innerHTML = '<div class="p-8 text-center text-[#4c739a] dark:text-slate-400"><span class="material-symbols-outlined text-4xl opacity-50 block mb-2">check_circle</span> No approved users</div>';
+    return;
+  }
+
+  container.innerHTML = approvedUsers.map(user => `
+    <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-[#0d141b] dark:text-white">${user.full_name || 'N/A'}</p>
+          <p class="text-sm text-[#4c739a] dark:text-slate-400">${user.email}</p>
+          <p class="text-xs text-[#4c739a] dark:text-slate-400 mt-1">
+            <span class="inline-block px-2 py-1 rounded-full bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-200 text-xs font-semibold">
+              ✓ ${user.role.charAt(0).toUpperCase() + user.role.slice(1)}
+            </span>
+          </p>
+        </div>
+        <p class="text-xs text-[#4c739a]">Approved: ${new Date(user.approved_at).toLocaleDateString()}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderRejectedUsers() {
+  const container = document.getElementById('rejectedUsers');
+  
+  if (rejectedUsers.length === 0) {
+    container.innerHTML = '<div class="p-8 text-center text-[#4c739a] dark:text-slate-400"><span class="material-symbols-outlined text-4xl opacity-50 block mb-2">archive</span> No rejected users</div>';
+    return;
+  }
+
+  container.innerHTML = rejectedUsers.map(user => `
+    <div class="p-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-semibold text-[#0d141b] dark:text-white">${user.full_name || 'N/A'}</p>
+          <p class="text-sm text-[#4c739a] dark:text-slate-400">${user.email}</p>
+          ${user.rejection_reason ? `<p class="text-xs text-red-600 dark:text-red-400 mt-1">Reason: ${user.rejection_reason}</p>` : ''}
+        </div>
+        <p class="text-xs text-[#4c739a]">Rejected: ${new Date(user.rejected_at).toLocaleDateString()}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+window.openApprovalModal = function(userId, email, role, action) {
+  currentModal = { userId, action };
+  
+  const modal = document.getElementById('approvalModal');
+  const title = document.getElementById('modalTitle');
+  const confirmBtn = document.getElementById('confirmBtn');
+  const rejectReason = document.getElementById('rejectReason');
+  
+  document.getElementById('userEmail').textContent = email;
+  document.getElementById('userRole').textContent = `Role: ${role.charAt(0).toUpperCase() + role.slice(1)}`;
+
+  if (action === 'approve') {
+    title.textContent = 'Approve User';
+    confirmBtn.textContent = 'Approve';
+    confirmBtn.className = 'flex-1 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors';
+    rejectReason.classList.add('hidden');
+  } else {
+    title.textContent = 'Reject User';
+    confirmBtn.textContent = 'Reject';
+    confirmBtn.className = 'flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors';
+    rejectReason.classList.remove('hidden');
+  }
+
+  modal.classList.remove('hidden');
+};
+
+window.closeModal = function() {
+  document.getElementById('approvalModal').classList.add('hidden');
+  document.getElementById('rejectReason').value = '';
+  currentModal = null;
+};
+
+window.confirmApproval = async function() {
+  if (!currentModal) return;
+
+  const { userId, action } = currentModal;
+
+  if (action === 'approve') {
+    const result = await approveUser(userId);
+    if (result.success) {
+      showAlert('success', 'User Approved', 'User has been approved and can now login.');
+      closeModal();
+      loadUsers();
+    } else {
+      showAlert('error', 'Approval Failed', result.error);
+    }
+  } else {
+    const reason = document.getElementById('rejectReason').value;
+    const result = await rejectUser(userId, reason);
+    if (result.success) {
+      showAlert('success', 'User Rejected', 'User registration has been rejected.');
+      closeModal();
+      loadUsers();
+    } else {
+      showAlert('error', 'Rejection Failed', result.error);
+    }
+  }
+};
+
+window.showAlert = function(type, title, description) {
+  const alertMessage = document.getElementById('alertMessage');
+  const alertIcon = document.getElementById('alertIcon');
+  const alertText = document.getElementById('alertText');
+  const alertDescription = document.getElementById('alertDescription');
+
+  const iconMap = {
+    success: 'check_circle',
+    error: 'error',
+    warning: 'warning'
+  };
+
+  const colorMap = {
+    success: 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200',
+    error: 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200',
+    warning: 'bg-yellow-50 dark:bg-yellow-900/20 text-yellow-800 dark:text-yellow-200'
+  };
+
+  alertIcon.textContent = iconMap[type] || 'info';
+  alertText.textContent = title;
+  alertDescription.textContent = description;
+
+  alertMessage.className = 'rounded-lg p-4 mb-6 flex items-center gap-3 ' + (colorMap[type] || '');
+  alertMessage.classList.remove('hidden');
+
+  setTimeout(() => {
+    alertMessage.classList.add('hidden');
+  }, 5000);
+};
+
+window.logoutUser = async function() {
+  await logoutUser();
+  window.location.href = '../Login_Register/Login.html';
+};
+</script>
+</body>
+</html>
