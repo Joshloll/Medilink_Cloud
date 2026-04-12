@@ -5,29 +5,8 @@
 // Every clickable element uses data-action and optional data-id attributes
 // ============================================================================
 
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-
-// Get Supabase credentials
-function getSupabaseCredentials() {
-  if (typeof window?.CONFIG !== 'undefined') {
-    return {
-      url: window.CONFIG.SUPABASE_URL,
-      key: window.CONFIG.SUPABASE_ANON_KEY
-    };
-  }
-  
-  if (typeof import?.meta?.env?.VITE_SUPABASE_URL !== 'undefined') {
-    return {
-      url: import.meta.env.VITE_SUPABASE_URL,
-      key: import.meta.env.VITE_SUPABASE_ANON_KEY
-    };
-  }
-  
-  throw new Error('Supabase credentials not found');
-}
-
-const credentials = getSupabaseCredentials();
-export const supabase = createClient(credentials.url, credentials.key);
+// Supabase client will be imported from supabase-auth.js
+// This file handles UI events only
 
 // ============================================================================
 // NOTIFICATION SYSTEM
@@ -165,6 +144,9 @@ async function handleAction(action, id, value, element) {
     await deleteAppointment(id);
   } else if (action === 'view-appointment') {
     await viewAppointmentDetails(id);
+  } else if (action === 'create-user-submit') {
+    // Handle create user form submission
+    return;
   }
   
   // ===== DOCTOR ACTIONS =====

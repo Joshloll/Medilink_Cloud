@@ -5,53 +5,51 @@
 // Provides validation, error handling, and data processing
 // ============================================================================
 
-import { showNotification, closeModal } from '../js/global-event-handler.js';
-import * as adminActions from '../Admin/admin-actions.js';
-import * as doctorActions from '../Doctor/doctor-actions.js';
-import * as patientActions from '../Patient/patient-actions.js';
+import { showNotification, closeModal } from './global-event-handler.js';
+import supabaseAuthService from '../auth/supabase-auth.js';
 
 // ============================================================================
 // FORM VALIDATOR
 // ============================================================================
 
 export function validateForm(formData, rules) {
-  const errors = {};
+  const errors = [];
   
   for (const [field, rule] of Object.entries(rules)) {
     const value = formData[field];
     
     // Check required
     if (rule.required && (!value || value.trim() === '')) {
-      errors[field] = `${rule.label || field} is required`;
+      errors.push(`${rule.label || field} is required`);
       continue;
     }
     
     // Check type
     if (value && rule.type) {
       if (rule.type === 'email' && !isValidEmail(value)) {
-        errors[field] = 'Invalid email address';
+        errors.push('Invalid email address');
       } else if (rule.type === 'phone' && !isValidPhone(value)) {
-        errors[field] = 'Invalid phone number';
+        errors.push('Invalid phone number');
       } else if (rule.type === 'date' && !isValidDate(value)) {
-        errors[field] = 'Invalid date';
+        errors.push('Invalid date');
       } else if (rule.type === 'time' && !isValidTime(value)) {
-        errors[field] = 'Invalid time';
+        errors.push('Invalid time');
       }
     }
     
     // Check min length
     if (value && rule.minLength && value.length < rule.minLength) {
-      errors[field] = `${rule.label || field} must be at least ${rule.minLength} characters`;
+      errors.push(`${rule.label || field} must be at least ${rule.minLength} characters`);
     }
     
     // Check max length
     if (value && rule.maxLength && value.length > rule.maxLength) {
-      errors[field] = `${rule.label || field} must not exceed ${rule.maxLength} characters`;
+      errors.push(`${rule.label || field} must not exceed ${rule.maxLength} characters`);
     }
     
     // Check pattern
     if (value && rule.pattern && !rule.pattern.test(value)) {
-      errors[field] = rule.patternError || `${rule.label || field} format is invalid`;
+      errors.push(rule.patternError || `${rule.label || field} format is invalid`);
     }
   }
   

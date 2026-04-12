@@ -671,10 +671,18 @@ setInterval(async () => {
     await loadDashboardData();
 }, 30000);
 </script>
+
+<!-- Load configuration first -->
+<script src="../config.js"></script>
+
+<!-- Import new admin dashboard and authentication system -->
+<script type="module">
+  import './admin-dashboard-service.js';
+  import '../js/form-handler-new.js';
+  import '../js/global-event-handler.js';
+  import '../auth/supabase-auth.js';
 </script>
-    <!-- Authentication System -->
-    <script type="module" src="../auth/authService.js"></script>
-    <script type="module" src="../auth/authUI.js"></script>
-    <!-- Touch Reader Debug Tool -->
-    <script src="debug.js"></script>
+
+<!-- Legacy scripts for compatibility -->
+<script src="debug.js"></script>
 </body></html>

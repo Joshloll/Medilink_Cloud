@@ -104,7 +104,7 @@
 </div>
 </div>
 <!-- Form -->
-<form class="flex flex-col gap-5 max-w-[480px]" id="registerForm" onsubmit="handleRegisterSubmit(event)">
+<form class="flex flex-col gap-5 max-w-[480px]" id="registerForm" data-action="register">
 <!-- Full Name Input -->
 <label class="flex flex-col w-full">
 <p class="text-[#0d141b] dark:text-white text-sm font-medium leading-normal pb-2">Full Name *</p>
@@ -112,7 +112,7 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
 <span class="material-symbols-outlined text-[20px]">person</span>
 </div>
-<input id="fullName" class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-4 text-base font-normal leading-normal transition-all" placeholder="John Doe" type="text" required/>
+<input name="full_name" id="fullName" class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-4 text-base font-normal leading-normal transition-all" placeholder="John Doe" type="text" required/>
 </div>
 </label>
 <!-- Email Input -->
@@ -122,7 +122,7 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
 <span class="material-symbols-outlined text-[20px]">mail</span>
 </div>
-<input id="email" class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-4 text-base font-normal leading-normal transition-all" placeholder="name@medilink.com" type="email" required/>
+<input name="email" id="email" class="form-input flex w-full min-w-0 resize-none overflow-hidden rounded-lg text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-4 text-base font-normal leading-normal transition-all" placeholder="name@medilink.com" type="email" required/>
 </div>
 </label>
 <!-- Password Input -->
@@ -132,7 +132,7 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 z-10">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input id="password" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border-r-0 text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-2 text-base font-normal leading-normal transition-all z-0" placeholder="Create a strong password" type="password" required/>
+<input name="password" id="password" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border-r-0 text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-2 text-base font-normal leading-normal transition-all z-0" placeholder="Create a strong password" type="password" required/>
 <button class="text-[#4c739a] dark:text-slate-400 flex border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-[#131d27] items-center justify-center px-3 rounded-r-lg border-l-0 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" type="button" onclick="togglePasswordVisibility('password', this)">
 <span class="material-symbols-outlined text-[20px]">visibility</span>
 </button>
@@ -145,7 +145,7 @@
 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 z-10">
 <span class="material-symbols-outlined text-[20px]">lock</span>
 </div>
-<input id="confirmPassword" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border-r-0 text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-2 text-base font-normal leading-normal transition-all z-0" placeholder="Confirm your password" type="password" required/>
+<input name="confirmPassword" id="confirmPassword" class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg rounded-r-none border-r-0 text-[#0d141b] dark:text-white dark:bg-[#131d27] focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 focus:border-primary h-12 placeholder:text-[#4c739a] pl-10 pr-2 text-base font-normal leading-normal transition-all z-0" placeholder="Confirm your password" type="password" required/>
 <button class="text-[#4c739a] dark:text-slate-400 flex border border-[#cfdbe7] dark:border-slate-700 bg-slate-50 dark:bg-[#131d27] items-center justify-center px-3 rounded-r-lg border-l-0 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" type="button" onclick="togglePasswordVisibility('confirmPassword', this)">
 <span class="material-symbols-outlined text-[20px]">visibility</span>
 </button>
@@ -397,8 +397,7 @@ window.handleRegisterSubmit = async function(event) {
     registerBtn.disabled = false;
     registerBtn.innerHTML = originalText;
   }
-};
-};
+}
 
 window.togglePasswordVisibility = function(fieldId, button) {
   const field = document.getElementById(fieldId);
@@ -429,5 +428,15 @@ document.head.appendChild(style);
 
 console.log('✅ Register form handlers initialized successfully');
 </script>
+
+<!-- Load configuration first -->
+<script src="../config.js"></script>
+
+<!-- Import new authentication and form handling system -->
+<script type="module">
+  import '../js/form-handler-new.js';
+  import '../auth/supabase-auth.js';
+</script>
+
 </body>
 </html>
